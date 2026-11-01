@@ -107,15 +107,16 @@
           <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
         </article>
 
-        <!-- 내가 만든 프로그램 -->
-        <article class="tile tile--app glass glass--dark" data-file="~/projects" aria-labelledby="dash-app-title">
-          <div class="tile__head"><h2 id="dash-app-title">Programs</h2><a class="link tile__more" href="https://github.com/yde5536?tab=repositories" target="_blank" rel="noopener">GitHub ↗</a></div>
-          <div class="tile__app">
-            <img src="images/calendar-icon.png" alt="" width="40" height="40">
-            <p><b>코워크 캘린더</b><span id="app-ver">Windows · 최신 버전</span></p>
-            <a class="btn btn--small" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">다운로드</a>
-          </div>
-          <ul class="programs" id="programs" aria-label="내 저장소"></ul>
+        <!-- 내가 배포하는 프로그램. 새 프로그램은 <li class="tile__app"> 한 줄을 복사해 추가한다. -->
+        <article class="tile tile--app glass glass--dark" data-file="~/programs" aria-labelledby="dash-app-title">
+          <div class="tile__head"><h2 id="dash-app-title">Programs</h2></div>
+          <ul class="programs" aria-label="배포 중인 프로그램">
+            <li class="tile__app">
+              <img src="images/calendar-icon.png" alt="" width="40" height="40">
+              <p><b>코워크 캘린더</b><span id="app-ver">Windows · 최신 버전</span></p>
+              <a class="btn btn--small" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">다운로드</a>
+            </li>
+          </ul>
         </article>
       </div>
       <p class="dash__more" aria-hidden="true">더 보기 ↓</p>

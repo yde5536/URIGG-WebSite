@@ -19,7 +19,7 @@ async function sha256(text) {
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 // 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
-const API_VERSION = 2;
+const API_VERSION = 3;
 async function load(name) {
   for (const url of [`/api/${name}?v=${API_VERSION}`, `data/${name}.json`]) {
     try {
@@ -194,13 +194,6 @@ function renderGithub(data) {
   });
   rows.push(row('', ' ', ''), row('', `${dirs} directories, ${files} files`, ''), row('', '$ ', '', 'term__row--cursor'));
   $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
-
-  // 내가 만든 프로그램 (캘린더는 위에 따로 있으니 목록에서는 뺀다)
-  const LANG = { 'C++': 'C++', TypeScript: 'TS', JavaScript: 'JS', CSS: 'Web', HTML: 'Web', Python: 'Py' };
-  $('#programs').innerHTML = (data.programs || [])
-    .filter((p) => p.name !== 'URIGG-ClaudeCalender')
-    .map((p) => `<li><a href="${esc(p.url)}" target="_blank" rel="noopener"><span class="programs__name">${esc(p.name)}</span><span class="programs__lang">${esc(LANG[p.language] || p.language || '—')}</span><span class="programs__when">${ago(p.pushedAt)}</span></a></li>`)
-    .join('');
 
   if (release) {
     $('#app-ver').textContent = `${release.tag} · ${stamp(release.publishedAt).slice(5, 10)}`;
