@@ -87,7 +87,10 @@
           <div class="dday__main" id="dday-main"><p class="dday__hint">캘린더 위젯에 로그인하면 D-day를 저장할 수 있어요.</p></div>
           <ul class="dday__list" id="dday-list"></ul>
           <form class="dday__form" id="dday-form" hidden>
-            <input id="dday-name" type="text" placeholder="이름 (예: 리눅스마스터 2차)" maxlength="60" required aria-label="D-day 이름">
+            <div class="dday__suggest-wrap">
+              <input id="dday-name" type="text" placeholder="이름 — 캘린더 일정에서 찾아요" maxlength="60" required aria-label="D-day 이름" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="dday-suggest">
+              <ul class="dday__suggest" id="dday-suggest" role="listbox" hidden></ul>
+            </div>
             <input id="dday-date" type="date" required aria-label="날짜">
             <label class="dday__check"><input id="dday-main-check" type="checkbox"> 메인</label>
             <button class="btn btn--small" type="submit">저장</button>
@@ -125,17 +128,6 @@
           </ul>
         </nav>
 
-        <!-- 커밋 잔디 -->
-        <article class="tile tile--activity glass glass--dark" aria-labelledby="activity-title">
-          <div class="tile__head"><h2 id="activity-title">Activity</h2><a class="link tile__more" href="#progress">진행도 ↓</a></div>
-          <div class="activity__grid" id="activity" role="img" aria-label="security.log 지난 26주 커밋 잔디"></div>
-          <dl class="activity__stats">
-            <div><dt>commits</dt><dd id="activity-total">0</dd></div>
-            <div><dt>활동한 날</dt><dd id="activity-days">0</dd></div>
-            <div><dt>연속</dt><dd id="activity-streak">0일</dd></div>
-          </dl>
-          <p class="activity__cap">security.log · 지난 26주</p>
-        </article>
 
         <!-- 내가 배포하는 프로그램. 새 프로그램은 <li class="tile__app"> 한 줄을 복사해 추가한다. -->
         <article class="tile tile--app glass glass--dark" aria-labelledby="dash-app-title">
@@ -172,6 +164,15 @@
           <h2 id="repo-title">Notes</h2>
           <p class="repo__count"><b id="repo-total">0</b><span>개 기록됨</span></p>
           <p class="repo__foot" id="repo-foot"></p>
+          <figure class="activity" aria-labelledby="activity-cap">
+            <div class="activity__grid" id="activity" role="img" aria-label="security.log 지난 26주 커밋 잔디"></div>
+            <dl class="activity__stats">
+              <div><dt>commits</dt><dd id="activity-total">0</dd></div>
+              <div><dt>활동한 날</dt><dd id="activity-days">0</dd></div>
+              <div><dt>연속</dt><dd id="activity-streak">0일</dd></div>
+            </dl>
+            <figcaption class="activity__cap" id="activity-cap">지난 26주 커밋</figcaption>
+          </figure>
           <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">security.log 열기</a>
         </div>
         <div class="term term--window glass glass--dark">

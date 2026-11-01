@@ -94,11 +94,65 @@
     if (id) await api(`ddays?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_main: true }) });
   }
 
+  /* ── 이름 자동완성: 캘린더(events 표)의 오늘 이후 일정에서 찾는다 ── */
+  const nameIn = $('#dday-name'), dateIn = $('#dday-date'), sug = $('#dday-suggest');
+  const kstDate = (iso) => new Date(Date.parse(iso) + 9 * 3_600_000).toISOString().slice(0, 10);
+  let hits = [], pick = -1, timer = 0, ask = 0;
+
+  const closeSug = () => { sug.hidden = true; sug.innerHTML = ''; hits = []; pick = -1; nameIn.setAttribute('aria-expanded', 'false'); nameIn.removeAttribute('aria-activedescendant'); };
+  const drawSug = () => {
+    sug.innerHTML = hits.length
+      ? hits.map((h, i) => `<li id="dday-sug-${i}" role="option" aria-selected="${i === pick}" data-i="${i}"><b>${esc(h.emoji || '·')}</b><span>${esc(h.title)}</span><time>${md(h.date)}</time></li>`).join('')
+      : '<li class="is-empty" role="option" aria-disabled="true">캘린더에 맞는 일정이 없어요</li>';
+    sug.hidden = false;
+    nameIn.setAttribute('aria-expanded', 'true');
+    if (pick >= 0) nameIn.setAttribute('aria-activedescendant', `dday-sug-${pick}`); else nameIn.removeAttribute('aria-activedescendant');
+  };
+  const choose = (i) => {
+    const h = hits[i];
+    if (!h) return;
+    nameIn.value = h.title.slice(0, 60);
+    dateIn.value = h.date;
+    closeSug();
+  };
+
+  async function suggest() {
+    // 검색 문법에 쓰이는 글자는 빼고 찾는다
+    const q = nameIn.value.trim().replace(/[*,()%\\]/g, '');
+    const n = ++ask;
+    if (!q || !session()) return closeSug();
+    try {
+      const from = encodeURIComponent(`${todayKey()}T00:00:00+09:00`);
+      const rows = await api(`events?select=title,emoji,start_at&title=ilike.*${encodeURIComponent(q)}*&start_at=gte.${from}&order=start_at.asc&limit=30`);
+      if (n !== ask) return; // 그새 더 입력했으면 버린다
+      // 같은 이름이 반복되면 가장 가까운 날짜 하나만
+      const seen = new Set();
+      hits = rows.filter((r) => !seen.has(r.title) && seen.add(r.title)).slice(0, 8).map((r) => ({ ...r, date: kstDate(r.start_at) }));
+      pick = -1;
+      drawSug();
+    } catch { closeSug(); }
+  }
+
+  nameIn.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(suggest, 220); });
+  nameIn.addEventListener('keydown', (e) => {
+    if (sug.hidden || !hits.length) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      pick = (pick + (e.key === 'ArrowDown' ? 1 : -1) + hits.length) % hits.length;
+      drawSug();
+    } else if (e.key === 'Enter' && pick >= 0) { e.preventDefault(); choose(pick); }
+    else if (e.key === 'Escape') { e.preventDefault(); closeSug(); }
+  });
+  // 클릭이 입력칸의 blur보다 먼저 처리되도록 mousedown에서 고른다
+  sug.addEventListener('mousedown', (e) => { const li = e.target.closest('[data-i]'); if (li) { e.preventDefault(); choose(+li.dataset.i); } });
+  nameIn.addEventListener('blur', () => setTimeout(closeSug, 120));
+
   addBtn.addEventListener('click', () => {
     form.hidden = !form.hidden;
-    if (!form.hidden) { $('#dday-date').value = todayKey(); $('#dday-name').focus(); }
+    closeSug();
+    if (!form.hidden) { dateIn.value = todayKey(); nameIn.focus(); }
   });
-  $('#dday-cancel').addEventListener('click', () => { form.hidden = true; });
+  $('#dday-cancel').addEventListener('click', () => { form.hidden = true; closeSug(); });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = $('#dday-name').value.trim(), target = $('#dday-date').value, isMain = $('#dday-main-check').checked;
