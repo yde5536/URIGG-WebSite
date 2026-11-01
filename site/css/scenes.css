@@ -160,7 +160,8 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 
 /* 프로그램 한 줄 설명 */
 .tile__app { flex-wrap: wrap; row-gap: 8px; }
-.tile__desc { flex: 1 0 100%; font-style: normal; font-size: var(--step-small); color: var(--muted); line-height: 1.4; }
+.tile__desc { order: 1; flex: 1 0 100%; font-style: normal; font-size: var(--step-small); color: var(--muted); line-height: 1.4; }
+.tile__app .btn { order: 2; }
 
 @media (max-width: 720px) {
   .emblem { width: 84px; }
