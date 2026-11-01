@@ -64,21 +64,9 @@
           <div class="tile__head">
             <h2 id="today-title">Today</h2>
             <p class="today__date" id="today-date"></p>
-            <p class="stamp" aria-hidden="true"><span class="stamp__on">Classified</span><span class="stamp__off">Declassified</span></p>
           </div>
-          <form class="unlock" id="unlock">
-            <label for="site-key">접근 키</label>
-            <input id="site-key" type="password" autocomplete="current-password" spellcheck="false" required>
-            <button class="btn" type="submit">잠금 해제</button>
-            <p class="unlock__msg" id="unlock-msg" role="status"></p>
-          </form>
-          <div class="cal" id="cal" hidden></div>
-        <ol class="agenda" id="agenda" aria-live="polite">
-            <li class="agenda__row rd"><time>--:--</time><span>████████ ██████</span></li>
-            <li class="agenda__row rd"><time>--:--</time><span>██████ ██████████</span></li>
-            <li class="agenda__row rd"><time>--:--</time><span>████ ████████</span></li>
-          </ol>
-          <button class="agenda__lock link" id="relock" type="button" hidden>이 브라우저에서 잠그기</button>
+          <!-- 코워크 캘린더 앱의 위젯 화면 (scripts/build-calendar.mjs로 만든 웹용) -->
+          <iframe class="widget-frame" src="calendar/" title="코워크 캘린더 위젯" loading="lazy"></iframe>
         </article>
 
         <!-- 최근 글 -->

@@ -34,7 +34,7 @@
 .tile__head h2 { font-size: var(--step-lead); }
 .tile__more { margin-left: auto; font-size: var(--step-small); color: var(--muted); text-decoration: none; white-space: nowrap; }
 .tile__more:hover { color: var(--ink); }
-.tile--today { grid-column: 1 / span 5; grid-row: 1 / span 2; }
+.tile--today { grid-column: 1 / span 5; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--log { grid-column: 6 / span 4; grid-row: 1; }
 .tile--alias { grid-column: 10 / span 3; grid-row: 1; }
 .tile--progress { grid-column: 6 / span 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
@@ -49,36 +49,6 @@
 .tail a:hover { color: var(--ink); text-decoration: underline 1px; text-underline-offset: 4px; }
 .js .tail li { opacity: 0; animation: type-in 400ms steps(8) forwards; animation-delay: calc(500ms + var(--i, 0) * 110ms); }
 @keyframes type-in { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
-
-/* 오늘 일정 */
-.today__date { color: var(--muted); font-family: var(--mono); font-size: var(--step-small); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.tile--today .stamp { margin-left: auto; }
-.stamp { font-family: var(--mono); font-weight: 500; font-size: var(--step-small); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-text); border: 2px solid currentColor; padding: 2px 10px; transform: rotate(-5deg); white-space: nowrap; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.stamp__off { display: none; }
-.is-clear .stamp { color: var(--ok); }
-.is-clear .stamp__on { display: none; }
-.is-clear .stamp__off { display: inline; }
-.unlock { display: grid; grid-template-columns: auto 1fr auto; gap: 10px 14px; align-items: center; }
-.unlock[hidden] { display: none; }
-.unlock label { font-family: var(--mono); font-size: var(--step-small); color: var(--accent-text); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.unlock input { min-height: 46px; min-width: 0; padding: 0 16px; border: 0; border-radius: 999px; background: var(--surface-2); color: var(--ink); font: inherit; }
-.unlock input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.unlock__msg { grid-column: 1 / -1; min-height: 1.4em; color: var(--muted); font-size: var(--step-small); }
-.agenda { display: grid; gap: 2px; min-height: 0; overflow: auto; }
-.agenda__row { display: grid; grid-template-columns: 7.5em 1fr; gap: 14px; align-items: baseline; padding: 9px 0; }
-.agenda__row time { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.agenda__row span { font-size: var(--step-body); }
-.agenda__row.is-today time { color: var(--accent-text); }
-.agenda__row.is-today span { font-weight: 600; }
-.agenda__lock { justify-self: start; border: 0; background: none; padding: 0; color: var(--muted); font: inherit; font-size: var(--step-small); cursor: pointer; }
-.agenda__lock[hidden] { display: none; }
-.rd { position: relative; }
-.rd > * { position: relative; }
-.rd::after {
-  content: ''; position: absolute; inset: 6px -4px; border-radius: 4px; background: #2e2e2e;
-  transform-origin: right center; transition: transform 520ms var(--ease-out);
-}
-.rd.is-open::after { transform: scaleX(0); }
 
 /* 바로가기 */
 .keys { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
@@ -141,7 +111,6 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 
 @media (prefers-reduced-motion: reduce) {
   .caret, .js .tail li { animation: none; opacity: 1; }
-  .rd::after { transition: none; }
 }
 
 /* 넓은 화면에서는 대시보드가 정확히 한 화면, 넘치는 목록은 타일 안에서 스크롤 */
@@ -171,17 +140,12 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .tile__head { flex-wrap: wrap; }
   .tail li { grid-template-columns: 1fr; gap: 0; white-space: normal; }
   .tail li:nth-child(n+4) { display: none; }
-  .unlock { grid-template-columns: 1fr auto; }
-  .unlock label { grid-column: 1 / -1; }
-  .agenda__row { grid-template-columns: 1fr; gap: 2px; }
-  .agenda__row span { font-size: var(--step-body); }
   .repo { padding-top: 96px; gap: 20px; }
   .repo__count b { font-size: 4rem; }
   .term--window { height: 48svh; }
 }
 
 /* 타일 안 목록은 세로로만 스크롤 (Windows에서 가로 스크롤바가 보이지 않도록) */
-.agenda, .progress, .programs { overflow-x: hidden; }
 
 /* ── 로고 엠블럼: 제목 왼쪽에 크게, 은은한 빛무리와 유리 링 ── */
 .dash__brand { display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); min-width: 0; }
@@ -207,40 +171,9 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .emblem { animation: none; }
 }
 
-/* ── Today 달력 (잠금 해제 후) ─────────────── */
-.cal[hidden] { display: none; }
-.cal { display: grid; gap: 8px; min-height: 0; animation: cal-in 420ms var(--ease-out); }
-@keyframes cal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.cal__bar { display: flex; align-items: center; gap: 10px; }
-.cal__month { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; }
-.cal__nav { width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.06); color: var(--ink); font: inherit; font-size: 1.25rem; line-height: 1; cursor: pointer; transition: background-color 200ms; }
-.cal__nav:hover { background: rgba(255, 255, 255, 0.14); }
-.cal__nav:disabled { opacity: 0.3; cursor: default; }
-.cal__nav:first-child { order: 0; }
-.cal__month { order: 1; }
-.cal__nav:last-child { order: 2; }
-.cal__week, .cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.cal__week span { text-align: center; font-size: var(--step-small); color: var(--muted); }
-.cal__week span:first-child { color: #ff8a96; }
-.cal__day {
-  display: grid; justify-items: center; align-content: start; gap: 2px; min-height: 46px; padding: 5px 0 4px;
-  border: 0; border-radius: 12px; background: transparent; color: var(--ink); font: inherit; cursor: pointer;
-  transition: background-color 180ms;
-}
-.cal__day b { font-size: var(--step-small); font-weight: 600; line-height: 1.3; }
-.cal__day span { font-size: 0.75rem; line-height: 1.1; letter-spacing: -0.1em; white-space: nowrap; overflow: hidden; max-width: 100%; }
-.cal__day:hover { background: rgba(255, 255, 255, 0.07); }
-.cal__day.is-out { opacity: 0.35; }
-.cal__day.is-today b { display: inline-grid; place-items: center; min-width: 1.9em; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #0a0a0a; }
-.cal__day.is-on { background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); } /* taste-skill-ignore: 고른 날짜 표시 */
-.cal__list { display: grid; gap: 6px; margin-top: 4px; padding-top: 10px; min-height: 0; }
-.cal__day-title { font-size: var(--step-small); color: var(--muted); }
-.cal__list ul { display: grid; gap: 4px; overflow: auto; max-height: 9.5em; }
-.cal__list li { display: grid; grid-template-columns: 3.4em 1.4em 1fr; gap: 8px; align-items: baseline; }
-.cal__list time { font-size: var(--step-small); color: var(--muted); font-variant-numeric: tabular-nums; }
-.cal__list li.is-empty { display: block; color: var(--muted); font-size: var(--step-small); }
-.agenda[hidden] { display: none; }
-.cal__day { min-height: 42px; }
+/* 타일 안 목록은 세로로만, 스크롤바는 가늘고 옅게 */
+.progress, .programs { overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
 
-/* 타일 안 스크롤바는 가늘고 옅게 */
-.agenda, .progress, .programs, .cal__list ul { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+/* Today: 코워크 캘린더 위젯을 그대로 띄운다 */
+.today__date { color: var(--muted); font-size: var(--step-small); }
+.widget-frame { display: block; width: 100%; height: 100%; min-height: 420px; border: 0; border-radius: 18px; background: transparent; color-scheme: dark; }

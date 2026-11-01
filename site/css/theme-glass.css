@@ -80,12 +80,9 @@ body::after {
 .btn:hover { background: rgba(200, 24, 46, 0.86); transform: translateY(-2px); }
 .btn:active { transform: scale(0.95); transition-duration: 100ms; }
 
-/* 입력칸·가림 막대도 유리 톤 */
-.unlock input { background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); } /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-.rd::after { background: #2b2d34; }
 
 /* 빨강은 주요 버튼과 CLASSIFIED 도장에만 */
 .progress__cells { color: var(--ink); }
-.unlock label, .term__user { color: var(--muted); }
+.term__user { color: var(--muted); }
 .repo__count b { color: var(--ink); }
 .caret { background: var(--ink); }
