@@ -34,7 +34,7 @@
 
   /* ── 장면 1: 첫 화면 ───────────────────── */
   const hero = $('.scene--hero');
-  const title = $('.hero__title'), lede = $('.hero__lede'), tail = $('.term--tail'), hint = $('.hero__hint');
+  const title = $('.hero__title'), lede = $('.hero__status'), tail = $('.term--tail'), hint = $('.hero__hint');
   const drawHero = () => {
     const p = progress(hero);
     title.style.transform = `translate3d(0, ${-p * 18}vh, 0) scale(${1 - p * 0.32})`;
@@ -42,40 +42,6 @@
     tail.style.transform = `translate3d(0, ${-p * 12}vh, 0)`;
     tail.style.opacity = 1 - clamp(p * 1.3);
     hint.style.opacity = 1 - clamp(p * 4);
-  };
-
-  /* ── 장면 2: 기밀 해제 ─────────────────── */
-  const about = $('.about'), scan = $('.scanline');
-  const chunks = [];
-  // 글을 두 낱말씩 묶어 가림 막대를 씌운다. 강조 표시(.mark)는 통째로 하나.
-  about.querySelectorAll('[data-redact] p').forEach((p) => {
-    [...p.childNodes].forEach((node) => {
-      if (node.nodeType === 1) { node.classList.add('rd'); chunks.push(node); return; }
-      if (node.nodeType !== 3 || !node.textContent.trim()) return;
-      const words = node.textContent.split(/(\s+)/);
-      const frag = document.createDocumentFragment();
-      for (let i = 0; i < words.length; i += 4) {
-        const piece = words.slice(i, i + 3).join('');
-        if (piece.trim()) {
-          const s = document.createElement('span');
-          s.className = 'rd'; s.textContent = piece;
-          frag.append(s); chunks.push(s);
-        } else if (piece) frag.append(piece);
-        if (words[i + 3]) frag.append(words[i + 3]);
-      }
-      node.replaceWith(frag);
-    });
-  });
-  let chunkY = [];
-  const measureChunks = () => { chunkY = chunks.map((c) => c.getBoundingClientRect().top + scrollY); };
-  const drawAbout = () => {
-    const on = visible(about);
-    scan.classList.toggle('is-on', on);
-    if (!on && scrollY < chunkY[0]) return;
-    const line = scrollY + vh() * 0.72;
-    let open = 0;
-    chunks.forEach((c, i) => { const o = chunkY[i] < line; c.classList.toggle('is-open', o); if (o) open++; });
-    about.classList.toggle('is-clear', open === chunks.length);
   };
 
   /* ── 장면 3: 로그 카드가 옆으로 ─────────── */
@@ -124,18 +90,18 @@
 
   /* ── 한 프레임에 한 번만 그린다 ───────────── */
   const scenes = [
-    [hero, drawHero], [about, drawAbout], [logScene, drawLog], [repoScene, drawRepo], [appScene, drawApp],
+    [hero, drawHero], [logScene, drawLog], [repoScene, drawRepo], [appScene, drawApp],
   ];
   let queued = false;
   const frame = () => {
     queued = false;
-    for (const [el, draw] of scenes) if (visible(el) || el === about) draw();
+    for (const [el, draw] of scenes) if (visible(el)) draw();
   };
   const request = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
   const layout = () => {
     $('.scene--repo').style.setProperty('--len', '260vh');
     $('.scene--app').style.setProperty('--len', '280vh');
-    sizeLog(); measureChunks(); measureHops(); request();
+    sizeLog(); measureHops(); request();
   };
 
   addEventListener('scroll', request, { passive: true });

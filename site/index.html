@@ -32,11 +32,12 @@
   <header class="top">
     <a class="top__mark" href="#top" aria-label="URIGG 처음으로">URIGG</a>
     <nav class="top__nav" aria-label="섹션">
-      <a class="link" href="#log">Blog</a>
-      <a class="link" href="#repo">Projects</a>
+      <a class="link" href="#today">Today</a>
+      <a class="link" href="#log">Log</a>
+      <a class="link" href="#repo">Notes</a>
       <a class="link" href="#app">Calendar</a>
     </nav>
-    <a class="btn" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 가기</a>
+    <a class="btn" href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener">새 글 쓰기</a>
   </header>
 
   <main id="top">
@@ -47,26 +48,53 @@
           <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 6 security.log<span class="caret" aria-hidden="true"></span></p>
           <ol class="tail" id="tail"></ol>
         </div>
-        <p class="hero__lede"><strong>정보보안을 공부하는 학생, URIGG입니다.</strong> 리눅스와 네트워크를 처음부터 기록하고, 필요한 도구는 직접 만듭니다.</p>
+        <dl class="hero__status" id="status">
+          <div><dt>today</dt><dd id="st-today">—</dd></div>
+          <div><dt>last post</dt><dd id="st-post">—</dd></div>
+          <div><dt>last push</dt><dd id="st-push">—</dd></div>
+          <div><dt>calendar</dt><dd id="st-app">—</dd></div>
+        </dl>
         <h1 id="hero-title" class="hero__title"><span class="sr-only">URIGG — Security, logged.</span><span class="line" aria-hidden="true" data-decrypt>Security,</span><span class="line" aria-hidden="true" data-decrypt>logged.</span></h1>
         <p class="hero__hint" aria-hidden="true">scroll ↓</p>
         <div class="lens" data-refract data-bezel="70" data-depth="80" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- 장면 2: 스캔 선이 지나간 자리부터 기밀이 해제된다 -->
-    <section class="about" id="about" aria-labelledby="about-title">
-      <div class="about__head">
-        <img class="about__photo" src="images/logo-round-240.png" alt="URIGG 원형 로고" width="120" height="120" loading="lazy">
-        <h2 id="about-title">About</h2>
+    <!-- 오늘: 접근 키를 넣으면 기밀이 해제되듯 일정이 드러난다 -->
+    <section class="today" id="today" aria-labelledby="today-title">
+      <div class="today__head">
+        <h2 id="today-title">Today</h2>
+        <p class="today__date" id="today-date"></p>
         <p class="stamp" aria-hidden="true"><span class="stamp__on">Classified</span><span class="stamp__off">Declassified</span></p>
       </div>
-      <div class="about__text" data-redact>
-        <p><b>URIGG</b>는 정보보안을 공부하는 학생입니다. Learning security from the ground up. 보안은 결국 시스템을 깊이 이해하는 일이라고 생각해서, 가장 아래층인 <span class="mark mark--1">리눅스</span>와 <span class="mark mark--2">네트워크</span>부터 차근차근 쌓고 있습니다. 공부한 내용은 티스토리 블로그 <span class="mark mark--3">security.log</span>에 연재하고, 같은 원고와 실습 기록을 GitHub 저장소에도 남깁니다.</p>
-        <p>「리눅스 제로부터」는 파일 구조에서 출발해 grep과 파이프, 로그 읽기까지 왔고, 「네트워크 첫걸음」은 IP 주소와 서브넷 마스크, DHCP를 지나는 중입니다. <span class="mark mark--2">2026년 10월</span>에는 첫 자격증 목표인 <span class="mark mark--1">리눅스마스터 2급</span> 1차 시험을 치렀고, 다음 차례는 <span class="mark mark--3">웹 해킹</span>과 암호학입니다.</p>
-        <p>공부하다 필요한 도구가 생기면 직접 만듭니다. C++로 텍스트 RPG와 로그라이크를 만들었고, 요즘은 Claude와 함께 만든 캘린더 앱으로 하루를 관리합니다.</p>
+      <div class="today__body glass glass--dark">
+        <form class="unlock" id="unlock">
+          <label for="site-key">접근 키</label>
+          <input id="site-key" type="password" autocomplete="current-password" spellcheck="false" required>
+          <button class="btn" type="submit">잠금 해제</button>
+          <p class="unlock__msg" id="unlock-msg" role="status"></p>
+        </form>
+        <ol class="agenda" id="agenda" aria-live="polite">
+          <li class="agenda__row rd"><time>--:--</time><span>████████ ██████</span></li>
+          <li class="agenda__row rd"><time>--:--</time><span>██████ ██████████</span></li>
+          <li class="agenda__row rd"><time>--:--</time><span>████ ████████</span></li>
+        </ol>
+        <button class="agenda__lock link" id="relock" type="button" hidden>이 브라우저에서 잠그기</button>
       </div>
-      <div class="scanline" aria-hidden="true"><span>scan</span></div>
+
+      <div class="alias">
+        <h2 class="alias__title" id="alias-title">Shortcuts</h2>
+        <ul class="alias__list" aria-labelledby="alias-title">
+          <li><a href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener"><code>write</code><span>티스토리 새 글 쓰기</span></a></li>
+          <li><a href="https://urigg-security.tistory.com/manage" target="_blank" rel="noopener"><code>blog-admin</code><span>티스토리 관리</span></a></li>
+          <li><a href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener"><code>notes</code><span>security.log 저장소</span></a></li>
+          <li><a href="https://github.com/yde5536?tab=repositories" target="_blank" rel="noopener"><code>repos</code><span>내 GitHub 저장소</span></a></li>
+          <li><a href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener"><code>releases</code><span>캘린더 릴리스</span></a></li>
+          <li><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener"><code>cf</code><span>Cloudflare 대시보드</span></a></li>
+          <li><a href="https://supabase.com/dashboard" target="_blank" rel="noopener"><code>db</code><span>Supabase 대시보드</span></a></li>
+          <li><a href="https://claude.ai/" target="_blank" rel="noopener"><code>claude</code><span>Claude 코워크</span></a></li>
+        </ul>
+      </div>
     </section>
 
     <!-- 장면 3: 세로로 내리면 로그 카드가 옆으로 흘러간다 -->
@@ -74,7 +102,7 @@
       <div class="stage log">
         <div class="log__head">
           <h2 id="log-title">The log</h2>
-          <p class="log__note">티스토리 <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log</a>에 올린 최신 글입니다. 휠을 내리면 다음 기록으로 넘어갑니다.</p>
+          <p class="log__note">티스토리 <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log</a> 최근 글. 휠을 내리면 옆으로 넘어간다.</p>
           <div class="grep glass glass--dark">
             <label for="grep">grep</label>
             <input id="grep" type="search" placeholder="리눅스, DHCP, 로그…" autocomplete="off" spellcheck="false">
@@ -94,12 +122,11 @@
     <section class="scene scene--repo" id="repo" data-scene="repo" aria-labelledby="repo-title">
       <div class="stage repo">
         <div class="repo__side">
-          <h2 id="repo-title">security.log on GitHub</h2>
-          <p class="repo__intro">블로그 원고와 실습 기록, 자격증 오답 노트를 모아 두는 저장소입니다. 목차는 저장소 README에서 바로 읽어 옵니다.</p>
-          <p class="repo__count"><b id="repo-total">0</b><span>개의 기록</span></p>
-          <ul class="repo__split" id="repo-split"></ul>
+          <h2 id="repo-title">Progress</h2>
+          <p class="repo__count"><b id="repo-total">0</b><span>개 기록됨</span></p>
+          <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
           <p class="repo__foot" id="repo-foot"></p>
-          <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">GitHub에서 보기</a>
+          <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">security.log 열기</a>
         </div>
         <div class="term term--window glass glass--dark">
           <p class="term__bar"><span></span><span></span><span></span><em>urigg@security: ~/URIGG-security.log</em></p>
@@ -117,14 +144,14 @@
       <div class="stage app">
         <div class="app__head">
           <h2 id="app-title">Cowork Calendar</h2>
-          <p>Claude 코워크에서 대화로 짠 일정을 MCP로 올리면, Windows 바탕화면 위젯과 아이폰 캘린더에 그대로 표시됩니다. 제 하루를 관리하려고 직접 만든 개인용 캘린더입니다.</p>
+          <p>코워크에서 짠 일정이 MCP를 거쳐 위젯과 아이폰으로 가는 길.</p>
         </div>
         <img class="app__shot" src="images/calendar-widget.png" alt="코워크 캘린더 위젯: 2026년 11월 달력에 날마다 일정 이모지가 표시되고, 아래에 오늘 일정과 다가오는 일정 목록이 있다" width="560" height="657" loading="lazy">
         <ol class="route" aria-label="일정이 표시되기까지">
-          <li class="hop"><b>Claude 코워크</b><span>대화로 일정을 짭니다</span><code>POST /mcp add_events</code></li>
-          <li class="hop"><b>MCP 서버</b><span>Cloudflare Workers가 요청을 받습니다</span><code>200 OK · batch_id</code></li>
-          <li class="hop"><b>Supabase</b><span>일정이 저장됩니다</span><code>INSERT events</code></li>
-          <li class="hop"><b>위젯 · 아이폰</b><span>바탕화면과 아이폰 캘린더에 표시됩니다</span><code>sync ok</code></li>
+          <li class="hop"><b>Claude 코워크</b><span>대화로 일정 짜기</span><code>POST /mcp add_events</code></li>
+          <li class="hop"><b>MCP 서버</b><span>Cloudflare Workers · cowork-calendar</span><code>200 OK · batch_id</code></li>
+          <li class="hop"><b>Supabase</b><span>events 테이블</span><code>INSERT events</code></li>
+          <li class="hop"><b>위젯 · 아이폰</b><span>바탕화면 위젯 · ICS 구독</span><code>sync ok</code></li>
           <li class="route__packet" aria-hidden="true"></li>
         </ol>
       </div>
@@ -135,13 +162,14 @@
         <div class="desk__id">
           <img src="images/calendar-icon.png" alt="" width="72" height="72">
           <div>
-            <h2 id="get-title">코워크 캘린더</h2>
+            <h2 id="get-title">코워크 캘린더 설치 파일</h2>
             <p class="desk__ver" id="app-ver">Windows · 최신 버전</p>
           </div>
         </div>
         <div class="desk__actions">
           <a class="btn" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows용 다운로드</a>
-          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender" target="_blank" rel="noopener">GitHub 저장소</a>
+          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender" target="_blank" rel="noopener">저장소</a>
+          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener">모든 릴리스</a>
         </div>
         <p class="desk__stack">Tauri · React · Supabase · Cloudflare Workers</p>
       </div>

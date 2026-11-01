@@ -34,6 +34,64 @@ const onScroll = () => topBar.classList.toggle('is-stuck', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+/* ── 첫 화면 상태 한 줄 ───────────────────── */
+const DAY = 86_400_000;
+const kstDay = (t) => Math.floor((t + 9 * 3_600_000) / DAY);
+const ago = (iso) => {
+  const d = kstDay(Date.now()) - kstDay(new Date(iso).getTime());
+  return d <= 0 ? '오늘' : d === 1 ? '어제' : `${d}일 전`;
+};
+function setStatus(id, iso) {
+  if (iso) $('#' + id).textContent = `${ago(iso)} · ${stamp(iso).slice(5, 10)}`;
+}
+const todayLabel = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'short' }).format(new Date());
+$('#st-today').textContent = todayLabel;
+$('#today-date').textContent = todayLabel;
+
+/* ── 오늘 일정: 접근 키가 맞아야 서버가 내준다 ── */
+const KEY = 'urigg.site-key';
+const store = {
+  get: () => { try { return localStorage.getItem(KEY) || ''; } catch { return ''; } },
+  set: (v) => { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch {} },
+};
+const today = $('#today'), agenda = $('#agenda'), form = $('#unlock'), msg = $('#unlock-msg'), relock = $('#relock');
+const hhmm = (iso) => new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(iso));
+const dayKey = (iso) => kstDay(new Date(iso).getTime());
+
+function renderAgenda({ events }) {
+  const now = kstDay(Date.now());
+  const rows = events.map((e) => {
+    const d = Math.max(dayKey(e.start), now) - now;
+    const when = d === 0 ? '오늘' : d === 1 ? '내일' : `D+${d}`;
+    const time = e.allDay ? '종일' : hhmm(e.start);
+    return `<li class="agenda__row rd${d === 0 ? ' is-today' : ''}"><time datetime="${e.start}">${when} · ${time}</time><span>${esc(e.title)}</span></li>`;
+  });
+  agenda.innerHTML = rows.join('') || '<li class="agenda__row rd"><time>7일</time><span>잡힌 일정이 없습니다</span></li>';
+  // 가림 막대가 위에서부터 하나씩 걷힌다
+  agenda.querySelectorAll('.rd').forEach((r, i) => setTimeout(() => r.classList.add('is-open'), 120 + i * 90));
+  today.classList.add('is-clear');
+  form.hidden = true;
+  relock.hidden = false;
+}
+
+async function openToday(key) {
+  msg.textContent = '확인 중…';
+  try {
+    const res = await fetch('/api/today', { headers: { 'x-site-key': key } });
+    if (res.status === 401) { store.set(''); msg.textContent = '키가 맞지 않습니다.'; return; }
+    if (res.status === 503) { msg.textContent = '서버에 일정 주소(ICS_URL)와 접근 키(SITE_KEY)가 아직 설정되지 않았습니다.'; return; }
+    if (!res.ok) { msg.textContent = '일정을 불러오지 못했습니다.'; return; }
+    store.set(key);
+    msg.textContent = '';
+    renderAgenda(await res.json());
+  } catch {
+    msg.textContent = '일정 서버에 연결하지 못했습니다.';
+  }
+}
+form.addEventListener('submit', (e) => { e.preventDefault(); openToday($('#site-key').value.trim()); });
+relock.addEventListener('click', () => { store.set(''); location.reload(); });
+if (store.get()) openToday(store.get());
+
 /* ── 블로그 ──────────────────────────────── */
 const markFor = (p) => (p.group === '자격증' ? 3 : /네트워크/.test(p.series) ? 2 : 1);
 function splitTitle(title) {
@@ -48,6 +106,7 @@ function renderTail(posts) {
 
 async function renderBlog(data) {
   renderTail(data.posts);
+  setStatus('st-post', data.posts[0]?.date);
   const track = $('#track'), input = $('#grep'), count = $('#grep-count');
   const posts = data.posts.map((p) => ({ ...p, ...splitTitle(p.title), mark: markFor(p) }));
   const hashes = await Promise.all(posts.map((p) => sha256(p.link)));
@@ -96,7 +155,14 @@ function renderGithub(data) {
 
   $('#repo-total').dataset.target = total;
   $('#repo-total').textContent = total;
-  $('#repo-split').innerHTML = written.map((g) => `<li><span>${esc(g.name)}</span><span>${g.done.length ? `${g.done.length}` : '—'}</span></li>`).join('');
+  // 시리즈별 진행도: 쓴 글 ■, 남은 자리 □
+  $('#progress').innerHTML = written.map((g) => {
+    const todo = g.entries.length - g.done.length;
+    const cells = '■'.repeat(g.done.length) + '□'.repeat(todo || (g.done.length ? 0 : 1));
+    const next = g.done.length && todo ? `next #${g.done.length + 1}` : g.done.length ? 'done' : '준비 중';
+    return `<li><span class="progress__name">${esc(g.name)}</span><span class="progress__cells" aria-hidden="true">${cells}</span><span class="progress__next">${g.done.length}편 · ${next}</span></li>`;
+  }).join('');
+  setStatus('st-push', repo.pushedAt);
   $('#repo-foot').textContent = `${Math.round(bytes / 1024)} KB · last push ${stamp(repo.pushedAt)}`;
 
   const row = (branch, name, size, cls = '', url = '') => {
@@ -122,7 +188,10 @@ function renderGithub(data) {
   rows.push(row('', ' ', ''), row('', `${dirs} directories, ${files} files`, ''), row('', '$ ', '', 'term__row--cursor'));
   $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
 
-  if (release) $('#app-ver').textContent = `Windows · ${release.tag} · ${stamp(release.publishedAt).slice(0, 10)} 배포`;
+  if (release) {
+    $('#app-ver').textContent = `Windows · ${release.tag} · ${stamp(release.publishedAt).slice(0, 10)} 배포`;
+    $('#st-app').textContent = release.tag;
+  }
   refresh();
 }
 
