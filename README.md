@@ -16,11 +16,10 @@ site/                  정적 파일 (Pages 출력 폴더)
   css/base.css         기본 스타일
   css/scenes.css       대시보드와 스크롤 장면 배치
   css/theme-glass.css  리퀴드 글래스 테마
-  css/theme-hacker.css 해커 터미널 테마 (초록 글씨, 주사선, 터미널 창)
+  css/theme-hacker.css 터미널 테마 (초록 포인트, 터미널 창 타일)
   js/main.js           데이터 불러오기, 대시보드, grep, tree
   js/scenes.js         스크롤 장면 엔진
   js/glass.js          유리 굴절 효과 (Chromium 전용)
-  js/rain.js           배경 코드 비
   data/*.json          API가 실패할 때 쓰는 예비 데이터
   images/
 functions/api/         Cloudflare Pages Functions (blog, github, today)
@@ -53,8 +52,7 @@ SITE_KEY=<접근 키>
 `site/index.html`에서 해당 줄을 지우면 그 효과만 빠진다.
 
 ```html
-<link rel="stylesheet" href="css/theme-hacker.css">   <!-- 해커 터미널 -->
-<script src="js/rain.js" defer></script>               <!-- 코드 비 -->
+<link rel="stylesheet" href="css/theme-hacker.css">   <!-- 터미널 테마 -->
 <link rel="stylesheet" href="css/theme-glass.css">    <!-- 리퀴드 글래스 -->
 <script src="js/glass.js" defer></script>              <!-- 유리 굴절 -->
 ```
