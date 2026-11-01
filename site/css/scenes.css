@@ -244,7 +244,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .gauge { --t: 1; display: grid; grid-template-columns: minmax(8em, 14rem) minmax(0, 1fr) 5.5em 6.5em; gap: 24px; align-items: center; }
 .gauge__name { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .gauge__name span { display: block; font-size: var(--step-small); font-weight: 400; color: var(--muted); letter-spacing: 0; }
-.gauge__track { height: 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); } /* taste-skill-ignore: 게이지 트랙 */
+.gauge__track { width: calc(var(--span, 1) * 100%); height: 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); } /* taste-skill-ignore: 게이지 트랙 */
 .gauge__fill { display: block; height: 100%; border-radius: inherit; background: rgba(215, 228, 255, 0.92); transform-origin: left; transform: scaleX(calc(var(--ratio) * var(--t))); will-change: transform; }
 .gauge__count { font-size: var(--step-lead); color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
 .gauge__count b { color: var(--ink); font-weight: 700; }

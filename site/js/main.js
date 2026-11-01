@@ -13,7 +13,7 @@ const stamp = (iso) => {
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 // 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
-const API_VERSION = 4;
+const API_VERSION = 5;
 async function load(name) {
   for (const url of [`/api/${name}?v=${API_VERSION}`, `data/${name}.json`]) {
     try {
@@ -73,6 +73,8 @@ function renderGithub(data) {
   $('#repo-total').dataset.target = total;
   $('#repo-total').textContent = total;
   // 진행도 장면의 게이지: 쓴 글 / 목차의 전체 자리. 채우는 움직임은 scenes.js가 한다.
+  // 트랙 길이는 그 분야 전체 글 수에 비례 (가장 많은 분야가 끝까지), 채움은 쓴 비율
+  const most = Math.max(1, ...written.map((g) => g.entries.length));
   $('#gauges').innerHTML = written.map((g) => {
     const all = g.entries.length;
     const done = g.done.length;
@@ -80,7 +82,7 @@ function renderGithub(data) {
     // 번호가 붙는 연재(리눅스·네트워크)만 다음 편 번호를 쓴다
     const series = /리눅스|네트워크/.test(g.name);
     const next = !done ? '준비 중' : done === all ? 'done' : series ? `next #${done + 1}` : '진행 중';
-    return `<li class="gauge${done ? '' : ' is-empty'}" style="--ratio:${ratio}" data-done="${done}">
+    return `<li class="gauge${done ? '' : ' is-empty'}" style="--ratio:${ratio};--span:${Math.max(all, 1) / most}" data-done="${done}">
       <p class="gauge__name">${esc(g.name)}<span>${esc(g.en || '')}</span></p>
       <div class="gauge__track" role="img" aria-label="${esc(g.name)} ${done}/${all}"><i class="gauge__fill"></i></div>
       <p class="gauge__count">${all ? `<b>${done}</b> / ${all}` : '—'}</p>
@@ -140,7 +142,7 @@ function renderActivity(days) {
   }
   $('#activity').innerHTML = cells.join('');
   $('#activity-total').textContent = total;
-  $('#activity-days').textContent = `${Object.values(days).filter((n) => n > 0).length}일`;
+  $('#activity-days').textContent = `${Object.entries(days).filter(([k, n]) => n > 0 && k >= kstKey(start)).length}일`;
   // 오늘(아직 안 했으면 어제)부터 거꾸로 이어진 날 수
   let streak = 0;
   for (let d = days[kstKey(now)] ? 0 : 1; days[kstKey(now - d * DAY)]; d++) streak++;
