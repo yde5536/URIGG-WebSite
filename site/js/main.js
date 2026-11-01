@@ -18,8 +18,10 @@ async function sha256(text) {
 }
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
+// 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
+const API_VERSION = 2;
 async function load(name) {
-  for (const url of [`/api/${name}`, `data/${name}.json`]) {
+  for (const url of [`/api/${name}?v=${API_VERSION}`, `data/${name}.json`]) {
     try {
       const res = await fetch(url);
       if (res.ok && res.headers.get('content-type')?.includes('json')) return await res.json();
