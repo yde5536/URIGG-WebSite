@@ -39,7 +39,10 @@ const DAY = 86_400_000;
 const kstDay = (t) => Math.floor((t + 9 * 3_600_000) / DAY);
 const ago = (iso) => {
   const d = kstDay(Date.now()) - kstDay(new Date(iso).getTime());
-  return d <= 0 ? '오늘' : d === 1 ? '어제' : `${d}일 전`;
+  if (d <= 0) return '오늘';
+  if (d === 1) return '어제';
+  if (d < 60) return `${d}일 전`;
+  return stamp(iso).slice(0, 7).replace('-', '.');
 };
 function setStatus(id, iso) {
   if (iso) $('#' + id).textContent = `${ago(iso)} · ${stamp(iso).slice(5, 10)}`;
@@ -190,8 +193,15 @@ function renderGithub(data) {
   rows.push(row('', ' ', ''), row('', `${dirs} directories, ${files} files`, ''), row('', '$ ', '', 'term__row--cursor'));
   $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
 
+  // 내가 만든 프로그램 (캘린더는 위에 따로 있으니 목록에서는 뺀다)
+  const LANG = { 'C++': 'C++', TypeScript: 'TS', JavaScript: 'JS', CSS: 'Web', HTML: 'Web', Python: 'Py' };
+  $('#programs').innerHTML = (data.programs || [])
+    .filter((p) => p.name !== 'URIGG-ClaudeCalender')
+    .map((p) => `<li><a href="${esc(p.url)}" target="_blank" rel="noopener"><span class="programs__name">${esc(p.name)}</span><span class="programs__lang">${esc(LANG[p.language] || p.language || '—')}</span><span class="programs__when">${ago(p.pushedAt)}</span></a></li>`)
+    .join('');
+
   if (release) {
-    $('#app-ver').textContent = `Windows · ${release.tag} · ${stamp(release.publishedAt).slice(0, 10)} 배포`;
+    $('#app-ver').textContent = `${release.tag} · ${stamp(release.publishedAt).slice(5, 10)}`;
     $('#st-app').textContent = release.tag;
   }
   refresh();

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-01T05:00:25.515Z",
+  "fetchedAt": "2026-11-01T09:10:42.986Z",
   "repo": {
     "name": "URIGG-security.log",
     "url": "https://github.com/yde5536/URIGG-security.log",
@@ -157,6 +157,57 @@
         }
       ],
       "planned": false
+    }
+  ],
+  "programs": [
+    {
+      "name": "URIGG-WebSite",
+      "url": "https://github.com/yde5536/URIGG-WebSite",
+      "language": "CSS",
+      "description": "URIGG personal website",
+      "pushedAt": "2026-11-01T09:22:53Z"
+    },
+    {
+      "name": "URIGG-ClaudeCalender",
+      "url": "https://github.com/yde5536/URIGG-ClaudeCalender",
+      "language": "TypeScript",
+      "description": null,
+      "pushedAt": "2026-11-01T04:41:30Z"
+    },
+    {
+      "name": "TextChattingTest",
+      "url": "https://github.com/yde5536/TextChattingTest",
+      "language": "C++",
+      "description": null,
+      "pushedAt": "2025-05-27T10:10:50Z"
+    },
+    {
+      "name": "URI.G.G._rougelike",
+      "url": "https://github.com/yde5536/URI.G.G._rougelike",
+      "language": null,
+      "description": null,
+      "pushedAt": "2025-04-30T08:44:26Z"
+    },
+    {
+      "name": "emotional-trash-can",
+      "url": "https://github.com/yde5536/emotional-trash-can",
+      "language": "C++",
+      "description": "emotional trash can",
+      "pushedAt": "2025-03-15T23:13:44Z"
+    },
+    {
+      "name": "text-roguelike",
+      "url": "https://github.com/yde5536/text-roguelike",
+      "language": null,
+      "description": null,
+      "pushedAt": "2025-02-06T04:31:24Z"
+    },
+    {
+      "name": "TextRPG_counterspell",
+      "url": "https://github.com/yde5536/TextRPG_counterspell",
+      "language": null,
+      "description": null,
+      "pushedAt": "2024-11-24T01:39:52Z"
     }
   ],
   "release": {

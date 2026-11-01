@@ -36,7 +36,7 @@
 .tile--log { grid-column: 6 / span 4; grid-row: 1; }
 .tile--alias { grid-column: 10 / span 3; grid-row: 1; }
 .tile--progress { grid-column: 6 / span 4; grid-row: 2; }
-.tile--app { grid-column: 10 / span 3; grid-row: 2; }
+.tile--app { grid-column: 10 / span 3; grid-row: 2; grid-template-rows: auto auto minmax(0, 1fr); align-content: stretch; }
 
 /* 최근 글 (tail) */
 .tail { display: grid; gap: 2px; margin-top: 8px; color: var(--muted); }
@@ -92,10 +92,19 @@
 
 /* 캘린더 앱 */
 .tile__app { display: flex; align-items: center; gap: 14px; }
-.tile__app img { width: 48px; height: 48px; }
+.tile__app img { width: 40px; height: 40px; }
 .tile__app p { display: grid; }
 .tile__app span { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.tile--app .btn { justify-self: start; }
+.tile__app { padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); } /* taste-skill-ignore: 목록 구분 */
+.tile__app p { flex: 1; min-width: 0; }
+.tile__app span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn--small { min-height: 36px; padding: 0 14px; font-size: var(--step-small); }
+.programs { display: grid; gap: 0; min-height: 0; overflow: auto; }
+.programs a { display: grid; grid-template-columns: 1fr auto 4.5em; gap: 10px; align-items: baseline; padding: 6px 10px; margin-inline: -10px; border-radius: 8px; text-decoration: none; font-size: var(--step-small); }
+.programs a:hover, .programs a:focus-visible { background: rgba(255, 255, 255, 0.06); }
+.programs__name { font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
+.programs__lang { color: var(--accent-text); font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
+.programs__when { color: var(--muted); text-align: right; }
 
 /* ── 장면 3: 로그 카드가 옆으로 흐른다 ────── */
 .log { display: grid; grid-template-rows: auto 1fr auto; gap: 28px; padding: 112px 0 40px; }
@@ -175,6 +184,11 @@ html:not(.scenes-on) .log__viewport { overflow-x: auto; padding-bottom: 12px; }
 @media (prefers-reduced-motion: reduce) {
   .caret, .js .tail li { animation: none; opacity: 1; }
   .rd::after { transition: none; }
+}
+
+/* 넓은 화면에서는 대시보드가 정확히 한 화면, 넘치는 목록은 타일 안에서 스크롤 */
+@media (min-width: 1025px) {
+  .dash { height: 100svh; }
 }
 
 /* ── 태블릿 ─────────────────────────────── */
