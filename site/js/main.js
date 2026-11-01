@@ -116,6 +116,15 @@ function renderGithub(data) {
     </div>`).join('');
   observe($('#toc'));
 
+  // 저장소 요약: 실제로 올라간 기록만 센다
+  const written = groups.map((g) => ({ ...g, done: g.entries.filter((e) => e.url) }));
+  const total = written.reduce((n, g) => n + g.done.length, 0);
+  const bytes = written.reduce((n, g) => n + g.done.reduce((m, e) => m + (e.size || 0), 0), 0);
+  $('#repo-total').innerHTML = `<b>${total}</b>개의 기록`;
+  $('#repo-split').innerHTML = written.map((g) => `
+    <li><span class="toc__dot" style="background:${g.done.length ? dotFor(g.name) : 'var(--surface-2)'}"></span><span>${esc(g.name)}</span><span>${g.done.length ? `${g.done.length}개` : '준비 중'}</span></li>`).join('');
+  $('#repo-foot').textContent = `문서 ${Math.round(bytes / 1024)} KB · 마지막 업데이트 ${ymd(repo.pushedAt)}`;
+
   if (release) $('#app-ver').textContent = `Windows · ${release.tag} · ${ymd(release.publishedAt)} 배포`;
 }
 

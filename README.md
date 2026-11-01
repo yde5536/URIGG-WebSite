@@ -50,4 +50,3 @@ npm run dev     # http://127.0.0.1:8788 (wrangler로 함수까지 실행)
 
 - IBM 2314 DiskDrives and IBM 2540 CardReader Punch — Scott Gerstenberger, public domain
 - Network cables in server room — ProjectManhattan, CC BY-SA 3.0
-- ASR-33 Teletype terminal — Rama & Musée Bolo, CC BY-SA 2.0

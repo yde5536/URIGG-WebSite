@@ -180,9 +180,14 @@ h2 { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.03em; lin
 .toc__dot { width: 12px; height: 12px; border-radius: 50%; align-self: center; }
 .toc__value { color: var(--muted); font-size: var(--step-small); font-variant-numeric: tabular-nums; }
 .toc__row--planned .toc__title { color: var(--muted); }
-.repo__figure { grid-column: 8 / span 5; position: sticky; top: 100px; align-self: start; margin-top: 40px; }
-.repo__figure img { width: 100%; aspect-ratio: 1; object-fit: cover; }
-.repo__figure figcaption { margin-top: 16px; color: var(--muted); font-size: var(--step-small); max-width: 40ch; }
+.repo__card { grid-column: 9 / span 4; position: sticky; top: 100px; align-self: start; margin-top: 40px; padding: 36px; display: grid; gap: 28px; }
+.repo__count { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.repo__count b { display: block; font-size: var(--step-display); line-height: 0.9; letter-spacing: -0.05em; color: var(--accent-text); }
+.repo__split li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; }
+.repo__split .toc__dot { width: 10px; height: 10px; }
+.repo__split span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+.repo__foot { color: var(--muted); font-size: var(--step-small); font-variant-numeric: tabular-nums; }
+.repo__card .btn { justify-self: start; }
 
 /* ── 코워크 캘린더 ────────────────────────── */
 .app { padding-top: var(--section-gap); }
@@ -250,7 +255,7 @@ h2 { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.03em; lin
   .log__body { grid-template-columns: 1fr; }
   .post { position: static; }
   .repo__col { grid-column: 1 / span 7; }
-  .repo__figure { grid-column: 8 / span 5; }
+  .repo__card { grid-column: 8 / span 5; }
   .desk__shot, .desk__panel { grid-column: 1 / -1; }
   .desk__panel { justify-self: center; width: 100%; }
 }
@@ -278,7 +283,7 @@ h2 { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.03em; lin
   .post { display: none; }
   .post { padding: 24px; }
   .repo { display: block; }
-  .repo__figure { margin-top: 64px; position: static; }
+  .repo__card { margin-top: 64px; position: static; padding: 24px; }
   .toc__row { min-height: 44px; }
   .app__head { display: block; }
   .app__head p { margin-top: 16px; }
