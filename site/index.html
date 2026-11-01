@@ -38,6 +38,7 @@
     <a class="top__mark" href="#top" aria-label="URIGG 처음으로"><img src="images/logo-round-240.png" alt="" width="28" height="28">URIGG</a>
     <nav class="top__nav" aria-label="섹션">
       <a class="link" href="#today">Dashboard</a>
+      <a class="link" href="#progress">Progress</a>
       <a class="link" href="#repo">Notes</a>
       <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">Blog ↗</a>
     </nav>
@@ -56,10 +57,6 @@
         </h1>
         </div>
         <div class="dash__side">
-          <figure class="activity" aria-labelledby="activity-cap">
-            <div class="activity__grid" id="activity" role="img" aria-label="security.log 커밋 잔디"></div>
-            <figcaption id="activity-cap">security.log · 지난 26주 <b id="activity-total">0</b> commits</figcaption>
-          </figure>
           <dl class="dash__status">
             <div><dt>today</dt><dd id="st-today">—</dd></div>
             <div><dt>time</dt><dd id="st-clock">--:--:--</dd></div>
@@ -128,10 +125,16 @@
           </ul>
         </nav>
 
-        <!-- 공부 진행도 -->
-        <article class="tile tile--progress glass glass--dark" aria-labelledby="progress-title">
-          <div class="tile__head"><h2 id="progress-title">Progress</h2><a class="link tile__more" href="#repo">tree로 보기 ↓</a></div>
-          <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
+        <!-- 커밋 잔디 -->
+        <article class="tile tile--activity glass glass--dark" aria-labelledby="activity-title">
+          <div class="tile__head"><h2 id="activity-title">Activity</h2><a class="link tile__more" href="#progress">진행도 ↓</a></div>
+          <div class="activity__grid" id="activity" role="img" aria-label="security.log 지난 26주 커밋 잔디"></div>
+          <dl class="activity__stats">
+            <div><dt>commits</dt><dd id="activity-total">0</dd></div>
+            <div><dt>활동한 날</dt><dd id="activity-days">0</dd></div>
+            <div><dt>연속</dt><dd id="activity-streak">0일</dd></div>
+          </dl>
+          <p class="activity__cap">security.log · 지난 26주</p>
         </article>
 
         <!-- 내가 배포하는 프로그램. 새 프로그램은 <li class="tile__app"> 한 줄을 복사해 추가한다. -->
@@ -150,6 +153,17 @@
       <p class="dash__more" aria-hidden="true">더 보기 ↓</p>
     </section>
 
+
+    <!-- 진행도: 휠을 내리면 시리즈별 게이지가 차례로 차오른다 -->
+    <section class="scene scene--progress" id="progress" data-scene="progress" aria-labelledby="progress-title">
+      <div class="stage pg">
+        <div class="pg__head">
+          <h2 id="progress-title">Progress</h2>
+          <p>security.log 시리즈별 진행도. README 목차에서 바로 읽어 온다.</p>
+        </div>
+        <ul class="gauges" id="gauges"></ul>
+      </div>
+    </section>
 
     <!-- 장면 4: tree 출력이 한 줄씩 찍히고 숫자가 올라간다 -->
     <section class="scene scene--repo" id="repo" data-scene="repo" aria-labelledby="repo-title">

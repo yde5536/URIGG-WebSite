@@ -72,14 +72,20 @@ function renderGithub(data) {
 
   $('#repo-total').dataset.target = total;
   $('#repo-total').textContent = total;
-  // 시리즈별 진행도: 쓴 글 ■, 남은 자리 □
-  $('#progress').innerHTML = written.map((g) => {
-    const todo = g.entries.length - g.done.length;
-    const cells = '■'.repeat(g.done.length) + '□'.repeat(todo || (g.done.length ? 0 : 1));
+  // 진행도 장면의 게이지: 쓴 글 / 목차의 전체 자리. 채우는 움직임은 scenes.js가 한다.
+  $('#gauges').innerHTML = written.map((g) => {
+    const all = g.entries.length;
+    const done = g.done.length;
+    const ratio = all ? done / all : 0;
     // 번호가 붙는 연재(리눅스·네트워크)만 다음 편 번호를 쓴다
     const series = /리눅스|네트워크/.test(g.name);
-    const next = !g.done.length ? '준비 중' : !todo ? 'done' : series ? `next #${g.done.length + 1}` : '진행 중';
-    return `<li><span class="progress__name">${esc(g.name)}</span><span class="progress__cells" aria-hidden="true">${cells}</span><span class="progress__next">${g.done.length}편 · ${next}</span></li>`;
+    const next = !done ? '준비 중' : done === all ? 'done' : series ? `next #${done + 1}` : '진행 중';
+    return `<li class="gauge${done ? '' : ' is-empty'}" style="--ratio:${ratio}" data-done="${done}">
+      <p class="gauge__name">${esc(g.name)}<span>${esc(g.en || '')}</span></p>
+      <div class="gauge__track" role="img" aria-label="${esc(g.name)} ${done}/${all}"><i class="gauge__fill"></i></div>
+      <p class="gauge__count">${all ? `<b>${done}</b> / ${all}` : '—'}</p>
+      <p class="gauge__next">${next}</p>
+    </li>`;
   }).join('');
   setStatus('st-push', repo.pushedAt);
   $('#repo-foot').textContent = `${Math.round(bytes / 1024)} KB · last push ${stamp(repo.pushedAt)}`;
@@ -134,6 +140,11 @@ function renderActivity(days) {
   }
   $('#activity').innerHTML = cells.join('');
   $('#activity-total').textContent = total;
+  $('#activity-days').textContent = `${Object.values(days).filter((n) => n > 0).length}일`;
+  // 오늘(아직 안 했으면 어제)부터 거꾸로 이어진 날 수
+  let streak = 0;
+  for (let d = days[kstKey(now)] ? 0 : 1; days[kstKey(now - d * DAY)]; d++) streak++;
+  $('#activity-streak').textContent = `${streak}일`;
 }
 
 /* ── 보안 뉴스 ──────────────────────────── */
