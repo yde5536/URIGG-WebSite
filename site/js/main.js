@@ -157,10 +157,15 @@ const markRead = () => {
   drawCount();
 };
 let readTimer = 0, alertsVisible = false;
+// 바탕화면 모드에서는 화면이 늘 보이므로, 알림 칸에 마우스를 올렸을 때만 읽은 것으로 친다
+const WALL = document.documentElement.classList.contains('wall');
+let alertsHovered = false;
 const watchRead = () => {
   clearTimeout(readTimer);
-  if (alertsVisible && !alertBox.hidden && !document.hidden) readTimer = setTimeout(markRead, 2000);
+  if (alertsVisible && !alertBox.hidden && !document.hidden && (!WALL || alertsHovered)) readTimer = setTimeout(markRead, 2000);
 };
+alertBox.closest('.tile').addEventListener('pointerenter', () => { alertsHovered = true; watchRead(); });
+alertBox.closest('.tile').addEventListener('pointerleave', () => { alertsHovered = false; watchRead(); });
 new IntersectionObserver(([e]) => { alertsVisible = e.isIntersecting; watchRead(); }, { threshold: 0.5 }).observe(alertBox.closest('.tile'));
 document.addEventListener('visibilitychange', watchRead);
 
@@ -278,6 +283,9 @@ function renderNews(data) {
   $('#panel-news').innerHTML = data.items.map((n) => `
     <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('');
 }
+
+/* ── 바탕화면 모드: 며칠씩 켜져 있으므로 30분마다 새로 불러와 뉴스·글·알림·날짜를 맞춘다 ── */
+if (WALL) setInterval(() => location.reload(), 30 * 60_000);
 
 /* ── 앱처럼 설치 (PWA) ───────────────────── */
 if ('serviceWorker' in navigator && location.protocol === 'https:') {

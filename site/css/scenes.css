@@ -270,3 +270,9 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 /* 제목: URIGG ↔ Security.log Website가 지지직 바뀐다. 긴 쪽은 한 줄에 들어오게 글씨 크기를 맞춘다 */
 .dash__name { display: block; white-space: nowrap; transition: font-size 500ms ease; }
 @media (prefers-reduced-motion: reduce) { .tabs__pill, .tabs button, .tabs__count, .dash__name { transition: none; } }
+
+/* ── 바탕화면 모드 (?wall): Lively Wallpaper 같은 배경화면 프로그램에 띄울 때
+   상단 바·스크롤 장면·끝 화면을 빼고 대시보드 한 화면만 꽉 채운다. 스크롤 없음. */
+.wall body { overflow: hidden; }
+.wall .top, .wall .scene, .wall .end, .wall .dash__more { display: none; }
+.wall .dash { height: 100vh; min-height: 0; padding-top: 28px; padding-bottom: 64px; /* 아래 작업 표시줄 자리 */ grid-template-rows: auto minmax(0, 1fr); }

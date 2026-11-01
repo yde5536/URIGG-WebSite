@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/scenes.css">
   <link rel="stylesheet" href="css/theme-glass.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js'); if (/[?&]wall/.test(location.search)) document.documentElement.classList.add('wall');</script>
   <script src="js/main.js" defer></script>
   <script src="js/scenes.js" defer></script>
   <script src="js/dday.js" defer></script>
