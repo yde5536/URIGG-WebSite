@@ -46,9 +46,6 @@ function setStatus(id, iso) {
 const todayLabel = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'short' }).format(new Date());
 $('#st-today').textContent = todayLabel;
 
-// 배너는 한 줄씩 찍힌다
-document.querySelectorAll('.banner span').forEach((l, i) => l.style.setProperty('--i', i));
-
 // 상태줄의 시계: 한국 시간, 1초마다
 const clock = $('#st-clock');
 const clockFmt = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });

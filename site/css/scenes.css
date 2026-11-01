@@ -18,9 +18,8 @@
 .dash { position: relative; min-height: 100svh; padding: 92px var(--gutter) 24px; display: grid; grid-template-rows: auto 1fr auto; gap: 18px; }
 .dash__head { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 40px; flex-wrap: wrap; }
 .dash__title { display: grid; gap: 6px; margin: 0; font-weight: 400; }
-.banner { margin: 0; font-family: var(--mono); font-size: clamp(12px, 1.05vw, 15px); line-height: 1.15; letter-spacing: 0; color: var(--ink); white-space: pre; } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
-.banner span { display: inline; }
-.js .banner span { opacity: 0; animation: type-in 260ms steps(10) forwards; animation-delay: calc(var(--i, 0) * 70ms); }
+.dash__name { font-family: var(--mono); font-size: clamp(3rem, 5.6vw, 5.25rem); font-weight: 500; letter-spacing: -0.04em; line-height: 0.9; color: var(--ink); } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
+.dash__name .glyph { font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
 .dash__tag { font-family: var(--mono); font-size: var(--step-body); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 터미널 느낌 */
 .dash__tag .glyph { color: var(--ink); font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 .dash__status { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 0; font-size: var(--step-small); }
@@ -135,7 +134,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 /* 장면이 꺼진 상태(스크립트 없음, 애니메이션 줄이기): 마지막 모습으로 보여 준다 */
 
 @media (prefers-reduced-motion: reduce) {
-  .caret, .js .tail li, .js .banner span { animation: none; opacity: 1; }
+  .caret, .js .tail li { animation: none; opacity: 1; }
   .rd::after { transition: none; }
 }
 
