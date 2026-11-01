@@ -1,24 +1,24 @@
-/* 터미널 테마 — 흰 글씨 위에 초록은 커서·프롬프트·작은 포인트에만, 타일은 터미널 창.
+/* 터미널 테마 — 흑백. 고정폭 라벨, 프롬프트, 커서, 터미널 창 타일. 빨강은 경고에만.
    이 파일을 빼면 검정·크림슨 버전으로 돌아간다.
    taste-skill-ignore: 사용자 요청 터미널 느낌 — 고정폭 라벨은 의도한 것 */
 
 :root {
-  --bg: #050806;
-  --surface: #0a100c;
-  --surface-2: #121b15;
-  --ink: #e6ebe7;
-  --muted: #8b968f;
-  --accent: #1fb862;
-  --accent-press: #189a51;
-  --accent-ink: #03120a;
-  --accent-text: #3ddc84;
-  --ok: #3ddc84;
+  --bg: #070707;
+  --surface: #0e0e0e;
+  --surface-2: #1a1a1a;
+  --ink: #ececec;
+  --muted: #8f8f8f;
+  --accent: #ececec;
+  --accent-press: #c9c9c9;
+  --accent-ink: #0a0a0a;
+  --accent-text: #ffffff;
+  --ok: #ffffff;
   --alert: #ff5a68;
-  --mark-1: #1fb862;   --mark-1-ink: #03120a;
-  --mark-2: #e6ebe7;   --mark-2-ink: #03120a;
-  --mark-3: #2a4434;   --mark-3-ink: #e6ebe7;
-  --glass-tint-strong: rgba(8, 16, 11, 0.6);
-  --glass-edge: inset 0 0 0 1px rgba(61, 220, 132, 0.2), inset 0 1px 0 rgba(200, 255, 220, 0.18); /* taste-skill-ignore */
+  --mark-1: #ececec;   --mark-1-ink: #0a0a0a;
+  --mark-2: #8f8f8f;   --mark-2-ink: #0a0a0a;
+  --mark-3: #333333;   --mark-3-ink: #ececec;
+  --glass-tint-strong: rgba(14, 14, 14, 0.62);
+  --glass-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.16); /* taste-skill-ignore */
 }
 
 body { background: var(--bg); }
@@ -32,17 +32,17 @@ h1, h2, .top__mark, .tile__more, .dash__more, .repo__count, .route .hop b {
 .dash__title { color: var(--ink); font-weight: 500; letter-spacing: -0.04em; }
 .dash__title::after { content: '_'; color: var(--accent-text); animation: blink 1s steps(1) infinite; }
 h2 { color: var(--ink); font-weight: 500; }
-.tile__head h2::before { content: '> '; color: var(--accent-text); }
+.tile__head h2::before { content: '> '; color: var(--muted); }
 
 /* 상단 바: URIGG 뒤에 작은 프롬프트 */
 .top__mark { color: var(--ink); font-weight: 500; font-size: var(--step-body); }
-.top__mark::after { content: ':~$'; color: var(--accent-text); font-weight: 400; }
+.top__mark::after { content: ':~$'; color: var(--muted); font-weight: 400; }
 .top__nav a { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore */
 .top__nav a:hover { color: var(--ink); }
 
-/* 버튼: 차분한 초록 */
+/* 버튼: 흰 바탕 검은 글씨 (터미널 선택 반전) */
 .btn { border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-weight: 600; }
-.btn:hover { background: var(--accent-text); }
+.btn:hover { background: var(--accent-press); }
 
 /* 타일 = 터미널 창 */
 .glass, .tile { border-radius: 10px; }
@@ -50,24 +50,24 @@ h2 { color: var(--ink); font-weight: 500; }
 .tile::before {
   content: '● ● ●  ' attr(data-file); position: absolute; left: 0; right: 0; top: 0; height: 30px;
   padding: 0 14px; display: flex; align-items: center; font-family: var(--mono); font-size: 0.75rem; /* taste-skill-ignore */
-  color: var(--muted); background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(61, 220, 132, 0.14); /* taste-skill-ignore: 터미널 창 제목줄 */
+  color: var(--muted); background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* taste-skill-ignore: 터미널 창 제목줄 */
 }
 
 /* 오늘 일정 */
 .stamp { color: var(--alert); }
 .is-clear .stamp { color: var(--ok); }
-.rd::after { background: #1b2a20; }
-.unlock input { background: #070e09; color: var(--ink); font-family: var(--mono); box-shadow: inset 0 0 0 1px rgba(61, 220, 132, 0.22); } /* taste-skill-ignore */
+.rd::after { background: #262626; }
+.unlock input { background: #050505; color: var(--ink); font-family: var(--mono); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); } /* taste-skill-ignore */
 
 /* 바로가기 */
 .alias__list code::before { content: '$ '; color: var(--muted); }
-.alias__list a:hover, .alias__list a:focus-visible { background: rgba(61, 220, 132, 0.08); }
+.alias__list a:hover, .alias__list a:focus-visible { background: rgba(255, 255, 255, 0.07); }
 
 /* 로그 · 아래 장면 */
 .tail li:first-child { color: var(--ink); }
 .card__meta b { color: var(--accent-text); }
 .term__row--dir { color: var(--accent-text); }
-.route__packet { background: var(--accent-text); box-shadow: 0 0 0 6px rgba(61, 220, 132, 0.2); } /* taste-skill-ignore */
+.route__packet { background: var(--accent-text); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.14); } /* taste-skill-ignore */
 .hop.is-on::before { background: var(--accent-text); }
 .log__bar span { background: var(--accent-text); }
 
@@ -92,3 +92,11 @@ h2 { color: var(--ink); font-weight: 500; }
 @media (prefers-reduced-motion: reduce) {
   .dash__title::after { animation: none; }
 }
+
+/* 흑백에서는 강조를 색 대신 굵기와 밝기로 */
+.alias__list code, .progress__cells, .term__user, .term__row--dir, .unlock label, .card__meta b, .grep label { color: var(--ink); }
+.term__user { color: var(--muted); }
+.term__row--dir { font-weight: 600; }
+.agenda__row.is-today time { color: var(--ink); font-weight: 600; }
+.unlock label { color: var(--muted); }
+.mark--1 { background: var(--ink); color: var(--accent-ink); }
