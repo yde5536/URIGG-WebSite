@@ -8,7 +8,7 @@
   <meta property="og:title" content="URIGG — security.log">
   <meta property="og:description" content="Security, logged. 정보보안 공부 기록과 직접 만든 도구들.">
   <meta property="og:image" content="/images/logo-round-1400.png">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#030805">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
   <link rel="apple-touch-icon" href="/images/favicon-180.png">
@@ -23,12 +23,15 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/scenes.css">
   <link rel="stylesheet" href="css/theme-glass.css">
+  <link rel="stylesheet" href="css/theme-hacker.css">
   <script>document.documentElement.classList.add('js')</script>
   <script src="js/glass.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/scenes.js" defer></script>
+  <script src="js/rain.js" defer></script>
 </head>
 <body>
+  <canvas class="rain" aria-hidden="true"></canvas>
   <header class="top">
     <a class="top__mark" href="#top" aria-label="URIGG 처음으로">URIGG</a>
     <nav class="top__nav" aria-label="섹션">
@@ -56,7 +59,7 @@
 
       <div class="dash__grid">
         <!-- 오늘 일정: 접근 키를 넣으면 기밀이 해제되듯 드러난다 -->
-        <article class="tile tile--today glass glass--dark" aria-labelledby="today-title">
+        <article class="tile tile--today glass glass--dark" data-file="today.sh" aria-labelledby="today-title">
           <div class="tile__head">
             <h2 id="today-title">Today</h2>
             <p class="today__date" id="today-date"></p>
@@ -77,7 +80,7 @@
         </article>
 
         <!-- 최근 글 -->
-        <article class="tile tile--log glass glass--dark" aria-labelledby="latest-title">
+        <article class="tile tile--log glass glass--dark" data-file="security.log" aria-labelledby="latest-title">
           <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="#log">카드로 보기 ↓</a></div>
           <div class="term" aria-label="최신 글">
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
@@ -86,7 +89,7 @@
         </article>
 
         <!-- 바로가기 -->
-        <nav class="tile tile--alias glass glass--dark" aria-labelledby="alias-title">
+        <nav class="tile tile--alias glass glass--dark" data-file="aliases" aria-labelledby="alias-title">
           <div class="tile__head"><h2 id="alias-title">Shortcuts</h2></div>
           <ul class="alias__list">
             <li><a href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener"><code>write</code><span>새 글 쓰기</span></a></li>
@@ -101,13 +104,13 @@
         </nav>
 
         <!-- 공부 진행도 -->
-        <article class="tile tile--progress glass glass--dark" aria-labelledby="progress-title">
+        <article class="tile tile--progress glass glass--dark" data-file="progress.md" aria-labelledby="progress-title">
           <div class="tile__head"><h2 id="progress-title">Progress</h2><a class="link tile__more" href="#repo">tree로 보기 ↓</a></div>
           <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
         </article>
 
         <!-- 캘린더 앱 -->
-        <article class="tile tile--app glass glass--dark" aria-labelledby="dash-app-title">
+        <article class="tile tile--app glass glass--dark" data-file="cowork-calendar.exe" aria-labelledby="dash-app-title">
           <div class="tile__head"><h2 id="dash-app-title">Calendar</h2><a class="link tile__more" href="#app">경로 보기 ↓</a></div>
           <div class="tile__app">
             <img src="images/calendar-icon.png" alt="" width="48" height="48">

@@ -1,0 +1,119 @@
+/* 해커 터미널 테마 — 초록 형광 글씨, CRT 주사선, 터미널 창 타일.
+   이 파일과 js/rain.js를 빼면 검정·크림슨 버전으로 돌아간다.
+   taste-skill-ignore: 사용자 요청 해커(터미널) 느낌 — 고정폭 글꼴, 빛번짐, 주사선은 의도한 것 */
+
+:root {
+  --bg: #030805;
+  --surface: #07120b;
+  --surface-2: #0d1f14;
+  --ink: #d6f5df;
+  --muted: #7fa58b;
+  --accent: #1fd16a;
+  --accent-press: #17a854;
+  --accent-ink: #021006;
+  --accent-text: #39ff88;
+  --ok: #39ff88;
+  --alert: #ff4d5e;
+  --mark-1: #1fd16a;   --mark-1-ink: #021006;
+  --mark-2: #d6f5df;   --mark-2-ink: #021006;
+  --mark-3: #24533a;   --mark-3-ink: #d6f5df;
+  --glow: 0 0 6px rgba(57, 255, 136, 0.55), 0 0 18px rgba(57, 255, 136, 0.25); /* taste-skill-ignore */
+  --glass-tint-strong: rgba(3, 14, 7, 0.62);
+  --glass-edge: inset 0 0 0 1px rgba(57, 255, 136, 0.28), inset 0 1px 0 rgba(160, 255, 200, 0.25); /* taste-skill-ignore */
+}
+
+body { background: var(--bg); }
+::selection { background: var(--accent-text); color: var(--accent-ink); }
+
+/* 매트릭스 코드 비 (rain.js가 그린다) */
+.rain { position: fixed; inset: 0; z-index: -2; width: 100%; height: 100%; opacity: 0.32; pointer-events: none; }
+
+/* CRT 주사선과 가장자리 어둠 */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px); /* taste-skill-ignore */
+  mix-blend-mode: multiply;
+}
+
+/* 제목·라벨은 터미널 글꼴과 초록 빛번짐 */
+h1, h2, .top__mark, .btn, .tile__more, .dash__more, .repo__count, .route .hop b {
+  font-family: var(--mono); /* taste-skill-ignore */
+  letter-spacing: -0.01em;
+}
+.dash__title { color: var(--accent-text); text-shadow: var(--glow); font-weight: 500; letter-spacing: -0.04em; } /* taste-skill-ignore */
+.dash__title::after { content: '_'; animation: blink 1s steps(1) infinite; }
+h2 { color: var(--accent-text); font-weight: 500; }
+.tile__head h2::before { content: '> '; color: var(--muted); }
+.repo__count b, .stamp { text-shadow: var(--glow); } /* taste-skill-ignore */
+
+/* 상단 바: 프롬프트 모양 */
+/* 로고 글자 "URIGG"는 그대로 두고 앞에 프롬프트, 뒤에 깜빡이는 커서 */
+.top__mark { color: var(--accent-text); font-weight: 500; font-size: var(--step-body); text-shadow: var(--glow); } /* taste-skill-ignore */
+.top__mark::before { content: 'root@'; color: var(--muted); font-weight: 400; text-shadow: none; }
+.top__mark::after { content: ':~#'; color: var(--muted); font-weight: 400; text-shadow: none; }
+.top__nav a { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore */
+.top__nav a:hover { color: var(--accent-text); }
+.top__nav a::before { content: './'; }
+
+/* 버튼: [ 대괄호 ] 터미널 버튼 */
+.btn { border-radius: 6px; background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn::before { content: '[ '; }
+.btn::after { content: ' ]'; }
+.btn:hover { background: var(--accent-text); box-shadow: var(--glow); } /* taste-skill-ignore */
+
+/* 타일 = 터미널 창 */
+.glass, .tile { border-radius: 10px; }
+.tile { padding-top: 46px; position: relative; }
+.tile::before {
+  content: '● ● ●  ' attr(data-file); position: absolute; left: 0; right: 0; top: 0; height: 30px;
+  padding: 0 14px; display: flex; align-items: center; font-family: var(--mono); font-size: 0.75rem; /* taste-skill-ignore */
+  color: var(--muted); background: rgba(57, 255, 136, 0.06); border-bottom: 1px solid rgba(57, 255, 136, 0.16);
+}
+
+/* 오늘 일정 */
+.stamp { color: var(--alert); }
+.is-clear .stamp { color: var(--ok); }
+.agenda__row span { color: var(--ink); }
+.rd::after { background: #123320; }
+.unlock input { background: #04140a; color: var(--accent-text); font-family: var(--mono); box-shadow: inset 0 0 0 1px rgba(57, 255, 136, 0.25); } /* taste-skill-ignore */
+.unlock input::placeholder { color: var(--muted); }
+
+/* 바로가기 */
+.alias__list code::before { content: '$ '; color: var(--muted); }
+.alias__list a:hover, .alias__list a:focus-visible { background: rgba(57, 255, 136, 0.1); }
+
+/* 진행도 · 로그 */
+.progress__cells { text-shadow: var(--glow); } /* taste-skill-ignore */
+.tail li:first-child { color: var(--accent-text); }
+.card__meta b { color: var(--accent-text); }
+.mark--1 { box-shadow: none; }
+
+/* 아래 장면들 */
+.term__row--dir { color: var(--accent-text); }
+.route__packet { background: var(--accent-text); box-shadow: 0 0 0 6px rgba(57, 255, 136, 0.22), var(--glow); } /* taste-skill-ignore */
+.hop.is-on::before { background: var(--accent-text); box-shadow: var(--glow); } /* taste-skill-ignore */
+.log__bar span { background: var(--accent-text); }
+
+/* 맺음: 흰 면 대신 검은 터미널 */
+.end { background: #000; color: var(--ink); }
+.end__cols p { color: var(--muted); }
+.end__cols p:first-child, .end__cols a { color: var(--accent-text); font-family: var(--mono); } /* taste-skill-ignore */
+.end__eof { color: var(--muted); }
+.end__eof span { color: var(--accent-text); }
+.end__word text { fill: var(--accent-text); fill-opacity: 0.9; font-family: var(--mono); } /* taste-skill-ignore */
+.end__legal { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dash__title::after { animation: none; }
+}
+
+/* 휴대폰: 고정폭 글꼴은 넓으니 제목을 줄이고, 칸이 화면 밖으로 밀리지 않게 */
+.dash, .dash__grid > * { min-width: 0; }
+@media (max-width: 720px) {
+  .dash__title { font-size: 7.4vw; }
+  .dash .lens { width: 76px; left: 52%; top: -10px; }
+  .top .btn { padding: 0 16px; }
+  .top .btn::before, .top .btn::after { content: none; }
+  .tile--today .tile__head { flex-wrap: wrap; row-gap: 8px; }
+  .tile--today .stamp { margin-left: 0; }
+}
