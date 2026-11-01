@@ -48,15 +48,18 @@ function renderBlog(data) {
   const posts = data.posts.map((p) => ({ ...p, ...splitTitle(p.title), mark: markFor(p) }));
 
   shelf.innerHTML = posts.map((p, i) => `
-    <button class="spine glass" type="button" data-i="${i}" aria-pressed="false" data-refract data-bezel="14" data-depth="22" data-blur="3px">
-      <span class="spine__title">${esc(p.name)}</span>
-      <span class="spine__series mark mark--${p.mark}">${esc(p.line || p.series)}</span>
-      <span class="spine__date">${ymd(p.date).slice(5)}</span>
-    </button>`).join('') + '<p class="shelf__empty" hidden>맞는 글이 없습니다.</p>';
+    <li class="entry" data-i="${i}">
+      <a class="entry__link" href="${esc(p.link)}" target="_blank" rel="noopener">
+        <time class="entry__date" datetime="${p.date}">${ymd(p.date)}</time>
+        <span class="entry__title">${esc(p.name)}</span>
+        <span class="entry__series"><span class="entry__dot" style="background:var(--mark-${p.mark})"></span>${esc(p.line || p.series)}</span>
+        <span class="entry__arrow" aria-hidden="true">→</span>
+      </a>
+    </li>`).join('') + '<li class="shelf__empty" hidden>맞는 글이 없습니다.</li>';
 
   const show = (i) => {
     const p = posts[i];
-    shelf.querySelectorAll('.spine').forEach((s) => s.setAttribute('aria-pressed', s.dataset.i == i));
+    shelf.querySelectorAll('.entry').forEach((s) => s.classList.toggle('is-active', s.dataset.i == i));
     post.innerHTML = `
       <span class="post__series mark mark--${p.mark}">${esc(p.line || p.series)}</span>
       <h3>${esc(p.name)}</h3>
@@ -66,20 +69,19 @@ function renderBlog(data) {
       <a class="btn" href="${esc(p.link)}" target="_blank" rel="noopener">글 읽기<span aria-hidden="true">→</span></a>`;
   };
 
-  shelf.addEventListener('click', (e) => {
-    const s = e.target.closest('.spine');
+  // 마우스를 올리거나 키보드로 고르면 옆 패널에 미리보기, 클릭하면 글로 이동
+  const preview = (e) => {
+    const s = e.target.closest('.entry');
     if (s) show(+s.dataset.i);
-  });
-  shelf.addEventListener('pointerover', (e) => {
-    const s = e.target.closest('.spine');
-    if (s && matchMedia('(hover: hover)').matches) show(+s.dataset.i);
-  });
+  };
+  shelf.addEventListener('pointerover', preview);
+  shelf.addEventListener('focusin', preview);
 
   // grep: 제목·시리즈·요약에서 찾는다
   const grep = () => {
     const q = input.value.trim().toLowerCase();
     let shown = 0, first = -1;
-    shelf.querySelectorAll('.spine').forEach((s) => {
+    shelf.querySelectorAll('.entry').forEach((s) => {
       const p = posts[+s.dataset.i];
       const hit = !q || `${p.title} ${p.series} ${p.summary}`.toLowerCase().includes(q);
       s.hidden = !hit;

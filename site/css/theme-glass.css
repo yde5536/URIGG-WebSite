@@ -50,9 +50,13 @@
   100% { transform: translate(260%, 60%); }
 }
 
-/* 책등: 기계실 사진 위의 유리 막대 */
-.spine { background: rgba(255, 255, 255, 0.06); }
-.spine[aria-pressed='true'] { background: rgba(255, 255, 255, 0.16); }
+/* 로그 목록: 고른 줄은 사진 위에 뜬 유리 띠 */
+.entry.is-active .entry__link, .entry__link:hover, .entry__link:focus-visible {
+  background: rgba(255, 255, 255, 0.09);
+  -webkit-backdrop-filter: blur(10px) saturate(160%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+  backdrop-filter: blur(10px) saturate(160%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+  box-shadow: var(--glass-edge); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+}
 
 /* 캘린더 스크린샷은 위젯 그대로, 아래에 유리 받침만 */
 .desk__shot { box-shadow: var(--glass-lift); } /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
