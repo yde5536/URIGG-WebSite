@@ -12,9 +12,7 @@ URIGG의 개인 웹사이트. Cloudflare Pages(`*.pages.dev`)에 배포한다.
 ```
 site/                 정적 파일 (Pages 출력 폴더)
   index.html
-  css/base.css        기본 스타일 (taste-skill 방향)
-  css/theme-glass.css 리퀴드 글래스 테마
-  js/glass.js         유리 굴절 효과 (Chromium 전용)
+  css/base.css        스타일 (taste-skill 방향)
   js/main.js          데이터 불러오기, 책장/grep, 목차
   data/*.json         API가 실패할 때 쓰는 예비 데이터
   images/
@@ -35,12 +33,13 @@ npm run dev     # http://127.0.0.1:8788 (wrangler로 함수까지 실행)
 - Build output directory: `site`
 - (선택) 환경 변수 `GITHUB_TOKEN`: GitHub API 한도를 늘릴 때만
 
-## 리퀴드 글래스 → taste-skill 기본 스타일로 바꾸기
+## 디자인 버전
 
-`site/index.html`에서 아래 두 줄을 지우면 된다. 나머지는 그대로 동작한다.
+- 지금: taste-skill "The page is the object" — 출입증, 편지지, 메뉴판, 서류 폴더, 엽서. 로고의 네이비와 종이색 두 가지.
+- 백업: 리퀴드 글래스 버전은 태그 `v1-liquid-glass` (브랜치 `liquid-glass`)에 있다. 되돌리려면
 
-```html
-<link rel="stylesheet" href="css/theme-glass.css">
-<script src="js/glass.js" defer></script>
 ```
-
+git checkout main
+git reset --hard v1-liquid-glass
+git push --force-with-lease
+```
