@@ -103,8 +103,16 @@ setInterval(tick, 1000);
 $('#today-date').textContent = todayLabel;
 
 /* ── 블로그: 대시보드의 tail 로그 ─────────── */
-/* ── Log 칸 탭: Log ↔ 알림 ──────────────── */
+/* ── Log 칸 탭: 알림(먼저) ↔ Log ──────────────
+   제목 뒤의 유리 알약이 고른 탭으로 미끄러져 간다. 칸 내용은 그대로 바뀐다. */
 const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+const pill = $('.tabs__pill');
+const movePill = () => {
+  const on = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
+  if (!on || !pill) return;
+  pill.style.width = `${on.offsetWidth}px`;
+  pill.style.transform = `translateX(${on.offsetLeft}px)`;
+};
 const showTab = (tab) => {
   for (const t of tabs) {
     const on = t === tab;
@@ -112,7 +120,8 @@ const showTab = (tab) => {
     t.tabIndex = on ? 0 : -1;
     $('#' + t.getAttribute('aria-controls')).hidden = !on;
   }
-  try { localStorage.setItem('urigg-log-tab', tab.id); } catch {}
+  movePill();
+  watchRead();
 };
 tabs.forEach((t, i) => {
   t.addEventListener('click', () => showTab(t));
@@ -122,12 +131,39 @@ tabs.forEach((t, i) => {
     showTab(next); next.focus();
   });
 });
-try { const saved = $('#' + localStorage.getItem('urigg-log-tab')); if (saved) showTab(saved); } catch {}
+addEventListener('resize', movePill);
+document.fonts?.ready.then(movePill);
 
 /* ── 주요 알림: 여러 곳(블로그·릴리스·뉴스·D-day·캘린더)에서 모아 한 목록으로 ──
-   각 출처가 window.alerts.set(이름, [{ text, href?, time?, icon?, warn?, at? }])로 자기 몫을 바꾼다. */
+   각 출처가 window.alerts.set(이름, [{ text, href?, time?, icon?, warn?, at? }])로 자기 몫을 바꾼다.
+   빨간 숫자는 아직 안 읽은 중요 알림 수. 알림 목록이 화면에 2초 보이면 읽은 것으로 친다(이 브라우저에 기억). */
 const alertBox = $('#pane-alerts'), alertCount = $('#alert-count');
 const alertSources = {};
+const SEEN = 'urigg-alerts-seen';
+let seen = new Set();
+try { seen = new Set(JSON.parse(localStorage.getItem(SEEN) || '[]')); } catch {}
+let warnKeys = [];
+const drawCount = () => {
+  const unread = warnKeys.filter((k) => !seen.has(k)).length;
+  if (unread) { alertCount.textContent = unread; alertCount.hidden = false; alertCount.classList.remove('is-read'); movePill(); }
+  else if (!alertCount.hidden) {
+    alertCount.classList.add('is-read');
+    setTimeout(() => { if (alertCount.classList.contains('is-read')) { alertCount.hidden = true; movePill(); } }, 400);
+  }
+};
+const markRead = () => {
+  warnKeys.forEach((k) => seen.add(k));
+  try { localStorage.setItem(SEEN, JSON.stringify([...seen].slice(-200))); } catch {}
+  drawCount();
+};
+let readTimer = 0, alertsVisible = false;
+const watchRead = () => {
+  clearTimeout(readTimer);
+  if (alertsVisible && !alertBox.hidden && !document.hidden) readTimer = setTimeout(markRead, 2000);
+};
+new IntersectionObserver(([e]) => { alertsVisible = e.isIntersecting; watchRead(); }, { threshold: 0.5 }).observe(alertBox.closest('.tile'));
+document.addEventListener('visibilitychange', watchRead);
+
 window.alerts = {
   set(source, items) {
     alertSources[source] = items;
@@ -138,12 +174,13 @@ window.alerts = {
           return `<li class="${a.warn ? 'is-warn' : ''}">${a.href ? `<a href="${esc(a.href)}" target="_blank" rel="noopener">${inner}</a>` : `<p>${inner}</p>`}</li>`;
         }).join('')
       : '<li class="is-empty">새 알림이 없어요</li>';
-    const warn = all.filter((a) => a.warn).length;
-    alertCount.textContent = warn;
-    alertCount.hidden = !warn;
+    warnKeys = all.filter((a) => a.warn).map((a) => a.text);
+    drawCount();
+    watchRead();
   },
 };
 window.alerts.set('init', []);
+showTab(tabs[0]);
 const daysAgo = (iso) => kstDay(Date.now()) - kstDay(new Date(iso).getTime());
 
 function renderBlog(data) {

@@ -20,17 +20,48 @@
 
   /* ── 제목 복호화 ───────────────────────── */
   const GLYPHS = '!<>-_\\/[]{}=+*^?#01ABCDEF';
-  document.querySelectorAll('[data-decrypt]').forEach((el, n) => {
-    const text = el.textContent;
-    const start = performance.now() + n * 180;
+  const glyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0].replace('<', '&lt;').replace('>', '&gt;');
+  // 글자가 무작위 기호로 깨졌다가 앞에서부터 text로 맞춰진다
+  const scramble = (el, text, delay = 0) => {
+    const start = performance.now() + delay;
     const tick = (t) => {
       const k = clamp((t - start) / 900);
       const fixed = Math.floor(k * text.length);
-      el.innerHTML = [...text].map((ch, i) => (i < fixed || ch === ' ' ? ch : `<span class="glyph">${GLYPHS[(Math.random() * GLYPHS.length) | 0]}</span>`)).join('');
+      el.innerHTML = [...text].map((ch, i) => (i < fixed || ch === ' ' ? ch : `<span class="glyph">${glyph()}</span>`)).join('');
       if (k < 1) requestAnimationFrame(tick); else el.textContent = text;
     };
     requestAnimationFrame(tick);
-  });
+  };
+  document.querySelectorAll('[data-decrypt]').forEach((el, n) => scramble(el, el.textContent, n * 180));
+
+  /* ── 제목: 15초마다 URIGG ↔ Security.log Website ── */
+  const name = $('.dash__name');
+  if (name) {
+    const TITLES = ['URIGG', 'Security.log Website'];
+    let cur = 0;
+    // 긴 제목은 옆의 상태줄과 겹치지 않게, 들어갈 만큼만 글씨를 줄인다
+    const fit = () => {
+      name.style.fontSize = '';
+      if (cur === 0) return;
+      const brand = name.closest('.dash__brand'), head = name.closest('.dash__head'), side = $('.dash__side');
+      const sideBeside = side && side.offsetTop < brand.offsetTop + brand.offsetHeight;
+      const room = head.clientWidth - (sideBeside ? side.offsetWidth + 40 : 0) - (brand.offsetWidth - name.offsetWidth);
+      const probe = name.cloneNode();
+      probe.textContent = TITLES[cur];
+      probe.style.cssText = 'position:absolute;visibility:hidden;transition:none';
+      name.parentNode.append(probe);
+      const need = probe.offsetWidth, base = parseFloat(getComputedStyle(probe).fontSize);
+      probe.remove();
+      if (need > room) name.style.fontSize = `${Math.floor(base * room / need)}px`;
+    };
+    setInterval(() => {
+      if (document.hidden || !visible(name)) return;
+      cur = (cur + 1) % TITLES.length;
+      fit();
+      scramble(name, TITLES[cur]);
+    }, 15_000);
+    addEventListener('resize', fit);
+  }
 
   /* ── 장면 4: tree 출력 ─────────────────── */
   const repoScene = $('.scene--repo'), screen = $('.term__screen'), out = $('#tree'), counter = $('#repo-total');

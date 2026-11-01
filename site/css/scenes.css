@@ -249,11 +249,11 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .tile--dday:has(.dday__suggest:not([hidden])) { overflow: visible; z-index: 3; }
 
 /* Log 칸의 탭: Log(최신 글) ↔ 알림 */
-.tabs { display: flex; gap: 16px; }
-.tabs button { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.tabs { position: relative; display: flex; gap: 4px; margin-left: -10px; }
+.tabs button { position: relative; z-index: 1; border: 0; background: none; padding: 3px 10px; border-radius: 999px; transition: color 300ms ease; font: inherit; font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .tabs button[aria-selected='true'] { color: var(--ink); }
 .tabs button:hover { color: var(--ink); }
-.tabs__count { min-width: 1.5em; padding: 1px 6px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.7rem; font-weight: 700; line-height: 1.5; text-align: center; letter-spacing: 0; }
+.tabs__count { transition: opacity 350ms ease, transform 350ms ease; min-width: 1.5em; padding: 1px 6px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.7rem; font-weight: 700; line-height: 1.5; text-align: center; letter-spacing: 0; }
 .tabs__count[hidden], .alerts[hidden], .term[hidden] { display: none; }
 .alerts { display: grid; gap: 2px; align-content: start; overflow: auto; overflow-x: hidden; min-height: 0; margin: 4px 0 0; padding: 0; list-style: none; font-size: var(--step-small); scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
 .alerts li > * { display: grid; grid-template-columns: 1.2em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; margin: 0; padding: 5px 6px; border-radius: 8px; color: var(--ink); text-decoration: none; }
@@ -263,3 +263,9 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .alerts .is-warn b { color: var(--accent-text); }
 .alerts .is-empty { display: block; color: var(--muted); padding: 5px 6px; }
 .alerts b { font-weight: 700; text-align: center; color: var(--muted); }
+/* 고른 탭 뒤에서 미끄러지는 유리 알약 */
+.tabs__pill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.09); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 1px 1px 0 -0.5px rgba(255, 255, 255, 0.35); transition: transform 420ms cubic-bezier(0.3, 1.4, 0.5, 1), width 420ms cubic-bezier(0.3, 1.4, 0.5, 1); pointer-events: none; } /* taste-skill-ignore: 사용자 요청 유리 탭 */
+.tabs__count.is-read { opacity: 0; transform: scale(0.4); }
+/* 제목: URIGG ↔ Security.log Website가 지지직 바뀐다. 긴 쪽은 한 줄에 들어오게 글씨 크기를 맞춘다 */
+.dash__name { display: block; white-space: nowrap; transition: font-size 500ms ease; }
+@media (prefers-reduced-motion: reduce) { .tabs__pill, .tabs button, .tabs__count, .dash__name { transition: none; } }
