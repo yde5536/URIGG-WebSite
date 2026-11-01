@@ -179,3 +179,6 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .repo__count b { font-size: 4rem; }
   .term--window { height: 48svh; }
 }
+
+/* 타일 안 목록은 세로로만 스크롤 (Windows에서 가로 스크롤바가 보이지 않도록) */
+.agenda, .progress, .programs { overflow-x: hidden; }

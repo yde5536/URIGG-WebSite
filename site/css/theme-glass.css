@@ -30,12 +30,36 @@
 
 /* ── 리퀴드 글래스 분위기 ─────────────────────
    화면 뒤의 빛(네이비·푸른 회색, 크림슨은 아주 조금)을 유리 타일이 흐리게 비춘다. */
+/* 빛 덩어리 셋이 각자 다른 주기로 천천히 떠다닌다 (위치·크기만 바꿔 GPU가 처리) */
+body::before, body::after {
+  content: ''; position: fixed; z-index: -1; pointer-events: none; border-radius: 50%;
+  will-change: transform;
+}
 body::before {
-  content: ''; position: fixed; inset: -10vmax; z-index: -1; pointer-events: none;
+  inset: -10vmax;
   background:
     radial-gradient(46vmax 36vmax at 84% 6%, rgba(52, 78, 140, 0.55), transparent 70%), /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-    radial-gradient(40vmax 34vmax at 6% 92%, rgba(34, 52, 89, 0.75), transparent 70%), /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-    radial-gradient(26vmax 22vmax at 58% 60%, rgba(177, 18, 38, 0.16), transparent 70%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
+    radial-gradient(40vmax 34vmax at 6% 92%, rgba(34, 52, 89, 0.75), transparent 70%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
+  border-radius: 0;
+  animation: drift-a 34s ease-in-out infinite alternate;
+}
+body::after {
+  width: 52vmax; height: 44vmax; left: 30vw; top: 30vh;
+  background: radial-gradient(closest-side, rgba(177, 18, 38, 0.2), rgba(70, 100, 170, 0.12) 55%, transparent); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
+  animation: drift-b 41s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-6vw, 5vh, 0) scale(1.08); }
+  100% { transform: translate3d(4vw, -4vh, 0) scale(0.96); }
+}
+@keyframes drift-b {
+  0%   { transform: translate3d(-18vw, 10vh, 0) scale(0.9); }
+  50%  { transform: translate3d(14vw, -16vh, 0) scale(1.15); }
+  100% { transform: translate3d(-4vw, -2vh, 0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none; }
 }
 
 .glass--dark { background: rgba(18, 20, 26, 0.42); }
