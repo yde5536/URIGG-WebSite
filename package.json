@@ -1,0 +1,1 @@
+{ "name": "urigg-website", "private": true, "type": "module", "scripts": { "snapshot": "node scripts/snapshot.mjs", "dev": "npx wrangler pages dev site" } }

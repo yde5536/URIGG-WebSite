@@ -1,0 +1,96 @@
+{
+  "source": "https://urigg-security.tistory.com",
+  "fetchedAt": "2026-11-01T05:00:25.534Z",
+  "posts": [
+    {
+      "title": "리눅스마스터 2급 노트 #0 - 시작하며",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4%EB%A7%88%EC%8A%A4%ED%84%B0-2%EA%B8%89-%EB%85%B8%ED%8A%B8-0-%EC%8B%9C%EC%9E%91%ED%95%98%EB%A9%B0",
+      "date": "2026-10-06T06:57:01.000Z",
+      "group": "자격증",
+      "series": "리눅스마스터 2급",
+      "summary": "리눅스마스터 2급 1차 시험을 10월 31일에 본다. 그동안 「리눅스 제로부터」에서 리눅스를 처음부터 하나씩 정리해 왔는데, 이번에는 시험 범위를 따라 공부한 내용을 따로 모아 두려고 한다. 「리눅스마스터 2급 노트」는 그 기록이다. #0에서는 왜 이 시험을 보기로 했는지, 시험이…",
+      "thumb": "https://blog.kakaocdn.net/dn/eoiPij/dJMcadKscgf/PTPHDWqNadpxXKbo1k85b1/img.png"
+    },
+    {
+      "title": "네트워크 첫걸음 #3 - 서브넷 마스크와 DHCP",
+      "link": "https://urigg-security.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%B2%AB%EA%B1%B8%EC%9D%8C-3-%EC%84%9C%EB%B8%8C%EB%84%B7-%EB%A7%88%EC%8A%A4%ED%81%AC%EC%99%80-DHCP",
+      "date": "2026-09-28T23:56:41.000Z",
+      "group": "보안",
+      "series": "네트워크",
+      "summary": "이전 편 : [네트워크 첫걸음 #2 - IP 주소] 네트워크 첫걸음 #2 - IP 주소 이전 편 : [네트워크 첫걸음 #1 - 네트워크 개념과 구성 요소] 네트워크 첫걸음 #1 - 네트워크 개념과 구성 요소리눅스를 공부하면서 서버는 멀리서 원격으로 조작한다는 것을 배웠다. 공격도,…",
+      "thumb": null
+    },
+    {
+      "title": "리눅스 제로부터 #6 - 로그 읽기",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-6-%EB%A1%9C%EA%B7%B8-%EC%9D%BD%EA%B8%B0",
+      "date": "2026-09-28T02:12:01.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "이전 편 : [리눅스 제로부터 #5 - grep과 파이프] 리눅스 제로부터 #5 - grep과 파이프 이전 편 : [리눅스 제로부터 #4 - 파일 내용 읽기] 리눅스 제로부터 #4 - 파일 내용 읽기 이전 편 : [리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습] 리눅…",
+      "thumb": null
+    },
+    {
+      "title": "네트워크 첫걸음 #2 - IP 주소",
+      "link": "https://urigg-security.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%B2%AB%EA%B1%B8%EC%9D%8C-2-IP-%EC%A3%BC%EC%86%8C",
+      "date": "2026-09-23T02:36:52.000Z",
+      "group": "보안",
+      "series": "네트워크",
+      "summary": "이전 편 : [네트워크 첫걸음 #1 - 네트워크 개념과 구성 요소] 네트워크 첫걸음 #1 - 네트워크 개념과 구성 요소 리눅스를 공부하면서 서버는 멀리서 원격으로 조작한다는 것을 배웠다. 공격도, 방어도, 원격 접속도 전부 컴퓨터끼리 연결되어 있기에 가능하다. 그런데 정작 멀리 있는…",
+      "thumb": "https://blog.kakaocdn.net/dn/cAu4nW/dJMcahsAvz8/PwPHXCJDt2JdO7020xOgS1/img.png"
+    },
+    {
+      "title": "리눅스 제로부터 #5 - grep과 파이프",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-5-grep%EA%B3%BC-%ED%8C%8C%EC%9D%B4%ED%94%84",
+      "date": "2026-09-22T17:06:16.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "이전 편 : [리눅스 제로부터 #4 - 파일 내용 읽기] 리눅스 제로부터 #4 - 파일 내용 읽기 이전 편 : [리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습] 리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습 이전 편 : [리눅스 제로부터 #2 - 권한…",
+      "thumb": null
+    },
+    {
+      "title": "네트워크 첫걸음 #1 - 네트워크 개념과 구성 요소",
+      "link": "https://urigg-security.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%B2%AB%EA%B1%B8%EC%9D%8C-1-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B0%9C%EB%85%90%EA%B3%BC-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C",
+      "date": "2026-09-22T02:27:45.000Z",
+      "group": "보안",
+      "series": "네트워크",
+      "summary": "리눅스를 공부하면서 서버는 멀리서 원격으로 조작한다는 것을 배웠다. 공격도, 방어도, 원격 접속도 전부 컴퓨터끼리 연결되어 있기에 가능하다. 그런데 정작 멀리 있는 컴퓨터에 어떻게 닿는지 는 모른다. 그래서 리눅스와 함께 네트워크도 첫걸음부터 정리해보기로 했다. 1. 네트워크란 무엇…",
+      "thumb": null
+    },
+    {
+      "title": "리눅스 제로부터 #4 - 파일 내용 읽기",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-4-%ED%8C%8C%EC%9D%BC-%EB%82%B4%EC%9A%A9-%EC%9D%BD%EA%B8%B0",
+      "date": "2026-09-21T16:37:35.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "이전 편 : [리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습] 리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습 이전 편 : [리눅스 제로부터 #2 - 권한과 사용자, 기초 명령어] 리눅스 제로부터 #2 - 권한과 사용자, 기초 명령어 이전 편 : [리눅…",
+      "thumb": "https://blog.kakaocdn.net/dn/twHcy/dJMcajcGGaq/Qjmz6zqxBKZXlUtFfLHJSK/img.jpg"
+    },
+    {
+      "title": "리눅스 제로부터 #3 - 실습 환경 구축 및 기초 명령어 실습",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-3-%EC%8B%A4%EC%8A%B5-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95-%EB%B0%8F-%EA%B8%B0%EC%B4%88-%EB%AA%85%EB%A0%B9%EC%96%B4-%EC%8B%A4%EC%8A%B5",
+      "date": "2026-09-21T03:33:20.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "이전 편 : [리눅스 제로부터 #2 - 권한과 사용자, 기초 명령어] 리눅스 제로부터 #2 - 권한과 사용자, 기초 명령어 이전 편 : [리눅스 제로부터 #1 - 개념과 파일 구조] 리눅스 제로부터 #1 - 개념과 파일 구조나는 리눅스를 한 번도 안 써봤다. 보안 공부를 하려니 리눅…",
+      "thumb": "https://blog.kakaocdn.net/dn/MXJDk/dJMcadQ1PfP/ozs2KoQmep8uEVvoCxtNbK/img.png"
+    },
+    {
+      "title": "리눅스 제로부터 #2 - 권한과 사용자, 기초 명령어",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-2-%E2%80%93-%EA%B6%8C%ED%95%9C%EA%B3%BC-%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B8%B0%EC%B4%88-%EB%AA%85%EB%A0%B9%EC%96%B4",
+      "date": "2026-09-20T13:50:16.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "이전 편 : [리눅스 제로부터 #1 - 개념과 파일 구조] 리눅스 제로부터 #1 - 개념과 파일 구조 나는 리눅스를 한 번도 안 써봤다. 보안 공부를 하려니 리눅스가 필수적인 요소임을 알게 되었다. 그래서 아예 제로부터 정리하면서 공부하기로 하였다. 이 블로그는 나 같은 초보자를 위…",
+      "thumb": "https://blog.kakaocdn.net/dn/cv3PYx/dJMcacEOee2/KtnSksWMpH8hCTElyisfd1/img.jpg"
+    },
+    {
+      "title": "리눅스 제로부터 #1 - 개념과 파일 구조",
+      "link": "https://urigg-security.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%A0%9C%EB%A1%9C%EB%B6%80%ED%84%B0-1-%EA%B0%9C%EB%85%90%EA%B3%BC-%ED%8C%8C%EC%9D%BC-%EA%B5%AC%EC%A1%B0",
+      "date": "2026-09-20T12:54:02.000Z",
+      "group": "보안",
+      "series": "시스템 · 리눅스",
+      "summary": "나는 리눅스를 한 번도 안 써봤다. 보안 공부를 하려니 리눅스가 필수적인 요소임을 알게 되었다. 그래서 아예 제로부터 정리하면서 공부하기로 하였다. 이 블로그는 나 같은 초보자를 위한 기록이다. 리눅스란 무엇인가? 왜 배워야 하는가? 리눅스는 운영체제(OS) 이다. 운영체제는 컴퓨터…",
+      "thumb": null
+    }
+  ]
+}
