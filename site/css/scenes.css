@@ -1,0 +1,181 @@
+/* 스크롤 장면.
+   html.scenes-on 일 때만 장면이 화면에 고정(sticky)되고 스크롤 양에 따라 움직인다.
+   스크립트가 꺼졌거나 '애니메이션 줄이기' 설정이면 평범한 세로 페이지로 보인다. */
+
+.scene { position: relative; }
+.stage { position: relative; }
+.scenes-on .scene { height: var(--len, 250vh); }
+.scenes-on .stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+
+/* 터미널 글자 */
+.term { font-family: var(--mono); font-size: var(--step-small); line-height: 1.7; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.term__prompt { color: var(--ink); }
+.term__user { color: var(--ok); }
+.caret { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 4px; vertical-align: -0.2em; background: var(--accent-text); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── 장면 1: 첫 화면 ─────────────────────── */
+.scene--hero { --len: 140vh; }
+.hero { min-height: 100svh; display: grid; grid-template-columns: 42% 1fr; align-items: end; padding: 0 var(--gutter) 72px; }
+.term--tail { position: absolute; left: 42%; right: var(--gutter); top: 20svh; }
+.tail { display: grid; gap: 2px; margin-top: 8px; color: var(--muted); }
+.tail li { display: grid; grid-template-columns: auto auto 1fr; gap: 12px; white-space: nowrap; overflow: hidden; }
+.tail li:first-child { color: var(--ink); }
+.tail .lvl { color: var(--ok); }
+.tail a { text-decoration: none; overflow: hidden; text-overflow: ellipsis; font-family: var(--font); }
+.tail a:hover { color: var(--ink); }
+.js .tail li { opacity: 0; animation: type-in 400ms steps(8) forwards; animation-delay: calc(700ms + var(--i, 0) * 120ms); }
+@keyframes type-in { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+.hero__lede { max-width: 32ch; color: var(--muted); padding-right: 32px; padding-bottom: 0.4em; }
+.hero__lede strong { color: var(--ink); font-weight: 500; }
+.hero__title { font-size: var(--step-display); font-weight: 600; letter-spacing: -0.045em; line-height: 0.95; transform-origin: left bottom; }
+.hero__title .line { display: block; white-space: nowrap; }
+.hero__title .line:last-of-type { color: var(--accent-text); }
+.hero__title .glyph { color: var(--accent-text); font-family: var(--mono); font-weight: 500; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.hero__hint { position: absolute; right: var(--gutter); bottom: 32px; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+
+/* ── 장면 2: 기밀 해제 ───────────────────── */
+.about { position: relative; padding: var(--section-gap) var(--gutter); }
+.about__head { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+.about__head .stamp { margin-left: auto; }
+.about__photo { width: 120px; height: 120px; }
+.stamp { font-family: var(--mono); font-weight: 500; font-size: var(--step-lead); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-text); border: 3px solid currentColor; padding: 4px 14px; transform: rotate(-6deg); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.stamp__off { display: none; color: var(--ok); }
+.about.is-clear .stamp { color: var(--ok); }
+.about.is-clear .stamp__on { display: none; }
+.about.is-clear .stamp__off { display: inline; }
+.about__text { columns: 2; column-gap: 40px; font-size: var(--step-lead); line-height: 1.45; color: var(--ink); }
+.about__text p + p { margin-top: 0.7em; }
+.about__text b { font-weight: 600; }
+.rd { position: relative; }
+.js .rd::after {
+  content: ''; position: absolute; inset: 0.08em -0.06em; background: #2e2e2e;
+  transform-origin: right center; transition: transform 520ms var(--ease-out);
+}
+.js .rd.is-open::after { transform: scaleX(0); }
+.scanline { position: fixed; left: var(--gutter); right: var(--gutter); top: 72svh; z-index: 4; height: 2px; background: var(--accent); opacity: 0; pointer-events: none; transition: opacity 300ms; }
+.scanline span { position: absolute; right: 0; bottom: 6px; font-family: var(--mono); font-size: var(--step-small); color: var(--accent-text); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.scanline.is-on { opacity: 1; }
+
+/* ── 장면 3: 로그 카드가 옆으로 흐른다 ────── */
+.log { display: grid; grid-template-rows: auto 1fr auto; gap: 28px; padding: 112px 0 40px; }
+.log__head { display: grid; grid-template-columns: auto 1fr auto; gap: 16px 40px; align-items: end; padding-inline: var(--gutter); }
+.log__note { font-size: var(--step-small); color: var(--muted); max-width: 46ch; }
+.log__viewport { min-height: 0; display: flex; align-items: stretch; margin-inline: var(--gutter); overflow: hidden; }
+.track { display: flex; gap: 20px; will-change: transform; align-items: stretch; }
+.scenes-on .track { flex-wrap: nowrap; }
+.card { flex: 0 0 auto; width: clamp(300px, 30vw, 420px); padding: 28px; display: grid; gap: 14px; align-content: start; }
+.card[hidden] { display: none; }
+.card__meta { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.card__meta b { color: var(--ok); font-weight: 500; }
+.card__series { justify-self: start; font-size: var(--step-small); padding: 2px 8px; }
+.card__title { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.card__thumb { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; border-radius: 12px; background: var(--surface-2); }
+.card__sum { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.card__foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 6px; }
+.card__hash { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.card__go { color: var(--ink); white-space: nowrap; }
+.card--end { justify-content: center; align-content: center; text-align: center; }
+.log__bar { margin-inline: var(--gutter); height: 2px; background: var(--surface-2); overflow: hidden; }
+.log__bar span { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+
+/* ── 장면 4: tree 출력 ───────────────────── */
+.repo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 32px; align-items: center; padding: 104px var(--gutter) 40px; }
+.repo__side { grid-column: 1 / span 4; display: grid; gap: 18px; align-content: center; }
+.repo__intro { color: var(--muted); }
+.repo__count { display: flex; align-items: baseline; gap: 12px; font-size: var(--step-lead); font-weight: 600; }
+.repo__count b { font-size: var(--step-display); line-height: 0.9; letter-spacing: -0.05em; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.repo__split { font-family: var(--mono); font-size: var(--step-small); display: grid; gap: 4px; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.repo__split li { display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+.repo__split span:last-child { color: var(--muted); }
+.repo__foot { color: var(--muted); font-size: var(--step-small); font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.repo__side .btn { justify-self: start; }
+.term--window { grid-column: 6 / span 7; display: grid; grid-template-rows: auto 1fr; height: min(66svh, 640px); overflow: hidden; }
+.term__bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; color: var(--muted); }
+.term__bar span { width: 11px; height: 11px; border-radius: 50%; background: var(--surface-2); }
+.term__bar span:first-child { background: var(--accent); }
+.term__bar em { font-style: normal; margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.term__screen { position: relative; overflow: hidden; padding: 0 22px 22px; }
+.term__out { will-change: transform; }
+.term__row { display: grid; grid-template-columns: auto 1fr auto; gap: 0 10px; white-space: pre; text-decoration: none; color: var(--ink); }
+.term__row .br { color: var(--muted); }
+.term__row .sz { color: var(--muted); }
+.term__row--dir { color: var(--accent-text); font-weight: 500; }
+.term__row--plan { color: var(--muted); }
+a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4px; }
+.term__row .nm { overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.scenes-on .term__row { visibility: hidden; }
+.scenes-on .term__row.is-on { visibility: visible; }
+
+/* ── 장면 5: 패킷 경로 ───────────────────── */
+.app { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr; gap: 24px 32px; padding: 104px var(--gutter) 40px; }
+.app__head { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px 32px; align-items: end; }
+.app__head h2 { grid-column: 1 / span 5; }
+.app__head p { grid-column: 7 / span 6; color: var(--muted); }
+.app__shot { grid-column: 1 / span 5; align-self: center; justify-self: center; max-height: 62svh; width: auto; border-radius: 22px; will-change: transform, opacity; }
+.route { grid-column: 7 / span 6; align-self: center; position: relative; display: grid; gap: 30px; padding-left: 40px; }
+.route::before { content: ''; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; background: var(--surface-2); }
+.hop { position: relative; display: grid; gap: 2px; transition: color 300ms; color: var(--muted); }
+.hop::before { content: ''; position: absolute; left: -38px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px var(--surface-2); transition: background-color 300ms, box-shadow 300ms; } /* taste-skill-ignore: 패킷 경로 표시 */
+.hop b { font-size: var(--step-lead); font-weight: 600; color: var(--muted); transition: color 300ms; }
+.hop code { font-size: var(--step-small); color: var(--muted); }
+.hop.is-on { color: var(--ink); }
+.hop.is-on b { color: var(--ink); }
+.hop.is-on code { color: var(--ok); }
+.hop.is-on::before { background: var(--accent); box-shadow: none; } /* taste-skill-ignore: 패킷 경로 표시 */
+.route__packet { position: absolute; left: 4px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-text); box-shadow: 0 0 0 6px rgba(224, 40, 63, 0.25); will-change: transform; } /* taste-skill-ignore: 패킷 경로 표시 */
+
+/* 장면이 꺼진 상태(스크립트 없음, 애니메이션 줄이기): 마지막 모습으로 보여 준다 */
+html:not(.scenes-on) .route__packet { display: none; }
+html:not(.scenes-on) .hop { color: var(--ink); }
+html:not(.scenes-on) .hop b { color: var(--ink); }
+html:not(.scenes-on) .log__bar { display: none; }
+html:not(.scenes-on) .log__viewport { overflow-x: auto; padding-bottom: 12px; }
+html:not(.scenes-on) .hero__hint { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .caret, .js .tail li { animation: none; opacity: 1; }
+  .js .rd::after { display: none; }
+}
+
+/* ── 태블릿 ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; align-content: end; gap: 32px; }
+  .hero__title { order: -1; font-size: 13vw; }
+  .term--tail { left: var(--gutter); }
+  .log__head { grid-template-columns: 1fr auto; }
+  .log__note { display: none; }
+  .repo__side { grid-column: 1 / -1; }
+  .repo__intro, .repo__split, .repo__foot { display: none; }
+  .term--window { grid-column: 1 / -1; height: 52svh; }
+  .repo { align-content: center; }
+  .app__head p { display: none; }
+  .app__shot { grid-column: 1 / span 6; max-height: 52svh; }
+  .route { grid-column: 7 / span 6; }
+}
+
+/* ── 휴대폰 ─────────────────────────────── */
+@media (max-width: 720px) {
+  .hero { padding-bottom: 28px; gap: 24px; }
+  .hero__title { font-size: 18vw; }
+  .term--tail { top: 92px; }
+  .tail li { grid-template-columns: auto 1fr; }
+  .tail .lvl { display: none; }
+  .tail li:nth-child(n+5) { display: none; }
+  .hero__lede { padding: 0; }
+  .about__text { columns: 1; font-size: 1.25rem; }
+  .stamp { font-size: 1rem; }
+  .about__photo { width: 72px; height: 72px; }
+  .log { padding-top: 96px; gap: 20px; }
+  .log__head { grid-template-columns: 1fr; gap: 12px; }
+  .card { width: 80vw; padding: 22px; }
+  .repo { padding-top: 96px; gap: 20px; }
+  .repo__count b { font-size: 4rem; }
+  .term--window { height: 48svh; }
+  .app { grid-template-rows: auto auto 1fr; padding-top: 96px; gap: 16px; }
+  .app__head { display: block; }
+  .app__shot { grid-column: 1 / -1; max-height: 30svh; }
+  .route { grid-column: 1 / -1; gap: 14px; }
+  .hop b { font-size: var(--step-body); }
+  .hop span { display: none; }
+}

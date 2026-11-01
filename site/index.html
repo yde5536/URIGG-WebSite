@@ -7,7 +7,7 @@
   <meta name="description" content="정보보안을 공부하는 학생 URIGG의 공부 기록, security.log 저장소, 그리고 직접 만든 Windows 캘린더 앱 코워크 캘린더.">
   <meta property="og:title" content="URIGG — security.log">
   <meta property="og:description" content="Security, logged. 정보보안 공부 기록과 직접 만든 도구들.">
-  <meta property="og:image" content="/images/favicon-512.png">
+  <meta property="og:image" content="/images/logo-round-1400.png">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
@@ -15,13 +15,18 @@
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> <!-- taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 -->
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/scenes.css">
   <link rel="stylesheet" href="css/theme-glass.css">
   <script>document.documentElement.classList.add('js')</script>
   <script src="js/glass.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/scenes.js" defer></script>
 </head>
 <body>
   <header class="top">
@@ -35,89 +40,110 @@
   </header>
 
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <p class="hero__lede"><strong>정보보안을 공부하는 학생, URIGG입니다.</strong> 리눅스와 네트워크를 처음부터 기록하고, 필요한 도구는 직접 만듭니다.</p>
-      <h1 id="hero-title"><span class="sr-only">URIGG — </span><span class="line"><span>Security,</span></span><span class="line"><span>logged.</span></span></h1>
-      <ol class="tail" id="tail" aria-label="최신 글"></ol>
-      <div class="lens" data-refract data-bezel="70" data-depth="80" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
-    </section>
-
-    <section class="about" aria-labelledby="about-title">
-      <h2 id="about-title" class="sr-only">About</h2>
-      <div class="about__text">
-        <p data-rise><b>URIGG</b>는 정보보안을 공부하는 학생입니다. Learning security from the ground up. 보안은 결국 시스템을 깊이 이해하는 일이라고 생각해서, 가장 아래층인 <span class="mark mark--1">리눅스</span>와 <span class="mark mark--2">네트워크</span>부터 차근차근 쌓고 있습니다. 공부한 내용은 티스토리 블로그 <span class="mark mark--3">security.log</span>에 연재하고, 같은 원고와 실습 기록을 GitHub 저장소에도 남깁니다.</p>
-        <p data-rise>「리눅스 제로부터」는 파일 구조에서 출발해 grep과 파이프, 로그 읽기까지 왔고, 「네트워크 첫걸음」은 IP 주소와 서브넷 마스크, DHCP를 지나는 중입니다. <span class="mark mark--2">2026년 10월</span>에는 첫 자격증 목표인 <span class="mark mark--1">리눅스마스터 2급</span> 1차 시험을 치렀고, 다음 차례는 <span class="mark mark--3">웹 해킹</span>과 암호학입니다.</p>
-        <p data-rise>공부하다 필요한 도구가 생기면 직접 만듭니다. C++로 텍스트 RPG와 로그라이크를 만들었고, 요즘은 Claude와 함께 만든 캘린더 앱으로 하루를 관리합니다. <a class="about__close" href="#log"><span class="mark mark--1">Read the log →</span></a></p>
-      </div>
-    </section>
-
-    <section class="log" id="log" aria-labelledby="log-title">
-      <div class="log__head">
-        <h2 id="log-title" data-rise>The log</h2>
-        <p class="log__note" data-rise>티스토리 <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log</a>에 올린 최신 글입니다. 제목에 마우스를 올리면 미리 보고, 누르면 글로 이동합니다.</p>
-        <div class="grep glass glass--dark" data-rise>
-          <label for="grep">grep</label>
-          <input id="grep" type="search" placeholder="리눅스, DHCP, 로그…" autocomplete="off" spellcheck="false">
-          <span class="grep__count" id="grep-count" aria-live="polite"></span>
+    <!-- 장면 1: 복호화되는 제목, 위에서 흐르는 로그 -->
+    <section class="scene scene--hero" data-scene="hero" aria-labelledby="hero-title">
+      <div class="stage hero">
+        <div class="term term--tail" aria-label="최신 글 로그">
+          <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 6 security.log<span class="caret" aria-hidden="true"></span></p>
+          <ol class="tail" id="tail"></ol>
         </div>
-      </div>
-      <div class="log__body">
-        <ol class="shelf" id="shelf" data-rise>
-          <noscript><li><a href="https://urigg-security.tistory.com/">블로그에서 최신 글 보기</a></li></noscript>
-        </ol>
-        <article class="post glass glass--dark" id="post" aria-live="polite" data-rise>
-          <h3>최신 글을 불러오는 중입니다</h3>
-          <a class="btn" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그에서 보기</a>
-        </article>
+        <p class="hero__lede"><strong>정보보안을 공부하는 학생, URIGG입니다.</strong> 리눅스와 네트워크를 처음부터 기록하고, 필요한 도구는 직접 만듭니다.</p>
+        <h1 id="hero-title" class="hero__title"><span class="sr-only">URIGG — Security, logged.</span><span class="line" aria-hidden="true" data-decrypt>Security,</span><span class="line" aria-hidden="true" data-decrypt>logged.</span></h1>
+        <p class="hero__hint" aria-hidden="true">scroll ↓</p>
+        <div class="lens" data-refract data-bezel="70" data-depth="80" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
       </div>
     </section>
 
-    <section class="repo" id="repo" aria-labelledby="repo-title">
-      <div class="repo__col">
-        <h2 id="repo-title" data-rise>security.log on GitHub</h2>
-        <p class="repo__intro" data-rise>블로그 원고와 실습 기록, 자격증 오답 노트를 모아 두는 저장소입니다. 아래 목차는 저장소 README에서 바로 읽어 옵니다.</p>
-        <p class="repo__meta" id="repo-meta" data-rise><a class="link" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">GitHub에서 보기</a></p>
-        <div id="toc"></div>
+    <!-- 장면 2: 스캔 선이 지나간 자리부터 기밀이 해제된다 -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about__head">
+        <img class="about__photo" src="images/logo-round-240.png" alt="URIGG 원형 로고" width="120" height="120" loading="lazy">
+        <h2 id="about-title">About</h2>
+        <p class="stamp" aria-hidden="true"><span class="stamp__on">Classified</span><span class="stamp__off">Declassified</span></p>
       </div>
-      <aside class="repo__card glass glass--dark" id="repo-card" aria-label="저장소 요약" data-rise>
-        <p class="repo__count"><span id="repo-total">기록</span></p>
-        <ul class="repo__split" id="repo-split"></ul>
-        <p class="repo__foot" id="repo-foot"></p>
-        <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">GitHub에서 보기</a>
-      </aside>
+      <div class="about__text" data-redact>
+        <p><b>URIGG</b>는 정보보안을 공부하는 학생입니다. Learning security from the ground up. 보안은 결국 시스템을 깊이 이해하는 일이라고 생각해서, 가장 아래층인 <span class="mark mark--1">리눅스</span>와 <span class="mark mark--2">네트워크</span>부터 차근차근 쌓고 있습니다. 공부한 내용은 티스토리 블로그 <span class="mark mark--3">security.log</span>에 연재하고, 같은 원고와 실습 기록을 GitHub 저장소에도 남깁니다.</p>
+        <p>「리눅스 제로부터」는 파일 구조에서 출발해 grep과 파이프, 로그 읽기까지 왔고, 「네트워크 첫걸음」은 IP 주소와 서브넷 마스크, DHCP를 지나는 중입니다. <span class="mark mark--2">2026년 10월</span>에는 첫 자격증 목표인 <span class="mark mark--1">리눅스마스터 2급</span> 1차 시험을 치렀고, 다음 차례는 <span class="mark mark--3">웹 해킹</span>과 암호학입니다.</p>
+        <p>공부하다 필요한 도구가 생기면 직접 만듭니다. C++로 텍스트 RPG와 로그라이크를 만들었고, 요즘은 Claude와 함께 만든 캘린더 앱으로 하루를 관리합니다.</p>
+      </div>
+      <div class="scanline" aria-hidden="true"><span>scan</span></div>
     </section>
 
-    <section class="app" id="app" aria-labelledby="app-title">
-      <div class="app__head">
-        <h2 id="app-title" data-rise>Cowork Calendar</h2>
-        <p data-rise>Claude 코워크에서 대화로 짠 일정을 MCP로 올리면, Windows 바탕화면 위젯과 아이폰 캘린더에 그대로 표시됩니다. 제 하루를 관리하려고 직접 만든 개인용 캘린더입니다.</p>
+    <!-- 장면 3: 세로로 내리면 로그 카드가 옆으로 흘러간다 -->
+    <section class="scene scene--log" id="log" data-scene="log" aria-labelledby="log-title">
+      <div class="stage log">
+        <div class="log__head">
+          <h2 id="log-title">The log</h2>
+          <p class="log__note">티스토리 <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log</a>에 올린 최신 글입니다. 휠을 내리면 다음 기록으로 넘어갑니다.</p>
+          <div class="grep glass glass--dark">
+            <label for="grep">grep</label>
+            <input id="grep" type="search" placeholder="리눅스, DHCP, 로그…" autocomplete="off" spellcheck="false">
+            <span class="grep__count" id="grep-count" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="log__viewport">
+          <ol class="track" id="track">
+            <li class="card glass glass--dark"><p class="card__title">최신 글을 불러오는 중입니다</p><a class="link" href="https://urigg-security.tistory.com/">블로그에서 보기</a></li>
+          </ol>
+        </div>
+        <div class="log__bar" aria-hidden="true"><span id="log-bar"></span></div>
       </div>
-      <div class="specimens" aria-hidden="true">
-        <div class="specimen" data-rise><p class="specimen__word">대화</p></div>
-        <div class="specimen" data-rise><p class="specimen__word">위젯</p></div>
-      </div>
-      <div class="desk">
-        <img class="desk__shot" src="images/calendar-widget.png" alt="코워크 캘린더 위젯: 2026년 11월 달력에 날마다 일정 이모지가 표시되고, 아래에 오늘 일정과 다가오는 일정 목록이 있다" width="560" height="657" loading="lazy" data-rise>
-        <div class="desk__panel glass glass--dark" data-rise>
-          <div class="desk__id">
-            <img src="images/calendar-icon.png" alt="" width="72" height="72">
-            <div>
-              <h3>코워크 캘린더</h3>
-              <p class="desk__ver" id="app-ver">Windows · 최신 버전</p>
+    </section>
+
+    <!-- 장면 4: tree 출력이 한 줄씩 찍히고 숫자가 올라간다 -->
+    <section class="scene scene--repo" id="repo" data-scene="repo" aria-labelledby="repo-title">
+      <div class="stage repo">
+        <div class="repo__side">
+          <h2 id="repo-title">security.log on GitHub</h2>
+          <p class="repo__intro">블로그 원고와 실습 기록, 자격증 오답 노트를 모아 두는 저장소입니다. 목차는 저장소 README에서 바로 읽어 옵니다.</p>
+          <p class="repo__count"><b id="repo-total">0</b><span>개의 기록</span></p>
+          <ul class="repo__split" id="repo-split"></ul>
+          <p class="repo__foot" id="repo-foot"></p>
+          <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">GitHub에서 보기</a>
+        </div>
+        <div class="term term--window glass glass--dark">
+          <p class="term__bar"><span></span><span></span><span></span><em>urigg@security: ~/URIGG-security.log</em></p>
+          <div class="term__screen">
+            <div class="term__out" id="tree">
+              <p class="term__prompt">$ tree --dirsfirst</p>
             </div>
           </div>
-          <div class="desk__actions">
-            <a class="btn" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows용 다운로드</a>
-            <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender" target="_blank" rel="noopener">GitHub 저장소</a>
-          </div>
-          <ol class="flow" aria-label="일정이 표시되기까지">
-            <li><b>만들기</b><span>Claude 코워크에서 대화로 일정을 짭니다</span></li>
-            <li><b>보내기</b><span>MCP 서버(Cloudflare Workers)로 한 번에 올립니다</span></li>
-            <li><b>저장</b><span>Supabase에 보관됩니다</span></li>
-            <li><b>보기</b><span>Windows 바탕화면 위젯과 아이폰 캘린더</span></li>
-          </ol>
-          <p class="desk__stack">Tauri · React · Supabase · Cloudflare Workers</p>
         </div>
+      </div>
+    </section>
+
+    <!-- 장면 5: 위젯이 다가오고, 패킷이 경로를 따라 이동한다 -->
+    <section class="scene scene--app" id="app" data-scene="app" aria-labelledby="app-title">
+      <div class="stage app">
+        <div class="app__head">
+          <h2 id="app-title">Cowork Calendar</h2>
+          <p>Claude 코워크에서 대화로 짠 일정을 MCP로 올리면, Windows 바탕화면 위젯과 아이폰 캘린더에 그대로 표시됩니다. 제 하루를 관리하려고 직접 만든 개인용 캘린더입니다.</p>
+        </div>
+        <img class="app__shot" src="images/calendar-widget.png" alt="코워크 캘린더 위젯: 2026년 11월 달력에 날마다 일정 이모지가 표시되고, 아래에 오늘 일정과 다가오는 일정 목록이 있다" width="560" height="657" loading="lazy">
+        <ol class="route" aria-label="일정이 표시되기까지">
+          <li class="hop"><b>Claude 코워크</b><span>대화로 일정을 짭니다</span><code>POST /mcp add_events</code></li>
+          <li class="hop"><b>MCP 서버</b><span>Cloudflare Workers가 요청을 받습니다</span><code>200 OK · batch_id</code></li>
+          <li class="hop"><b>Supabase</b><span>일정이 저장됩니다</span><code>INSERT events</code></li>
+          <li class="hop"><b>위젯 · 아이폰</b><span>바탕화면과 아이폰 캘린더에 표시됩니다</span><code>sync ok</code></li>
+          <li class="route__packet" aria-hidden="true"></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="get" aria-labelledby="get-title">
+      <div class="desk__panel glass glass--dark">
+        <div class="desk__id">
+          <img src="images/calendar-icon.png" alt="" width="72" height="72">
+          <div>
+            <h2 id="get-title">코워크 캘린더</h2>
+            <p class="desk__ver" id="app-ver">Windows · 최신 버전</p>
+          </div>
+        </div>
+        <div class="desk__actions">
+          <a class="btn" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows용 다운로드</a>
+          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender" target="_blank" rel="noopener">GitHub 저장소</a>
+        </div>
+        <p class="desk__stack">Tauri · React · Supabase · Cloudflare Workers</p>
       </div>
     </section>
   </main>
@@ -128,7 +154,7 @@
       <div><p>GitHub</p><p><a class="link" href="https://github.com/yde5536" target="_blank" rel="noopener">yde5536</a></p><p><a class="link" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">URIGG-security.log</a></p></div>
       <div><p>Download</p><p><a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">코워크 캘린더 (Windows)</a></p><p><a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener">모든 릴리스</a></p></div>
     </div>
-    <div></div>
+    <p class="end__eof">Connection to urigg closed. <span>EOF</span></p>
     <svg class="end__word" viewBox="0 0 1000 232" role="img" aria-label="URIGG"><text x="-8" y="222" font-size="318" textLength="1012" lengthAdjust="spacingAndGlyphs">URIGG</text></svg>
     <p class="end__legal">© 2026 URIGG · Security, logged.</p>
   </footer>

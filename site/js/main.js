@@ -1,13 +1,21 @@
-// 페이지 동작 — 데이터 불러오기, 책장과 grep, 저장소 목차, 등장 움직임
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// 페이지 데이터 — 블로그 로그, 로그 카드와 grep, tree 출력, 캘린더 버전
+// 화면을 움직이는 일은 scenes.js가 한다. 여기서 내용이 바뀌면 'scenes:refresh'를 알린다.
 const $ = (s, root = document) => root.querySelector(s);
 const esc = (s = '') => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const refresh = () => window.dispatchEvent(new Event('scenes:refresh'));
 
-const ymd = (iso) => {
-  const p = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(iso));
+// 한국 시간으로 "2026-10-06 15:57"
+const stamp = (iso) => {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(iso));
   const get = (t) => p.find((x) => x.type === t).value;
-  return `${get('year')}.${get('month')}.${get('day')}`;
+  return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')}`;
 };
+
+async function sha256(text) {
+  if (!crypto?.subtle) return '';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join(''); // taste-skill-ignore: 해시 16진수 자리 맞춤
+}
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 async function load(name) {
@@ -26,119 +34,102 @@ const onScroll = () => topBar.classList.toggle('is-stuck', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-/* ── 블로그 책장 ──────────────────────────── */
-function markFor(post) {
-  if (post.group === '자격증') return 3;
-  if (/네트워크/.test(post.series)) return 2;
-  return 1;
-}
-
+/* ── 블로그 ──────────────────────────────── */
+const markFor = (p) => (p.group === '자격증' ? 3 : /네트워크/.test(p.series) ? 2 : 1);
 function splitTitle(title) {
   const i = title.indexOf(' - ');
   return i < 0 ? { line: '', name: title } : { line: title.slice(0, i), name: title.slice(i + 3) };
 }
 
 function renderTail(posts) {
-  $('#tail').innerHTML = posts.slice(0, 6).map((p, i) => `<li style="--i:${i}"><time datetime="${p.date}">${ymd(p.date)}</time><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
+  $('#tail').innerHTML = posts.slice(0, 6).map((p, i) => `
+    <li style="--i:${i}"><time datetime="${p.date}">${stamp(p.date)}</time><span class="lvl">INFO</span><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
 }
 
-function renderBlog(data) {
+async function renderBlog(data) {
   renderTail(data.posts);
-  const shelf = $('#shelf'), post = $('#post'), input = $('#grep'), count = $('#grep-count');
+  const track = $('#track'), input = $('#grep'), count = $('#grep-count');
   const posts = data.posts.map((p) => ({ ...p, ...splitTitle(p.title), mark: markFor(p) }));
+  const hashes = await Promise.all(posts.map((p) => sha256(p.link)));
 
-  shelf.innerHTML = posts.map((p, i) => `
-    <li class="entry" data-i="${i}">
-      <a class="entry__link" href="${esc(p.link)}" target="_blank" rel="noopener">
-        <time class="entry__date" datetime="${p.date}">${ymd(p.date)}</time>
-        <span class="entry__title">${esc(p.name)}</span>
-        <span class="entry__series"><span class="entry__dot" style="background:var(--mark-${p.mark})"></span>${esc(p.line || p.series)}</span>
-        <span class="entry__arrow" aria-hidden="true">→</span>
-      </a>
-    </li>`).join('') + '<li class="shelf__empty" hidden>맞는 글이 없습니다.</li>';
-
-  const show = (i) => {
-    const p = posts[i];
-    shelf.querySelectorAll('.entry').forEach((s) => s.classList.toggle('is-active', s.dataset.i == i));
-    post.innerHTML = `
-      <span class="post__series mark mark--${p.mark}">${esc(p.line || p.series)}</span>
-      <h3>${esc(p.name)}</h3>
-      <p class="post__date">${ymd(p.date)} · ${esc(p.group)} / ${esc(p.series)}</p>
-      ${p.thumb ? `<img class="post__thumb" src="${esc(p.thumb)}" alt="${esc(p.name)} 글의 첫 이미지" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">` : ''}
-      <p class="post__summary">${esc(p.summary)}</p>
-      <a class="btn" href="${esc(p.link)}" target="_blank" rel="noopener">글 읽기<span aria-hidden="true">→</span></a>`;
-  };
-
-  // 마우스를 올리거나 키보드로 고르면 옆 패널에 미리보기, 클릭하면 글로 이동
-  const preview = (e) => {
-    const s = e.target.closest('.entry');
-    if (s) show(+s.dataset.i);
-  };
-  shelf.addEventListener('pointerover', preview);
-  shelf.addEventListener('focusin', preview);
+  track.innerHTML = posts.map((p, i) => `
+    <li class="card glass glass--dark" data-i="${i}">
+      <p class="card__meta">[${stamp(p.date)}] <b>INFO</b> ${esc(p.group)}/${esc(p.series)}</p>
+      <span class="card__series mark mark--${p.mark}">${esc(p.line || p.series)}</span>
+      <h3 class="card__title">${esc(p.name)}</h3>
+      ${p.thumb ? `<img class="card__thumb" src="${esc(p.thumb)}" alt="${esc(p.name)} 글에 들어간 이미지" width="480" height="270" loading="lazy" referrerpolicy="no-referrer">` : ''}
+      <p class="card__sum">${esc(p.summary)}</p>
+      <p class="card__foot"><span class="card__hash">${hashes[i] ? `sha256 ${hashes[i].slice(0, 12)}…` : ''}</span><a class="link card__go" href="${esc(p.link)}" target="_blank" rel="noopener">글 읽기 →</a></p>
+    </li>`).join('') + `
+    <li class="card card--end glass glass--dark">
+      <p class="card__meta">EOF</p>
+      <h3 class="card__title">전체 글은 블로그에서</h3>
+      <a class="btn" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log 열기</a>
+    </li>`;
 
   // grep: 제목·시리즈·요약에서 찾는다
   const grep = () => {
     const q = input.value.trim().toLowerCase();
-    let shown = 0, first = -1;
-    shelf.querySelectorAll('.entry').forEach((s) => {
-      const p = posts[+s.dataset.i];
+    let shown = 0;
+    track.querySelectorAll('.card[data-i]').forEach((c) => {
+      const p = posts[+c.dataset.i];
       const hit = !q || `${p.title} ${p.series} ${p.summary}`.toLowerCase().includes(q);
-      s.hidden = !hit;
-      if (hit) { shown++; if (first < 0) first = +s.dataset.i; }
+      c.hidden = !hit;
+      if (hit) shown++;
     });
-    shelf.querySelector('.shelf__empty').hidden = shown > 0;
     count.textContent = `${shown} / ${posts.length}`;
-    if (first >= 0) show(first);
+    refresh();
   };
   input.addEventListener('input', grep);
   grep();
   window.dispatchEvent(new Event('glass:refresh'));
 }
 
-/* ── security.log 목차 ───────────────────── */
-const sizeLabel = (b) => (b == null ? '폴더' : b >= 1024 ? `${(b / 1024).toFixed(1)} KB` : `${b} B`);
-const dotFor = (name) => (/리눅스/.test(name) ? 'var(--mark-1)' : /네트워크/.test(name) ? 'var(--mark-2)' : 'var(--mark-3)');
+/* ── security.log: tree 출력 ─────────────── */
+const sizeLabel = (b) => (b == null ? 'dir' : b >= 1024 ? `${(b / 1024).toFixed(1)}K` : `${b}B`);
 
 function renderGithub(data) {
   const { repo, groups, release } = data;
-  $('#repo-meta').innerHTML = `별 ${repo.stars}개 · 마지막 업데이트 ${ymd(repo.pushedAt)} · <a class="link" href="${esc(repo.url)}" target="_blank" rel="noopener">GitHub에서 보기</a>`;
-  $('#toc').innerHTML = groups.map((g) => `
-    <div class="toc__group" data-rise>
-      <p class="toc__name">${esc(g.name)}${g.en ? ` · ${esc(g.en)}` : ''}</p>
-      <ul>
-        ${g.planned && !g.entries.length
-          ? `<li class="toc__row toc__row--planned"><span class="toc__dot" style="background:var(--surface-2)"></span><span class="toc__title">준비 중인 시리즈</span><span class="toc__value">작성 예정</span></li>`
-          : g.entries.map((e) => e.url
-            ? `<li><a class="toc__row" href="${esc(e.url)}" target="_blank" rel="noopener"><span class="toc__dot" style="background:${dotFor(g.name)}"></span><span class="toc__title">${esc(e.title)}</span><span class="toc__value">${sizeLabel(e.size)}</span></a></li>`
-            : `<li class="toc__row toc__row--planned"><span class="toc__dot" style="background:var(--surface-2)"></span><span class="toc__title">${esc(e.title)}</span><span class="toc__value">작성 예정</span></li>`).join('')}
-      </ul>
-    </div>`).join('');
-  observe($('#toc'));
-
-  // 저장소 요약: 실제로 올라간 기록만 센다
   const written = groups.map((g) => ({ ...g, done: g.entries.filter((e) => e.url) }));
   const total = written.reduce((n, g) => n + g.done.length, 0);
   const bytes = written.reduce((n, g) => n + g.done.reduce((m, e) => m + (e.size || 0), 0), 0);
-  $('#repo-total').innerHTML = `<b>${total}</b>개의 기록`;
-  $('#repo-split').innerHTML = written.map((g) => `
-    <li><span class="toc__dot" style="background:${g.done.length ? dotFor(g.name) : 'var(--surface-2)'}"></span><span>${esc(g.name)}</span><span>${g.done.length ? `${g.done.length}개` : '준비 중'}</span></li>`).join('');
-  $('#repo-foot').textContent = `문서 ${Math.round(bytes / 1024)} KB · 마지막 업데이트 ${ymd(repo.pushedAt)}`;
 
-  if (release) $('#app-ver').textContent = `Windows · ${release.tag} · ${ymd(release.publishedAt)} 배포`;
-}
+  $('#repo-total').dataset.target = total;
+  $('#repo-total').textContent = total;
+  $('#repo-split').innerHTML = written.map((g) => `<li><span>${esc(g.name)}</span><span>${g.done.length ? `${g.done.length}` : '—'}</span></li>`).join('');
+  $('#repo-foot').textContent = `${Math.round(bytes / 1024)} KB · last push ${stamp(repo.pushedAt)}`;
 
-/* ── 등장 순서 ─────────────────────────── */
-// 등장 자체는 CSS 스크롤 애니메이션이 한다. 여기서는 같은 줄에 있는 것들의 순서만 매긴다.
-function observe(root = document) {
-  root.querySelectorAll('[data-rise]').forEach((el, i) => el.style.setProperty('--i', i % 4));
+  const row = (branch, name, size, cls = '', url = '') => {
+    const inner = `<span class="br">${branch}</span><span class="nm">${esc(name)}</span><span class="sz">${size}</span>`;
+    return url
+      ? `<a class="term__row ${cls}" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`
+      : `<p class="term__row ${cls}">${inner}</p>`;
+  };
+  let dirs = 0, files = 0;
+  const rows = [row('', `${repo.name}/`, `stars ${repo.stars}`, 'term__row--dir', repo.url)];
+  written.forEach((g, gi) => {
+    const lastG = gi === written.length - 1;
+    dirs++;
+    rows.push(row(lastG ? '└── ' : '├── ', `${g.name}${g.en ? ` (${g.en})` : ''}/`, '', 'term__row--dir'));
+    const pad = lastG ? '    ' : '│   ';
+    const list = g.entries.length ? g.entries : [{ title: '작성 예정', url: null }];
+    list.forEach((e, ei) => {
+      const br = pad + (ei === list.length - 1 ? '└── ' : '├── ');
+      if (e.url) { files++; rows.push(row(br, e.title, sizeLabel(e.size), '', e.url)); }
+      else rows.push(row(br, e.title, 'todo', 'term__row--plan'));
+    });
+  });
+  rows.push(row('', ' ', ''), row('', `${dirs} directories, ${files} files`, ''), row('', '$ ', '', 'term__row--cursor'));
+  $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
+
+  if (release) $('#app-ver').textContent = `Windows · ${release.tag} · ${stamp(release.publishedAt).slice(0, 10)} 배포`;
+  refresh();
 }
-observe();
 
 // 렌즈는 첫 화면이 보일 때만 떠다닌다 (화면 밖에서 유리 필터를 다시 그리지 않도록)
 const lens = $('.lens');
 if (lens && 'IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.hero'));
+  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.scene--hero'));
 }
 
 load('blog').then((d) => d?.posts?.length && renderBlog(d));
