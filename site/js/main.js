@@ -131,7 +131,7 @@ function renderGithub(data) {
 /* ── 등장 순서 ─────────────────────────── */
 // 등장 자체는 CSS 스크롤 애니메이션이 한다. 여기서는 같은 줄에 있는 것들의 순서만 매긴다.
 function observe(root = document) {
-  root.querySelectorAll('[data-reveal]').forEach((el, i) => el.style.setProperty('--i', i % 4));
+  root.querySelectorAll('[data-rise]').forEach((el, i) => el.style.setProperty('--i', i % 4));
 }
 observe();
 
