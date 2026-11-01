@@ -1,4 +1,4 @@
-// 페이지 데이터 — 블로그 로그, 로그 카드와 grep, tree 출력, 캘린더 버전
+// 페이지 데이터 — 대시보드(상태·시계·일정·tail·진행도·프로그램)와 tree 출력
 // 화면을 움직이는 일은 scenes.js가 한다. 여기서 내용이 바뀌면 'scenes:refresh'를 알린다.
 const $ = (s, root = document) => root.querySelector(s);
 const esc = (s = '') => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -10,12 +10,6 @@ const stamp = (iso) => {
   const get = (t) => p.find((x) => x.type === t).value;
   return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')}`;
 };
-
-async function sha256(text) {
-  if (!crypto?.subtle) return '';
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join(''); // taste-skill-ignore: 해시 16진수 자리 맞춤
-}
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 // 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
@@ -51,6 +45,16 @@ function setStatus(id, iso) {
 }
 const todayLabel = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'short' }).format(new Date());
 $('#st-today').textContent = todayLabel;
+
+// 배너는 한 줄씩 찍힌다
+document.querySelectorAll('.banner span').forEach((l, i) => l.style.setProperty('--i', i));
+
+// 상태줄의 시계: 한국 시간, 1초마다
+const clock = $('#st-clock');
+const clockFmt = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+const tick = () => { clock.textContent = clockFmt.format(new Date()); };
+tick();
+setInterval(tick, 1000);
 $('#today-date').textContent = todayLabel;
 
 /* ── 오늘 일정: 접근 키가 맞아야 서버가 내준다 ── */
@@ -97,56 +101,11 @@ form.addEventListener('submit', (e) => { e.preventDefault(); openToday($('#site-
 relock.addEventListener('click', () => { store.set(''); location.reload(); });
 if (store.get()) openToday(store.get());
 
-/* ── 블로그 ──────────────────────────────── */
-const markFor = (p) => (p.group === '자격증' ? 3 : /네트워크/.test(p.series) ? 2 : 1);
-function splitTitle(title) {
-  const i = title.indexOf(' - ');
-  return i < 0 ? { line: '', name: title } : { line: title.slice(0, i), name: title.slice(i + 3) };
-}
-
-function renderTail(posts) {
-  $('#tail').innerHTML = posts.slice(0, 5).map((p, i) => `
+/* ── 블로그: 대시보드의 tail 로그 ─────────── */
+function renderBlog(data) {
+  $('#tail').innerHTML = data.posts.slice(0, 5).map((p, i) => `
     <li style="--i:${i}"><time datetime="${p.date}">${stamp(p.date).slice(5)}</time><span class="lvl">INFO</span><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
-}
-
-async function renderBlog(data) {
-  renderTail(data.posts);
   setStatus('st-post', data.posts[0]?.date);
-  const track = $('#track'), input = $('#grep'), count = $('#grep-count');
-  const posts = data.posts.map((p) => ({ ...p, ...splitTitle(p.title), mark: markFor(p) }));
-  const hashes = await Promise.all(posts.map((p) => sha256(p.link)));
-
-  track.innerHTML = posts.map((p, i) => `
-    <li class="card glass glass--dark" data-i="${i}">
-      <p class="card__meta">[${stamp(p.date)}] <b>INFO</b> ${esc(p.group)}/${esc(p.series)}</p>
-      <span class="card__series mark mark--${p.mark}">${esc(p.line || p.series)}</span>
-      <h3 class="card__title">${esc(p.name)}</h3>
-      ${p.thumb ? `<img class="card__thumb" src="${esc(p.thumb)}" alt="${esc(p.name)} 글에 들어간 이미지" width="480" height="270" loading="lazy" referrerpolicy="no-referrer">` : ''}
-      <p class="card__sum">${esc(p.summary)}</p>
-      <p class="card__foot"><span class="card__hash">${hashes[i] ? `sha256 ${hashes[i].slice(0, 12)}…` : ''}</span><a class="link card__go" href="${esc(p.link)}" target="_blank" rel="noopener">글 읽기 →</a></p>
-    </li>`).join('') + `
-    <li class="card card--end glass glass--dark">
-      <p class="card__meta">EOF</p>
-      <h3 class="card__title">전체 글은 블로그에서</h3>
-      <a class="btn" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log 열기</a>
-    </li>`;
-
-  // grep: 제목·시리즈·요약에서 찾는다
-  const grep = () => {
-    const q = input.value.trim().toLowerCase();
-    let shown = 0;
-    track.querySelectorAll('.card[data-i]').forEach((c) => {
-      const p = posts[+c.dataset.i];
-      const hit = !q || `${p.title} ${p.series} ${p.summary}`.toLowerCase().includes(q);
-      c.hidden = !hit;
-      if (hit) shown++;
-    });
-    count.textContent = `${shown} / ${posts.length}`;
-    refresh();
-  };
-  input.addEventListener('input', grep);
-  grep();
-  window.dispatchEvent(new Event('glass:refresh'));
 }
 
 /* ── security.log: tree 출력 ─────────────── */

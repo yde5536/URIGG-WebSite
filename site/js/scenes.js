@@ -32,19 +32,6 @@
     requestAnimationFrame(tick);
   });
 
-  /* ── 장면 3: 로그 카드가 옆으로 ─────────── */
-  const logScene = $('.scene--log'), track = $('#track'), viewport = $('.log__viewport'), bar = $('#log-bar');
-  let logRun = 0;
-  const sizeLog = () => {
-    logRun = Math.max(0, track.scrollWidth - viewport.clientWidth);
-    logScene.style.height = `${logRun + vh() * 1.15}px`;
-  };
-  const drawLog = () => {
-    const p = progress(logScene);
-    track.style.transform = `translate3d(${-p * logRun}px, 0, 0)`;
-    bar.style.transform = `scaleX(${p})`;
-  };
-
   /* ── 장면 4: tree 출력 ─────────────────── */
   const repoScene = $('.scene--repo'), screen = $('.term__screen'), out = $('#tree'), counter = $('#repo-total');
   const drawRepo = () => {
@@ -60,25 +47,9 @@
     counter.textContent = Math.round(clamp(p / 0.6) * target);
   };
 
-  /* ── 장면 5: 위젯과 패킷 ───────────────── */
-  const appScene = $('.scene--app'), shot = $('.app__shot'), packet = $('.route__packet');
-  const hops = [...document.querySelectorAll('.hop')];
-  let hopY = [];
-  const measureHops = () => { hopY = hops.map((h) => h.offsetTop); };
-  const drawApp = () => {
-    const p = progress(appScene);
-    const t = clamp(p / 0.35);
-    shot.style.transform = `translate3d(0, ${(1 - t) * 8}vh, 0) scale(${0.72 + 0.28 * t})`;
-    shot.style.opacity = 0.25 + 0.75 * t;
-    const q = clamp((p - 0.3) / 0.6);
-    const y = hopY[0] + q * (hopY[hopY.length - 1] - hopY[0]);
-    packet.style.transform = `translate3d(0, ${y}px, 0)`;
-    hops.forEach((h, i) => h.classList.toggle('is-on', y >= hopY[i] - 2));
-  };
-
   /* ── 한 프레임에 한 번만 그린다 ───────────── */
   const scenes = [
-    [logScene, drawLog], [repoScene, drawRepo], [appScene, drawApp],
+    [repoScene, drawRepo],
   ];
   let queued = false;
   const frame = () => {
@@ -88,8 +59,7 @@
   const request = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
   const layout = () => {
     $('.scene--repo').style.setProperty('--len', '260vh');
-    $('.scene--app').style.setProperty('--len', '280vh');
-    sizeLog(); measureHops(); request();
+    request();
   };
 
   addEventListener('scroll', request, { passive: true });

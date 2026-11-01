@@ -34,9 +34,8 @@
     <a class="top__mark" href="#top" aria-label="URIGG 처음으로">URIGG</a>
     <nav class="top__nav" aria-label="섹션">
       <a class="link" href="#today">Dashboard</a>
-      <a class="link" href="#log">Log</a>
       <a class="link" href="#repo">Notes</a>
-      <a class="link" href="#app">Calendar</a>
+      <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">Blog ↗</a>
     </nav>
     <a class="btn" href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener">새 글 쓰기</a>
   </header>
@@ -45,14 +44,23 @@
     <!-- 첫 화면: 한눈에 보는 대시보드 -->
     <section class="dash" id="today" aria-labelledby="dash-title">
       <header class="dash__head">
-        <h1 id="dash-title" class="dash__title"><span class="sr-only">URIGG — Security, logged.</span><span aria-hidden="true" data-decrypt>Security, logged.</span></h1>
+        <h1 id="dash-title" class="dash__title">
+          <span class="sr-only">URIGG — Security, logged.</span>
+          <pre class="banner" aria-hidden="true"><span> _   _ ____  ___ ____  ____ </span>
+<span>| | | |  _ \|_ _/ ___|/ ___|</span>
+<span>| | | | |_) || | |  _| |  _ </span>
+<span>| |_| |  _ &lt; | | |_| | |_| |</span>
+<span> \___/|_| \_\___\____|\____|</span></pre>
+          <span class="dash__tag" aria-hidden="true" data-decrypt>Security, logged.</span>
+        </h1>
         <dl class="dash__status">
           <div><dt>today</dt><dd id="st-today">—</dd></div>
+          <div><dt>time</dt><dd id="st-clock">--:--:--</dd></div>
           <div><dt>last post</dt><dd id="st-post">—</dd></div>
           <div><dt>last push</dt><dd id="st-push">—</dd></div>
           <div><dt>calendar</dt><dd id="st-app">—</dd></div>
         </dl>
-        <div class="lens" data-refract data-bezel="60" data-depth="70" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
+        <div class="lens" data-refract data-bezel="34" data-depth="46" data-disperse="0" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
       </header>
 
       <div class="dash__grid">
@@ -79,7 +87,7 @@
 
         <!-- 최근 글 -->
         <article class="tile tile--log glass glass--dark" data-file="security.log" aria-labelledby="latest-title">
-          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="#log">카드로 보기 ↓</a></div>
+          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a></div>
           <div class="term" aria-label="최신 글">
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
             <ol class="tail" id="tail"></ol>
@@ -122,26 +130,6 @@
       <p class="dash__more" aria-hidden="true">더 보기 ↓</p>
     </section>
 
-    <!-- 장면 3: 세로로 내리면 로그 카드가 옆으로 흘러간다 -->
-    <section class="scene scene--log" id="log" data-scene="log" aria-labelledby="log-title">
-      <div class="stage log">
-        <div class="log__head">
-          <h2 id="log-title">The log</h2>
-          <p class="log__note">티스토리 <a class="link" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">security.log</a> 최근 글. 휠을 내리면 옆으로 넘어간다.</p>
-          <div class="grep glass glass--dark">
-            <label for="grep">grep</label>
-            <input id="grep" type="search" placeholder="리눅스, DHCP, 로그…" autocomplete="off" spellcheck="false">
-            <span class="grep__count" id="grep-count" aria-live="polite"></span>
-          </div>
-        </div>
-        <div class="log__viewport">
-          <ol class="track" id="track">
-            <li class="card glass glass--dark"><p class="card__title">최신 글을 불러오는 중입니다</p><a class="link" href="https://urigg-security.tistory.com/">블로그에서 보기</a></li>
-          </ol>
-        </div>
-        <div class="log__bar" aria-hidden="true"><span id="log-bar"></span></div>
-      </div>
-    </section>
 
     <!-- 장면 4: tree 출력이 한 줄씩 찍히고 숫자가 올라간다 -->
     <section class="scene scene--repo" id="repo" data-scene="repo" aria-labelledby="repo-title">
@@ -163,23 +151,6 @@
       </div>
     </section>
 
-    <!-- 장면 5: 위젯이 다가오고, 패킷이 경로를 따라 이동한다 -->
-    <section class="scene scene--app" id="app" data-scene="app" aria-labelledby="app-title">
-      <div class="stage app">
-        <div class="app__head">
-          <h2 id="app-title">Cowork Calendar</h2>
-          <p>코워크에서 짠 일정이 MCP를 거쳐 위젯과 아이폰으로 가는 길.</p>
-        </div>
-        <img class="app__shot" src="images/calendar-widget.png" alt="코워크 캘린더 위젯: 2026년 11월 달력에 날마다 일정 이모지가 표시되고, 아래에 오늘 일정과 다가오는 일정 목록이 있다" width="560" height="657" loading="lazy">
-        <ol class="route" aria-label="일정이 표시되기까지">
-          <li class="hop"><b>Claude 코워크</b><span>대화로 일정 짜기</span><code>POST /mcp add_events</code></li>
-          <li class="hop"><b>MCP 서버</b><span>Cloudflare Workers · cowork-calendar</span><code>200 OK · batch_id</code></li>
-          <li class="hop"><b>Supabase</b><span>events 테이블</span><code>INSERT events</code></li>
-          <li class="hop"><b>위젯 · 아이폰</b><span>바탕화면 위젯 · ICS 구독</span><code>sync ok</code></li>
-          <li class="route__packet" aria-hidden="true"></li>
-        </ol>
-      </div>
-    </section>
   </main>
 
   <footer class="end">
