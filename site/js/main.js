@@ -100,8 +100,8 @@ function splitTitle(title) {
 }
 
 function renderTail(posts) {
-  $('#tail').innerHTML = posts.slice(0, 6).map((p, i) => `
-    <li style="--i:${i}"><time datetime="${p.date}">${stamp(p.date)}</time><span class="lvl">INFO</span><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
+  $('#tail').innerHTML = posts.slice(0, 5).map((p, i) => `
+    <li style="--i:${i}"><time datetime="${p.date}">${stamp(p.date).slice(5)}</time><span class="lvl">INFO</span><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
 }
 
 async function renderBlog(data) {
@@ -159,7 +159,9 @@ function renderGithub(data) {
   $('#progress').innerHTML = written.map((g) => {
     const todo = g.entries.length - g.done.length;
     const cells = '■'.repeat(g.done.length) + '□'.repeat(todo || (g.done.length ? 0 : 1));
-    const next = g.done.length && todo ? `next #${g.done.length + 1}` : g.done.length ? 'done' : '준비 중';
+    // 번호가 붙는 연재(리눅스·네트워크)만 다음 편 번호를 쓴다
+    const series = /리눅스|네트워크/.test(g.name);
+    const next = !g.done.length ? '준비 중' : !todo ? 'done' : series ? `next #${g.done.length + 1}` : '진행 중';
     return `<li><span class="progress__name">${esc(g.name)}</span><span class="progress__cells" aria-hidden="true">${cells}</span><span class="progress__next">${g.done.length}편 · ${next}</span></li>`;
   }).join('');
   setStatus('st-push', repo.pushedAt);
@@ -198,7 +200,7 @@ function renderGithub(data) {
 // 렌즈는 첫 화면이 보일 때만 떠다닌다 (화면 밖에서 유리 필터를 다시 그리지 않도록)
 const lens = $('.lens');
 if (lens && 'IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.scene--hero'));
+  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.dash'));
 }
 
 load('blog').then((d) => d?.posts?.length && renderBlog(d));

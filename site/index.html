@@ -32,7 +32,7 @@
   <header class="top">
     <a class="top__mark" href="#top" aria-label="URIGG 처음으로">URIGG</a>
     <nav class="top__nav" aria-label="섹션">
-      <a class="link" href="#today">Today</a>
+      <a class="link" href="#today">Dashboard</a>
       <a class="link" href="#log">Log</a>
       <a class="link" href="#repo">Notes</a>
       <a class="link" href="#app">Calendar</a>
@@ -41,60 +41,82 @@
   </header>
 
   <main id="top">
-    <!-- 장면 1: 복호화되는 제목, 위에서 흐르는 로그 -->
-    <section class="scene scene--hero" data-scene="hero" aria-labelledby="hero-title">
-      <div class="stage hero">
-        <div class="term term--tail" aria-label="최신 글 로그">
-          <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 6 security.log<span class="caret" aria-hidden="true"></span></p>
-          <ol class="tail" id="tail"></ol>
-        </div>
-        <dl class="hero__status" id="status">
+    <!-- 첫 화면: 한눈에 보는 대시보드 -->
+    <section class="dash" id="today" aria-labelledby="dash-title">
+      <header class="dash__head">
+        <h1 id="dash-title" class="dash__title"><span class="sr-only">URIGG — Security, logged.</span><span aria-hidden="true" data-decrypt>Security, logged.</span></h1>
+        <dl class="dash__status">
           <div><dt>today</dt><dd id="st-today">—</dd></div>
           <div><dt>last post</dt><dd id="st-post">—</dd></div>
           <div><dt>last push</dt><dd id="st-push">—</dd></div>
           <div><dt>calendar</dt><dd id="st-app">—</dd></div>
         </dl>
-        <h1 id="hero-title" class="hero__title"><span class="sr-only">URIGG — Security, logged.</span><span class="line" aria-hidden="true" data-decrypt>Security,</span><span class="line" aria-hidden="true" data-decrypt>logged.</span></h1>
-        <p class="hero__hint" aria-hidden="true">scroll ↓</p>
-        <div class="lens" data-refract data-bezel="70" data-depth="80" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
-      </div>
-    </section>
+        <div class="lens" data-refract data-bezel="60" data-depth="70" data-disperse="0.22" data-blur="0.4px" data-extra="saturate(140%) brightness(1.08)" aria-hidden="true"></div>
+      </header>
 
-    <!-- 오늘: 접근 키를 넣으면 기밀이 해제되듯 일정이 드러난다 -->
-    <section class="today" id="today" aria-labelledby="today-title">
-      <div class="today__head">
-        <h2 id="today-title">Today</h2>
-        <p class="today__date" id="today-date"></p>
-        <p class="stamp" aria-hidden="true"><span class="stamp__on">Classified</span><span class="stamp__off">Declassified</span></p>
-      </div>
-      <div class="today__body glass glass--dark">
-        <form class="unlock" id="unlock">
-          <label for="site-key">접근 키</label>
-          <input id="site-key" type="password" autocomplete="current-password" spellcheck="false" required>
-          <button class="btn" type="submit">잠금 해제</button>
-          <p class="unlock__msg" id="unlock-msg" role="status"></p>
-        </form>
-        <ol class="agenda" id="agenda" aria-live="polite">
-          <li class="agenda__row rd"><time>--:--</time><span>████████ ██████</span></li>
-          <li class="agenda__row rd"><time>--:--</time><span>██████ ██████████</span></li>
-          <li class="agenda__row rd"><time>--:--</time><span>████ ████████</span></li>
-        </ol>
-        <button class="agenda__lock link" id="relock" type="button" hidden>이 브라우저에서 잠그기</button>
-      </div>
+      <div class="dash__grid">
+        <!-- 오늘 일정: 접근 키를 넣으면 기밀이 해제되듯 드러난다 -->
+        <article class="tile tile--today glass glass--dark" aria-labelledby="today-title">
+          <div class="tile__head">
+            <h2 id="today-title">Today</h2>
+            <p class="today__date" id="today-date"></p>
+            <p class="stamp" aria-hidden="true"><span class="stamp__on">Classified</span><span class="stamp__off">Declassified</span></p>
+          </div>
+          <form class="unlock" id="unlock">
+            <label for="site-key">접근 키</label>
+            <input id="site-key" type="password" autocomplete="current-password" spellcheck="false" required>
+            <button class="btn" type="submit">잠금 해제</button>
+            <p class="unlock__msg" id="unlock-msg" role="status"></p>
+          </form>
+          <ol class="agenda" id="agenda" aria-live="polite">
+            <li class="agenda__row rd"><time>--:--</time><span>████████ ██████</span></li>
+            <li class="agenda__row rd"><time>--:--</time><span>██████ ██████████</span></li>
+            <li class="agenda__row rd"><time>--:--</time><span>████ ████████</span></li>
+          </ol>
+          <button class="agenda__lock link" id="relock" type="button" hidden>이 브라우저에서 잠그기</button>
+        </article>
 
-      <div class="alias">
-        <h2 class="alias__title" id="alias-title">Shortcuts</h2>
-        <ul class="alias__list" aria-labelledby="alias-title">
-          <li><a href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener"><code>write</code><span>티스토리 새 글 쓰기</span></a></li>
-          <li><a href="https://urigg-security.tistory.com/manage" target="_blank" rel="noopener"><code>blog-admin</code><span>티스토리 관리</span></a></li>
-          <li><a href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener"><code>notes</code><span>security.log 저장소</span></a></li>
-          <li><a href="https://github.com/yde5536?tab=repositories" target="_blank" rel="noopener"><code>repos</code><span>내 GitHub 저장소</span></a></li>
-          <li><a href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener"><code>releases</code><span>캘린더 릴리스</span></a></li>
-          <li><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener"><code>cf</code><span>Cloudflare 대시보드</span></a></li>
-          <li><a href="https://supabase.com/dashboard" target="_blank" rel="noopener"><code>db</code><span>Supabase 대시보드</span></a></li>
-          <li><a href="https://claude.ai/" target="_blank" rel="noopener"><code>claude</code><span>Claude 코워크</span></a></li>
-        </ul>
+        <!-- 최근 글 -->
+        <article class="tile tile--log glass glass--dark" aria-labelledby="latest-title">
+          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="#log">카드로 보기 ↓</a></div>
+          <div class="term" aria-label="최신 글">
+            <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
+            <ol class="tail" id="tail"></ol>
+          </div>
+        </article>
+
+        <!-- 바로가기 -->
+        <nav class="tile tile--alias glass glass--dark" aria-labelledby="alias-title">
+          <div class="tile__head"><h2 id="alias-title">Shortcuts</h2></div>
+          <ul class="alias__list">
+            <li><a href="https://urigg-security.tistory.com/manage/newpost" target="_blank" rel="noopener"><code>write</code><span>새 글 쓰기</span></a></li>
+            <li><a href="https://urigg-security.tistory.com/manage" target="_blank" rel="noopener"><code>blog</code><span>티스토리 관리</span></a></li>
+            <li><a href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener"><code>notes</code><span>security.log</span></a></li>
+            <li><a href="https://github.com/yde5536?tab=repositories" target="_blank" rel="noopener"><code>repos</code><span>GitHub</span></a></li>
+            <li><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener"><code>cf</code><span>Cloudflare</span></a></li>
+            <li><a href="https://supabase.com/dashboard" target="_blank" rel="noopener"><code>db</code><span>Supabase</span></a></li>
+            <li><a href="https://claude.ai/" target="_blank" rel="noopener"><code>claude</code><span>Claude</span></a></li>
+            <li><a href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener"><code>releases</code><span>캘린더 릴리스</span></a></li>
+          </ul>
+        </nav>
+
+        <!-- 공부 진행도 -->
+        <article class="tile tile--progress glass glass--dark" aria-labelledby="progress-title">
+          <div class="tile__head"><h2 id="progress-title">Progress</h2><a class="link tile__more" href="#repo">tree로 보기 ↓</a></div>
+          <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
+        </article>
+
+        <!-- 캘린더 앱 -->
+        <article class="tile tile--app glass glass--dark" aria-labelledby="dash-app-title">
+          <div class="tile__head"><h2 id="dash-app-title">Calendar</h2><a class="link tile__more" href="#app">경로 보기 ↓</a></div>
+          <div class="tile__app">
+            <img src="images/calendar-icon.png" alt="" width="48" height="48">
+            <p><b>코워크 캘린더</b><span id="app-ver">Windows · 최신 버전</span></p>
+          </div>
+          <a class="btn" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows용 다운로드</a>
+        </article>
       </div>
+      <p class="dash__more" aria-hidden="true">더 보기 ↓</p>
     </section>
 
     <!-- 장면 3: 세로로 내리면 로그 카드가 옆으로 흘러간다 -->
@@ -122,9 +144,8 @@
     <section class="scene scene--repo" id="repo" data-scene="repo" aria-labelledby="repo-title">
       <div class="stage repo">
         <div class="repo__side">
-          <h2 id="repo-title">Progress</h2>
+          <h2 id="repo-title">Notes</h2>
           <p class="repo__count"><b id="repo-total">0</b><span>개 기록됨</span></p>
-          <ul class="progress" id="progress" aria-label="시리즈별 진행도"></ul>
           <p class="repo__foot" id="repo-foot"></p>
           <a class="btn" href="https://github.com/yde5536/URIGG-security.log" target="_blank" rel="noopener">security.log 열기</a>
         </div>
@@ -154,24 +175,6 @@
           <li class="hop"><b>위젯 · 아이폰</b><span>바탕화면 위젯 · ICS 구독</span><code>sync ok</code></li>
           <li class="route__packet" aria-hidden="true"></li>
         </ol>
-      </div>
-    </section>
-
-    <section class="get" aria-labelledby="get-title">
-      <div class="desk__panel glass glass--dark">
-        <div class="desk__id">
-          <img src="images/calendar-icon.png" alt="" width="72" height="72">
-          <div>
-            <h2 id="get-title">코워크 캘린더 설치 파일</h2>
-            <p class="desk__ver" id="app-ver">Windows · 최신 버전</p>
-          </div>
-        </div>
-        <div class="desk__actions">
-          <a class="btn" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows용 다운로드</a>
-          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender" target="_blank" rel="noopener">저장소</a>
-          <a class="link" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases" target="_blank" rel="noopener">모든 릴리스</a>
-        </div>
-        <p class="desk__stack">Tauri · React · Supabase · Cloudflare Workers</p>
       </div>
     </section>
   </main>

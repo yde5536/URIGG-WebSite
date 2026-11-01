@@ -32,18 +32,6 @@
     requestAnimationFrame(tick);
   });
 
-  /* ── 장면 1: 첫 화면 ───────────────────── */
-  const hero = $('.scene--hero');
-  const title = $('.hero__title'), lede = $('.hero__status'), tail = $('.term--tail'), hint = $('.hero__hint');
-  const drawHero = () => {
-    const p = progress(hero);
-    title.style.transform = `translate3d(0, ${-p * 18}vh, 0) scale(${1 - p * 0.32})`;
-    lede.style.opacity = 1 - clamp(p * 1.8);
-    tail.style.transform = `translate3d(0, ${-p * 12}vh, 0)`;
-    tail.style.opacity = 1 - clamp(p * 1.3);
-    hint.style.opacity = 1 - clamp(p * 4);
-  };
-
   /* ── 장면 3: 로그 카드가 옆으로 ─────────── */
   const logScene = $('.scene--log'), track = $('#track'), viewport = $('.log__viewport'), bar = $('#log-bar');
   let logRun = 0;
@@ -90,7 +78,7 @@
 
   /* ── 한 프레임에 한 번만 그린다 ───────────── */
   const scenes = [
-    [hero, drawHero], [logScene, drawLog], [repoScene, drawRepo], [appScene, drawApp],
+    [logScene, drawLog], [repoScene, drawRepo], [appScene, drawApp],
   ];
   let queued = false;
   const frame = () => {
