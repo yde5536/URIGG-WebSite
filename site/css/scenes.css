@@ -78,13 +78,14 @@
 .programs { display: grid; gap: 14px; min-height: 0; overflow: auto; align-content: start; }
 
 /* ── 장면 4: tree 출력 ───────────────────── */
-.repo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 32px; align-items: center; padding: 104px var(--gutter) 40px; }
-.repo__side { grid-column: 1 / span 3; display: grid; gap: 18px; align-content: center; }
+.repo { display: grid; grid-template-columns: max-content minmax(0, clamp(280px, 18vw, 440px)) minmax(0, 1fr); gap: 32px clamp(40px, 4vw, 72px); align-items: center; padding: 104px var(--gutter) 40px; }
+.repo .activity { grid-column: 2; }
+.repo__side { grid-column: 1; display: grid; gap: 18px; align-content: center; }
 .repo__count { display: flex; align-items: baseline; gap: 12px; font-size: var(--step-lead); font-weight: 600; }
 .repo__count b { font-size: var(--step-display); line-height: 0.9; letter-spacing: -0.05em; color: var(--accent-text); font-variant-numeric: tabular-nums; }
 .repo__foot { color: var(--muted); font-size: var(--step-small); font-family: var(--mono); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 .repo__side .btn { justify-self: start; }
-.term--window { grid-column: 7 / span 6; display: grid; grid-template-rows: auto 1fr; height: min(66svh, 640px); overflow: hidden; }
+.term--window { grid-column: 3; min-width: 0; justify-self: end; width: min(100%, 50vw); display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; height: min(66svh, 640px); overflow: hidden; }
 .term__bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; color: var(--muted); }
 .term__bar span { width: 11px; height: 11px; border-radius: 50%; background: var(--surface-2); }
 .term__bar span:first-child { background: var(--accent); }
@@ -119,9 +120,11 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .tile--today { grid-column: 1 / -1; grid-row: auto; }
   .tile--dday, .tile--news, .tile--log, .tile--alias, .tile--app { grid-column: auto; grid-row: auto; height: auto; }
   .tile--news { height: 320px; }
-  .repo__side, .activity { grid-column: 1 / -1; }
+  .repo { grid-template-columns: max-content minmax(0, 300px); justify-content: space-between; }
+  .repo .activity { grid-column: 2; }
+
   .repo__foot { display: none; }
-  .term--window { grid-column: 1 / -1; height: 52svh; }
+  .term--window { grid-column: 1 / -1; width: auto; justify-self: stretch; height: 52svh; }
   .repo { align-content: center; }
 }
 
@@ -138,6 +141,8 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .repo { padding-top: 96px; gap: 20px; }
   .repo__count b { font-size: 4rem; }
   .term--window { height: 48svh; }
+  .repo { grid-template-columns: minmax(0, 1fr); }
+  .repo .activity { display: none; }
 }
 
 /* 타일 안 목록은 세로로만 스크롤 (Windows에서 가로 스크롤바가 보이지 않도록) */
@@ -169,7 +174,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .widget-frame { display: block; width: 100%; height: 100%; min-height: 420px; border: 0; border-radius: 18px; background: transparent; color-scheme: dark; }
 
 /* ── Notes 옆 커밋 잔디 ─────── */
-.activity { grid-column: 4 / span 3; margin: 0; display: grid; gap: 12px; align-content: center; }
+.activity { margin: 0; display: grid; gap: 12px; align-content: center; }
 .activity__grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, auto); grid-auto-columns: minmax(0, 1fr); gap: 3px; }
 .activity__grid i { aspect-ratio: 1; border-radius: 3px; background: rgba(255, 255, 255, 0.06); }
 .activity__grid .lv1 { background: rgba(140, 170, 235, 0.38); }
