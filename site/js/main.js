@@ -13,7 +13,7 @@ const stamp = (iso) => {
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 // 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
-const API_VERSION = 3;
+const API_VERSION = 4;
 async function load(name) {
   for (const url of [`/api/${name}?v=${API_VERSION}`, `data/${name}.json`]) {
     try {
