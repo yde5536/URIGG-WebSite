@@ -152,11 +152,9 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .emblem {
   flex: 0 0 auto; width: clamp(96px, 9.5vw, 148px); height: auto; aspect-ratio: 1; border-radius: 50%;
   box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.07), 0 0 0 6px rgba(255, 255, 255, 0.16), 0 0 70px 6px rgba(60, 92, 170, 0.55); /* taste-skill-ignore: 로고 빛무리 */
-  animation: emblem-float 6s ease-in-out infinite alternate;
   transition: transform 300ms var(--ease-out);
 }
-.emblem:hover { animation-play-state: paused; transform: scale(1.05); }
-@keyframes emblem-float { from { translate: 0 -4px; } to { translate: 0 5px; } }
+.emblem:hover { transform: scale(1.04); }
 .top__mark { display: inline-flex; align-items: center; gap: 10px; }
 .top__mark img { width: 28px; height: 28px; border-radius: 50%; }
 
@@ -166,9 +164,6 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 
 @media (max-width: 720px) {
   .emblem { width: 84px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .emblem { animation: none; }
 }
 
 /* 타일 안 목록은 세로로만, 스크롤바는 가늘고 옅게 */
