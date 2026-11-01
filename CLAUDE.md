@@ -64,5 +64,5 @@ Gotchas: `core.autocrlf=true` (normalize `\r\n` in Node edit scripts); write reg
 ## Open threads (as of 2026-11-02)
 
 - Lively Wallpaper setup with `?wall` was just explained; the user may need help with it (keyboard input inside Lively may not work; desktop icons: suggested hiding them).
-- Command palette: discussing a macOS Spotlight-style design (centered glass bar, grouped results, optional preview pane, Ctrl+K and `/`). **Don't build until the user says so.**
+- Command palette: **on hold** (2026-11-02). The user agreed it isn't needed now: the dashboard already shows everything on one screen, there is little to search, and the main use is the `?wall` wallpaper where keyboard input may not work. If notes/blog posts pile up, add a plain notes + blog search box in the Notes scene instead. Design notes kept in case: Spotlight-style centered glass bar, sliding glass pill selection, grouped results, Korean initial-consonant (초성) search, Ctrl+K and `/`.
 - Feature ideas offered: Linux Master mock-exam score chart from commit messages, study timer, next-post reminder, news keyword highlight.
