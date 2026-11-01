@@ -21,17 +21,11 @@
 
 /* 상단 바: 첫 화면에서는 투명하고, 스크롤하면 유리가 된다 */
 .top { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; } /* taste-skill-ignore: 사용자 요청 유리 패널 */
-.top.is-stuck {
-  background: rgba(255, 255, 255, 0.025);
-  -webkit-backdrop-filter: blur(3px) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
-  backdrop-filter: blur(3px) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
-  /* 가장자리: 흰 반사 + 프리즘처럼 갈라지는 푸른·붉은 테 */
-  box-shadow: var(--glass-edge), inset 3px 0 4px -3px rgba(90, 210, 255, 0.55), inset -3px 0 4px -3px rgba(255, 90, 200, 0.5), inset 0 -3px 4px -3px rgba(255, 220, 120, 0.35), 0 10px 30px -14px rgba(0, 0, 0, 0.5); /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
-}
-/* 크롬·엣지: 뒤 화면을 가장자리에서 굴절시키고 색을 갈라 보이게 (main.js가 렌즈 필터를 만든다) */
+/* 스크롤하면: 색·흐림·테두리 없이 완전히 투명하고, 크롬·엣지에서는 가장자리 굴절과 프리즘만 (main.js가 렌즈 필터를 만든다) */
+.top.is-stuck { background: transparent; box-shadow: none; }
 .lens-on .top.is-stuck {
-  -webkit-backdrop-filter: url(#top-lens) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
-  backdrop-filter: url(#top-lens) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
+  -webkit-backdrop-filter: url(#top-lens); /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
+  backdrop-filter: url(#top-lens); /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
 }
 
 /* ── 리퀴드 글래스 분위기 ─────────────────────

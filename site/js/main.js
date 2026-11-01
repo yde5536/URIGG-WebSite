@@ -39,9 +39,8 @@ if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').match
   svg.setAttribute('style', 'position:absolute;width:0;height:0');
   svg.innerHTML = `<filter id="top-lens" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
     <feImage result="map" preserveAspectRatio="none"/>
-    <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="src"/>
     ${[['r', 1, '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['g', 0.9, '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['b', 0.8, '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0']]
-      .map(([c, k, m]) => `<feDisplacementMap in="src" in2="map" data-k="${k}" xChannelSelector="R" yChannelSelector="G"/><feColorMatrix type="matrix" values="${m}" result="${c}"/>`).join('')}
+      .map(([c, k, m]) => `<feDisplacementMap in="SourceGraphic" in2="map" data-k="${k}" xChannelSelector="R" yChannelSelector="G"/><feColorMatrix type="matrix" values="${m}" result="${c}"/>`).join('')}
     <feBlend in="r" in2="g" mode="screen" result="rg"/><feBlend in="rg" in2="b" mode="screen"/>
   </filter>`;
   document.body.append(svg);
