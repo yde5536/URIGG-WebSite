@@ -135,21 +135,10 @@ function observe(root = document) {
 }
 observe();
 
-// 사진이 스크롤보다 조금 느리게 움직인다
-const drifting = [...document.querySelectorAll('[data-drift]')];
-if (!reduced && drifting.length) {
-  let ticking = false;
-  const drift = () => {
-    ticking = false;
-    for (const el of drifting) {
-      const box = el.parentElement.getBoundingClientRect();
-      const p = (innerHeight - box.top) / (innerHeight + box.height); // 0 → 1
-      if (p < 0 || p > 1) continue;
-      el.style.transform = `translate3d(0, ${(p - 0.5) * -8}%, 0) scale(1.1)`;
-    }
-  };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift); } }, { passive: true });
-  drift();
+// 렌즈는 첫 화면이 보일 때만 떠다닌다 (화면 밖에서 유리 필터를 다시 그리지 않도록)
+const lens = $('.lens');
+if (lens && 'IntersectionObserver' in window) {
+  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.hero'));
 }
 
 load('blog').then((d) => d?.posts?.length && renderBlog(d));

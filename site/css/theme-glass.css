@@ -5,7 +5,7 @@
 :root {
   --glass-tint: rgba(255, 255, 255, 0.07);
   --glass-tint-strong: rgba(22, 22, 22, 0.42);
-  --glass-blur: 14px;
+  --glass-blur: 10px;
   --glass-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.14),
                 inset 1.5px 1.5px 0 -0.5px rgba(255, 255, 255, 0.55),
                 inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.22);
@@ -44,6 +44,7 @@
 }
 .lens.is-held { cursor: grabbing; animation: none; }
 .lens.is-placed { animation: none; }
+.lens.is-paused { animation-play-state: paused; }
 @keyframes drift {
   0%   { transform: translate(0, 0); }
   50%  { transform: translate(120%, 160%); }
@@ -52,9 +53,7 @@
 
 /* 로그 목록: 고른 줄은 사진 위에 뜬 유리 띠 */
 .entry.is-active .entry__link, .entry__link:hover, .entry__link:focus-visible {
-  background: rgba(255, 255, 255, 0.09);
-  -webkit-backdrop-filter: blur(10px) saturate(160%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  backdrop-filter: blur(10px) saturate(160%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+  background: rgba(255, 255, 255, 0.1);
   box-shadow: var(--glass-edge); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
 }
 
