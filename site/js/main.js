@@ -30,6 +30,52 @@ const onScroll = () => topBar.classList.toggle('is-stuck', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+/* ── 상단 바 유리 렌즈 (크롬·엣지만: 배경 필터에 SVG를 쓸 수 있는 브라우저) ──
+   가장자리 띠에서 뒤 화면을 안쪽으로 당겨 굴절처럼 보이게 하고, 빨강·초록·파랑을 조금씩 다르게 당겨 프리즘처럼 갈라지게 한다. */
+if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').matches) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('style', 'position:absolute;width:0;height:0');
+  svg.innerHTML = `<filter id="top-lens" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feImage result="map" preserveAspectRatio="none"/>
+    <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="src"/>
+    ${[['r', 1, '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['g', 0.9, '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['b', 0.8, '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0']]
+      .map(([c, k, m]) => `<feDisplacementMap in="src" in2="map" data-k="${k}" xChannelSelector="R" yChannelSelector="G"/><feColorMatrix type="matrix" values="${m}" result="${c}"/>`).join('')}
+    <feBlend in="r" in2="g" mode="screen" result="rg"/><feBlend in="rg" in2="b" mode="screen"/>
+  </filter>`;
+  document.body.append(svg);
+  const filter = svg.querySelector('filter'), img = svg.querySelector('feImage');
+  const BAND = 20, SCALE = 46;
+  // 알약 모양의 가장자리에서 안쪽으로 얼마나 들어왔는지(거리)와 바깥 방향(법선)으로 변위 지도를 그린다
+  const build = () => {
+    const w = Math.round(topBar.offsetWidth), h = Math.round(topBar.offsetHeight);
+    if (!w || !h) return;
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext('2d'), data = ctx.createImageData(w, h), r = h / 2;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const px = x + 0.5 - w / 2, py = y + 0.5 - h / 2;
+      const qx = Math.abs(px) - (w / 2 - r), qy = Math.abs(py) - (h / 2 - r);
+      let nx, ny, depth;
+      if (qx > 0) { const l = Math.hypot(qx, qy > 0 ? qy : 0) || 1; depth = r - Math.hypot(qx, Math.max(qy, 0)); nx = Math.sign(px) * qx / l; ny = qy > 0 ? Math.sign(py) * qy / l : 0; }
+      else { depth = r - Math.abs(py); nx = 0; ny = Math.sign(py); }
+      const t = Math.max(0, 1 - depth / BAND), mag = t * t;
+      const i = (y * w + x) * 4;
+      data.data[i] = 128 - nx * mag * 127;
+      data.data[i + 1] = 128 - ny * mag * 127;
+      data.data[i + 2] = 128; data.data[i + 3] = 255;
+    }
+    ctx.putImageData(data, 0, 0);
+    for (const el of [filter, img]) { el.setAttribute('x', 0); el.setAttribute('y', 0); el.setAttribute('width', w); el.setAttribute('height', h); }
+    img.setAttribute('href', cv.toDataURL());
+    svg.querySelectorAll('feDisplacementMap').forEach((d) => d.setAttribute('scale', SCALE * d.dataset.k));
+  };
+  build();
+  addEventListener('resize', build);
+  document.documentElement.classList.add('lens-on');
+}
+
 /* ── 첫 화면 상태 한 줄 ───────────────────── */
 const DAY = 86_400_000;
 const kstDay = (t) => Math.floor((t + 9 * 3_600_000) / DAY);
@@ -72,23 +118,6 @@ function renderGithub(data) {
 
   $('#repo-total').dataset.target = total;
   $('#repo-total').textContent = total;
-  // 진행도 장면의 게이지: 쓴 글 / 목차의 전체 자리. 채우는 움직임은 scenes.js가 한다.
-  // 트랙 길이는 그 분야 전체 글 수에 비례 (가장 많은 분야가 끝까지), 채움은 쓴 비율
-  const most = Math.max(1, ...written.map((g) => g.entries.length));
-  $('#gauges').innerHTML = written.map((g) => {
-    const all = g.entries.length;
-    const done = g.done.length;
-    const ratio = all ? done / all : 0;
-    // 번호가 붙는 연재(리눅스·네트워크)만 다음 편 번호를 쓴다
-    const series = /리눅스|네트워크/.test(g.name);
-    const next = !done ? '준비 중' : done === all ? 'done' : series ? `next #${done + 1}` : '진행 중';
-    return `<li class="gauge${done ? '' : ' is-empty'}" style="--ratio:${ratio};--span:${Math.max(all, 1) / most}" data-done="${done}">
-      <p class="gauge__name">${esc(g.name)}<span>${esc(g.en || '')}</span></p>
-      <div class="gauge__track" role="img" aria-label="${esc(g.name)} ${done}/${all}"><i class="gauge__fill"></i></div>
-      <p class="gauge__count">${all ? `<b>${done}</b> / ${all}` : '—'}</p>
-      <p class="gauge__next">${next}</p>
-    </li>`;
-  }).join('');
   setStatus('st-push', repo.pushedAt);
   $('#repo-foot').textContent = `${Math.round(bytes / 1024)} KB · last push ${stamp(repo.pushedAt)}`;
 

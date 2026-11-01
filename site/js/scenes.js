@@ -47,24 +47,8 @@
     counter.textContent = Math.round(clamp(p / 0.6) * target);
   };
 
-  /* ── 진행도: 위에서부터 차례로 게이지가 차오른다 ── */
-  const pgScene = $('.scene--progress');
-  const drawProgress = () => {
-    const p = progress(pgScene);
-    const gauges = pgScene.querySelectorAll('.gauge');
-    const step = gauges.length > 1 ? 0.5 / (gauges.length - 1) : 0;
-    gauges.forEach((g, i) => {
-      // 각 게이지는 자기 차례(i × step)부터 0.4만큼의 구간 동안 0 → 1
-      const t = clamp((p - i * step) / 0.4);
-      g.style.setProperty('--t', t);
-      const n = g.querySelector('.gauge__count b');
-      if (n) n.textContent = Math.round(t * (+g.dataset.done || 0));
-    });
-  };
-
   /* ── 한 프레임에 한 번만 그린다 ───────────── */
   const scenes = [
-    [pgScene, drawProgress],
     [repoScene, drawRepo],
   ];
   let queued = false;
@@ -75,7 +59,6 @@
   const request = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
   const layout = () => {
     $('.scene--repo').style.setProperty('--len', '260vh');
-    pgScene.style.setProperty('--len', '220vh');
     request();
   };
 

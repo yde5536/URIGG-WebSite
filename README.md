@@ -3,7 +3,7 @@
 URIGG의 개인 거점 사이트. 나를 소개하는 페이지가 아니라 내가 쓰는 대시보드다. Cloudflare Pages(`*.pages.dev`)에 배포한다.
 
 - 첫 화면 대시보드: 상태, 오늘 일정(캘린더 위젯), D-day, 바로가기, 커밋 잔디(Activity), 보안 뉴스, 블로그 로그, 프로그램
-- 아래 스크롤 장면: 시리즈별 진행도 게이지(Progress), security.log `tree` 출력(Notes)
+- 아래 스크롤 장면: security.log `tree` 출력과 커밋 잔디(Notes)
 - 블로그: 티스토리 [security.log](https://urigg-security.tistory.com/) RSS → `/api/blog`
 - 저장소: [URIGG-security.log](https://github.com/yde5536/URIGG-security.log) README 목차 → `/api/github`
 - 일정: 코워크 캘린더 앱의 위젯 화면을 웹용으로 빌드해 Today 칸에 띄운다 (`site/calendar/`, 앱 계정으로 로그인)
@@ -60,4 +60,4 @@ npm run dev     # http://127.0.0.1:8788 (wrangler로 함수까지 실행)
 
 ## 캘린더 위젯 자동 갱신
 
-`.github/workflows/calendar-widget.yml`이 매일 새벽 3시(한국 시간)에 앱을 받아 다시 빌드하고, 바뀌었을 때만 커밋한다. GitHub 저장소의 Actions 탭에서 바로 돌릴 수도 있다.
+`.github/workflows/calendar-widget.yml`이 매시간 앱을 받아 다시 빌드하고, 바뀌었을 때만 커밋한다. GitHub 저장소의 Actions 탭에서 바로 돌릴 수도 있다.

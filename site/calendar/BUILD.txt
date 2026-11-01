@@ -1,1 +1,1 @@
-URIGG-ClaudeCalender 4a1e492 — scripts/build-calendar.mjs로 만든 웹용 위젯
+URIGG-ClaudeCalender 1fcda01 — scripts/build-calendar.mjs로 만든 웹용 위젯

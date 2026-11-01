@@ -1,11 +1,11 @@
 # 코워크 캘린더 앱이 바뀌면 사이트의 웹용 위젯(site/calendar)도 다시 빌드한다.
-# 매일 새벽 3시(한국 시간)에 확인하고, 바뀐 게 있을 때만 커밋한다 → Cloudflare Pages가 자동으로 다시 배포.
+# 매시간 확인하고, 바뀐 게 있을 때만 커밋한다 → Cloudflare Pages가 자동으로 다시 배포.
 # Actions 탭에서 "Run workflow"로 바로 돌릴 수도 있다.
 name: Rebuild calendar widget
 
 on:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 permissions:
