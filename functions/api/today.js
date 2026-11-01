@@ -1,6 +1,6 @@
-import { parseIcs, upcoming } from '../../lib/ics.js';
+import { parseIcs, months } from '../../lib/ics.js';
 
-// GET /api/today — 오늘부터 7일 일정. 공개 사이트라 접근 키(x-site-key)가 맞아야 내준다.
+// GET /api/today — 지난달부터 다음 달까지의 일정(달력용). 공개 사이트라 접근 키(x-site-key)가 맞아야 내준다.
 // Cloudflare Pages 환경 변수(비밀): ICS_URL = 코워크 캘린더 구독 주소, SITE_KEY = 접근 키
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -22,7 +22,7 @@ export async function onRequestGet({ request, env }) {
   try {
     const res = await fetch(env.ICS_URL, { headers: { 'User-Agent': 'URIGG-site' } });
     if (!res.ok) return json({ error: `calendar ${res.status}` }, 502);
-    return json(upcoming(parseIcs(await res.text())));
+    return json(months(parseIcs(await res.text())));
   } catch (err) {
     return json({ error: String(err.message || err) }, 502);
   }

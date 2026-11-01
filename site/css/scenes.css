@@ -206,3 +206,41 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 @media (prefers-reduced-motion: reduce) {
   .emblem { animation: none; }
 }
+
+/* ── Today 달력 (잠금 해제 후) ─────────────── */
+.cal[hidden] { display: none; }
+.cal { display: grid; gap: 8px; min-height: 0; animation: cal-in 420ms var(--ease-out); }
+@keyframes cal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.cal__bar { display: flex; align-items: center; gap: 10px; }
+.cal__month { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; }
+.cal__nav { width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.06); color: var(--ink); font: inherit; font-size: 1.25rem; line-height: 1; cursor: pointer; transition: background-color 200ms; }
+.cal__nav:hover { background: rgba(255, 255, 255, 0.14); }
+.cal__nav:disabled { opacity: 0.3; cursor: default; }
+.cal__nav:first-child { order: 0; }
+.cal__month { order: 1; }
+.cal__nav:last-child { order: 2; }
+.cal__week, .cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal__week span { text-align: center; font-size: var(--step-small); color: var(--muted); }
+.cal__week span:first-child { color: #ff8a96; }
+.cal__day {
+  display: grid; justify-items: center; align-content: start; gap: 2px; min-height: 46px; padding: 5px 0 4px;
+  border: 0; border-radius: 12px; background: transparent; color: var(--ink); font: inherit; cursor: pointer;
+  transition: background-color 180ms;
+}
+.cal__day b { font-size: var(--step-small); font-weight: 600; line-height: 1.3; }
+.cal__day span { font-size: 0.75rem; line-height: 1.1; letter-spacing: -0.1em; white-space: nowrap; overflow: hidden; max-width: 100%; }
+.cal__day:hover { background: rgba(255, 255, 255, 0.07); }
+.cal__day.is-out { opacity: 0.35; }
+.cal__day.is-today b { display: inline-grid; place-items: center; min-width: 1.9em; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #0a0a0a; }
+.cal__day.is-on { background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); } /* taste-skill-ignore: 고른 날짜 표시 */
+.cal__list { display: grid; gap: 6px; margin-top: 4px; padding-top: 10px; min-height: 0; }
+.cal__day-title { font-size: var(--step-small); color: var(--muted); }
+.cal__list ul { display: grid; gap: 4px; overflow: auto; max-height: 9.5em; }
+.cal__list li { display: grid; grid-template-columns: 3.4em 1.4em 1fr; gap: 8px; align-items: baseline; }
+.cal__list time { font-size: var(--step-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+.cal__list li.is-empty { display: block; color: var(--muted); font-size: var(--step-small); }
+.agenda[hidden] { display: none; }
+.cal__day { min-height: 42px; }
+
+/* 타일 안 스크롤바는 가늘고 옅게 */
+.agenda, .progress, .programs, .cal__list ul { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }

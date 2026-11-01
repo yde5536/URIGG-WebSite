@@ -64,17 +64,75 @@ const today = $('#today'), agenda = $('#agenda'), form = $('#unlock'), msg = $('
 const hhmm = (iso) => new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(iso));
 const dayKey = (iso) => kstDay(new Date(iso).getTime());
 
-function renderAgenda({ events }) {
-  const now = kstDay(Date.now());
-  const rows = events.map((e) => {
-    const d = Math.max(dayKey(e.start), now) - now;
-    const when = d === 0 ? '오늘' : d === 1 ? '내일' : `D+${d}`;
-    const time = e.allDay ? '종일' : hhmm(e.start);
-    return `<li class="agenda__row rd${d === 0 ? ' is-today' : ''}"><time datetime="${e.start}">${when} · ${time}</time><span>${esc(e.title)}</span></li>`;
-  });
-  agenda.innerHTML = rows.join('') || '<li class="agenda__row rd"><time>7일</time><span>잡힌 일정이 없습니다</span></li>';
-  // 가림 막대가 위에서부터 하나씩 걷힌다
-  agenda.querySelectorAll('.rd').forEach((r, i) => setTimeout(() => r.classList.add('is-open'), 120 + i * 90));
+/* 잠금이 풀리면 위젯처럼 달력을 그린다: 날짜마다 일정 이모지, 고른 날의 일정은 아래 목록 */
+const cal = $('#cal');
+const KST_MS = 9 * 3_600_000;
+const EMOJI = /^(\p{Extended_Pictographic}(?:️|‍\p{Extended_Pictographic})*)\s*/u;
+const splitEmoji = (title) => {
+  const m = title.match(EMOJI);
+  return m ? { emoji: m[1], text: title.slice(m[0].length) } : { emoji: '', text: title };
+};
+const monthTitle = (y, m) => `${y}년 ${m + 1}월`;
+const dayLabel = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'short' });
+
+function renderCalendar({ events, from, until }) {
+  // 날짜(한국 시간 기준 일 번호)별로 일정을 모은다. 여러 날 걸친 종일 일정은 매일 들어간다.
+  const byDay = new Map();
+  for (const e of events) {
+    const s = new Date(e.start).getTime(), end = new Date(e.end).getTime();
+    for (let d = kstDay(s); d <= kstDay(Math.max(s, end - 1)); d++) {
+      if (!byDay.has(d)) byDay.set(d, []);
+      byDay.get(d).push({ ...e, ...splitEmoji(e.title) });
+    }
+  }
+  const todayKey = kstDay(Date.now());
+  const k = new Date(Date.now() + KST_MS);
+  let y = k.getUTCFullYear(), m = k.getUTCMonth(), selected = todayKey;
+  const minKey = kstDay(new Date(from).getTime()), maxKey = kstDay(new Date(until).getTime()) - 1;
+
+  const draw = () => {
+    const first = kstDay(Date.UTC(y, m, 1) - KST_MS);
+    const start = first - new Date(Date.UTC(y, m, 1)).getUTCDay();
+    const cells = [];
+    // 이번 달에 필요한 주 수만큼만 그린다 (4~6주)
+    const daysInMonth = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    const weeks = Math.ceil((first - start + daysInMonth) / 7);
+    for (let i = 0; i < weeks * 7; i++) {
+      const d = start + i;
+      const date = new Date(d * 86_400_000 + KST_MS);
+      const inMonth = date.getUTCMonth() === m;
+      const list = byDay.get(d) || [];
+      const marks = list.slice(0, 3).map((e) => e.emoji || '•').join('');
+      const cls = ['cal__day', inMonth ? '' : 'is-out', d === todayKey ? 'is-today' : '', d === selected ? 'is-on' : ''].join(' ').trim();
+      cells.push(`<button type="button" class="${cls}" data-d="${d}" aria-pressed="${d === selected}" aria-label="${date.getUTCMonth() + 1}월 ${date.getUTCDate()}일, 일정 ${list.length}개"><b>${date.getUTCDate()}</b><span>${esc(marks)}</span></button>`);
+    }
+    const sel = (byDay.get(selected) || []).slice().sort((a, b) => (b.allDay - a.allDay) || (new Date(a.start) - new Date(b.start)));
+    const prevOk = first - 1 >= minKey, nextOk = first + 31 <= maxKey;
+    cal.innerHTML = `
+      <div class="cal__bar">
+        <button type="button" class="cal__nav" data-step="-1" aria-label="지난달"${prevOk ? '' : ' disabled'}>‹</button>
+        <p class="cal__month">${monthTitle(y, m)}</p>
+        <button type="button" class="cal__nav" data-step="1" aria-label="다음 달"${nextOk ? '' : ' disabled'}>›</button>
+      </div>
+      <div class="cal__week" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div class="cal__grid">${cells.join('')}</div>
+      <div class="cal__list">
+        <p class="cal__day-title">${dayLabel.format(new Date(selected * 86_400_000))}</p>
+        <ul>${sel.map((e) => `<li><time>${e.allDay ? '종일' : hhmm(e.start)}</time><span class="cal__emoji">${esc(e.emoji)}</span><span>${esc(e.text)}</span></li>`).join('') || '<li class="is-empty">일정 없음</li>'}</ul>
+      </div>`;
+  };
+
+  cal.onclick = (e) => {
+    const day = e.target.closest('.cal__day');
+    const nav = e.target.closest('.cal__nav');
+    if (day) { selected = +day.dataset.d; const dt = new Date(selected * 86_400_000 + KST_MS); y = dt.getUTCFullYear(); m = dt.getUTCMonth(); draw(); }
+    if (nav && !nav.disabled) { m += +nav.dataset.step; if (m < 0) { m = 11; y--; } if (m > 11) { m = 0; y++; } draw(); }
+  };
+  draw();
+
+  // 가림 막대가 걷히고 달력이 드러난다
+  agenda.querySelectorAll('.rd').forEach((r, i) => setTimeout(() => r.classList.add('is-open'), 80 + i * 90));
+  setTimeout(() => { agenda.hidden = true; cal.hidden = false; }, 420);
   today.classList.add('is-clear');
   form.hidden = true;
   relock.hidden = false;
@@ -89,7 +147,7 @@ async function openToday(key) {
     if (!res.ok) { msg.textContent = '일정을 불러오지 못했습니다.'; return; }
     store.set(key);
     msg.textContent = '';
-    renderAgenda(await res.json());
+    renderCalendar(await res.json());
   } catch {
     msg.textContent = '일정 서버에 연결하지 못했습니다.';
   }
