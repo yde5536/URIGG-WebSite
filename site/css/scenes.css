@@ -72,7 +72,8 @@
 .tile__app img { width: 40px; height: 40px; }
 .tile__app p { display: grid; }
 .tile__app span { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.tile__app p { flex: 1; min-width: 0; }
+.tile__app p { flex: 1 1 0; min-width: max-content; }
+.tile__app b { white-space: nowrap; }
 .tile__app span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .btn--small { min-height: 36px; padding: 0 14px; font-size: var(--step-small); }
 .programs { display: grid; gap: 14px; min-height: 0; overflow: auto; align-content: start; }
@@ -161,7 +162,6 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 /* 프로그램 한 줄 설명 */
 .tile__app { flex-wrap: wrap; row-gap: 8px; }
 .tile__desc { order: 1; flex: 1 0 100%; font-style: normal; font-size: var(--step-small); color: var(--muted); line-height: 1.4; }
-.tile__app .btn { order: 2; }
 
 @media (max-width: 720px) {
   .emblem { width: 84px; }
