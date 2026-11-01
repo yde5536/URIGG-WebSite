@@ -77,9 +77,9 @@ em { font-style: italic; }
 .badge__links { margin-top: auto; padding-top: 40px; display: flex; gap: 28px; justify-content: center; font-size: var(--step-small); }
 .badge__links a { text-decoration-color: transparent; }
 
-.room { position: relative; overflow: hidden; background: var(--ground); min-height: calc(100svh - 24px); position: sticky; top: 12px; align-self: start; }
+.room { position: relative; overflow: hidden; background: var(--ground-deep); min-height: calc(100svh - 24px); position: sticky; top: 12px; align-self: start; }
 .room__pic { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
-.room__pic--fit { object-fit: contain; padding: 12%; }
+.room__pic--fit { object-fit: contain; padding: 10%; }
 .room__pic.is-on { opacity: 1; }
 
 /* ── 소개: 편지지 ─────────────────────────── */
@@ -89,7 +89,7 @@ em { font-style: italic; }
   content: ''; position: absolute; left: 0; right: 0; bottom: -14px; height: 14px; background: var(--paper);
   -webkit-mask: var(--scallop-down) repeat-x left top / 28px 14px; mask: var(--scallop-down) repeat-x left top / 28px 14px;
 }
-.letter__face { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.letter__face { width: 44px; height: 44px; }
 .sheet--letter h2 { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; margin-top: 0.4em; }
 .sheet--letter mark { background: var(--silver); color: var(--ink); padding: 0 0.15em; }
 .letter__sign { display: grid; margin-top: 0.6em; }
@@ -203,7 +203,7 @@ em { font-style: italic; }
 .postcard__msg h2 { font-size: var(--step-head); font-weight: 400; font-style: italic; letter-spacing: -0.02em; line-height: 1; margin-bottom: 24px; }
 .postcard__msg p { max-width: 36ch; }
 .postcard__addr { display: grid; gap: 12px; align-content: start; justify-items: start; font-size: var(--step-lead); }
-.stamp { justify-self: end; width: 88px; height: 88px; padding: 6px; background: var(--paper); object-fit: cover; margin-bottom: 8px; outline: 2px dotted var(--ink-soft); outline-offset: -2px; }
+.stamp { justify-self: end; width: 88px; height: 88px; padding: 6px; background: var(--paper); object-fit: contain; margin-bottom: 8px; outline: 2px dotted var(--ink-soft); outline-offset: -2px; }
 .imprint { grid-column: 1 / -1; text-align: center; font-size: var(--step-small); color: var(--ink-soft); }
 
 /* ── 움직임 ─────────────────────────────── */
