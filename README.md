@@ -2,7 +2,7 @@
 
 URIGG의 개인 거점 사이트. 나를 소개하는 페이지가 아니라 내가 쓰는 대시보드다. Cloudflare Pages(`*.pages.dev`)에 배포한다.
 
-- 첫 화면 대시보드: 상태(D-day 포함), 커밋 잔디, 오늘 일정(캘린더 위젯), 블로그·보안 뉴스 피드, 바로가기, 공부 진행도, 프로그램
+- 첫 화면 대시보드: 상태, 커밋 잔디, 오늘 일정(캘린더 위젯), D-day, 보안 뉴스, 블로그 로그, 바로가기, 공부 진행도, 프로그램
 - 아래 스크롤 장면: 블로그 로그 카드, security.log `tree` 출력, 캘린더 패킷 경로
 - 블로그: 티스토리 [security.log](https://urigg-security.tistory.com/) RSS → `/api/blog`
 - 저장소: [URIGG-security.log](https://github.com/yde5536/URIGG-security.log) README 목차 → `/api/github`
@@ -55,11 +55,8 @@ npm run dev     # http://127.0.0.1:8788 (wrangler로 함수까지 실행)
 
 ## D-day
 
-`site/index.html`에서 `id="st-dday"`인 줄에 날짜와 이름을 넣으면 상태줄에 나타난다.
-
-```html
-<dd id="st-dday" data-date="2026-12-12" data-label="리눅스마스터 2차"></dd>
-```
+대시보드의 D-day 칸에서 직접 추가·삭제하고 "메인"으로 큰 D-day를 고른다. 저장은 코워크 캘린더와 같은 Supabase의 `ddays` 표이고,
+처음 한 번 `db/ddays.sql`을 Supabase SQL Editor에서 실행해야 한다. 로그인은 Today 칸의 캘린더 위젯 로그인을 같이 쓴다.
 
 ## 캘린더 위젯 자동 갱신
 

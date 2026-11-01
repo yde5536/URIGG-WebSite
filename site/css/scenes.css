@@ -28,17 +28,20 @@
 .dash__status dd { margin: 0; color: var(--ink); }
 .dash__more { justify-self: center; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 
-.dash__grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
+.dash__grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: clamp(280px, 33svh, 340px) clamp(280px, 33svh, 340px) auto; gap: 16px; min-height: 0; }
 .tile { padding: 18px 22px; display: grid; gap: 10px; align-content: start; min-height: 0; overflow: hidden; }
 .tile__head { display: flex; align-items: baseline; gap: 14px; }
 .tile__head h2 { font-size: var(--step-lead); }
 .tile__more { margin-left: auto; font-size: var(--step-small); color: var(--muted); text-decoration: none; white-space: nowrap; }
 .tile__more:hover { color: var(--ink); }
-.tile--today { grid-column: 1 / span 5; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--log { grid-column: 6 / span 4; grid-row: 1; }
-.tile--alias { grid-column: 10 / span 3; grid-row: 1; }
-.tile--progress { grid-column: 6 / span 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--app { grid-column: 10 / span 3; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+/* 위 두 줄: Today | D-day·News | Shortcuts·Log,  아래 한 줄: Progress | Programs */
+.tile--today { grid-column: 1 / span 4; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--dday { grid-column: 5 / span 4; grid-row: 1; }
+.tile--news { grid-column: 5 / span 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--alias { grid-column: 9 / span 4; grid-row: 1; }
+.tile--log { grid-column: 9 / span 4; grid-row: 2; }
+.tile--progress { grid-column: 1 / span 7; grid-row: 3; height: 300px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--app { grid-column: 8 / span 5; grid-row: 3; height: 300px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 
 /* 최근 글 (tail) */
 .tail { display: grid; gap: 2px; margin-top: 8px; color: var(--muted); }
@@ -115,7 +118,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 
 /* 넓은 화면에서는 대시보드가 정확히 한 화면, 넘치는 목록은 타일 안에서 스크롤 */
 @media (min-width: 1025px) {
-  .dash { height: 100svh; }
+  .dash { min-height: 100svh; }
 }
 
 /* ── 태블릿 ─────────────────────────────── */
@@ -123,7 +126,8 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .dash { min-height: 0; }
   .dash__grid { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
   .tile--today { grid-column: 1 / -1; grid-row: auto; }
-  .tile--log, .tile--alias, .tile--progress, .tile--app { grid-column: auto; grid-row: auto; }
+  .tile--dday, .tile--news, .tile--log, .tile--alias, .tile--progress, .tile--app { grid-column: auto; grid-row: auto; height: auto; }
+  .tile--news { height: 320px; }
   .repo__side { grid-column: 1 / -1; }
   .repo__foot { display: none; }
   .term--window { grid-column: 1 / -1; height: 52svh; }
@@ -136,7 +140,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .dash__status { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
   .dash__grid { grid-template-columns: 1fr; gap: 12px; }
   .tile { padding: 18px 18px; }
-  .tile--today { order: 1; } .tile--alias { order: 2; } .tile--log { order: 3; } .tile--progress { order: 4; } .tile--app { order: 5; }
+  .tile--today { order: 1; } .tile--dday { order: 2; } .tile--alias { order: 3; } .tile--news { order: 4; } .tile--log { order: 5; } .tile--progress { order: 6; } .tile--app { order: 7; }
   .tile__head { flex-wrap: wrap; }
   .tail li { grid-template-columns: 1fr; gap: 0; white-space: normal; }
   .tail li:nth-child(n+4) { display: none; }
@@ -183,13 +187,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .activity figcaption { font-size: var(--step-small); color: var(--muted); }
 .activity figcaption b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 
-/* ── Feed 칸: 탭과 보안 뉴스 ───────────────── */
-.tile--log { grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.feed-tabs { margin-left: auto; display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); }
-.feed-tabs button { border: 0; padding: 5px 12px; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-size: var(--step-small); cursor: pointer; transition: background-color 200ms, color 200ms; }
-.feed-tabs button[aria-selected='true'] { background: rgba(255, 255, 255, 0.14); color: var(--ink); }
-.feed-tabs button:hover { color: var(--ink); }
-.news[hidden], .term[hidden] { display: none; }
+/* ── 보안 뉴스 ───────────────── */
 .news { display: grid; align-content: start; gap: 0; min-height: 0; overflow: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
 .news a { display: grid; grid-template-columns: 5.4em minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 6px 8px; margin-inline: -8px; border-radius: 10px; text-decoration: none; font-size: var(--step-small); }
 .news a:hover, .news a:focus-visible { background: rgba(255, 255, 255, 0.07); }
@@ -212,3 +210,32 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 @media (max-width: 1024px) {
   .dash__side { justify-items: start; width: 100%; }
 }
+
+/* ── D-day ─────────────────────────────── */
+.tile--dday { grid-template-rows: auto auto minmax(0, 1fr) auto; align-content: stretch; }
+.dday__add-btn { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step-small); color: var(--muted); cursor: pointer; }
+.dday__add-btn:hover { color: var(--ink); }
+.dday__main { display: grid; gap: 2px; }
+.dday__big { font-size: clamp(2.4rem, 3.6vw, 3.25rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; font-variant-numeric: tabular-nums; }
+.dday__big.is-past { color: var(--muted); }
+.dday__name { font-size: var(--step-body); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.dday__date { font-size: var(--step-small); color: var(--muted); }
+.dday__hint { color: var(--muted); font-size: var(--step-small); }
+.dday__hint code { font-size: 0.75rem; }
+.dday__list { display: grid; align-content: start; gap: 2px; min-height: 0; overflow: auto; overflow-x: hidden; margin-top: 6px; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.dday__list li { display: grid; grid-template-columns: 4.4em minmax(0, 1fr) auto auto auto; gap: 8px; align-items: center; padding: 1px 0; font-size: var(--step-small); }
+.dday__list li b { font-variant-numeric: tabular-nums; }
+.dday__list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dday__list li time { color: var(--muted); white-space: nowrap; }
+.dday__list li.is-past { opacity: 0.5; }
+.dday__list .dday__top-actions { display: block; padding-top: 6px; }
+.dday__list .dday__top-actions button { border: 0; background: none; padding: 0; font: inherit; font-size: 0.75rem; color: var(--muted); cursor: pointer; }
+.dday__icon { min-width: 26px; height: 26px; padding: 0 6px; font-size: 0.75rem; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font: inherit; cursor: pointer; }
+.dday__icon:hover { background: rgba(255, 255, 255, 0.1); color: var(--ink); }
+.dday__form[hidden] { display: none; }
+.dday__form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.dday__form input[type='text'], .dday__form input[type='date'] { min-height: 38px; padding: 0 12px; border: 0; border-radius: 10px; background: rgba(255, 255, 255, 0.08); color: var(--ink); font: inherit; font-size: var(--step-small); color-scheme: dark; }
+.dday__form input[type='text'] { grid-column: 1 / -1; }
+.dday__check { display: inline-flex; align-items: center; gap: 6px; font-size: var(--step-small); color: var(--muted); }
+.dday__form .btn { justify-self: start; }
+.dday__cancel { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step-small); color: var(--muted); cursor: pointer; justify-self: end; }

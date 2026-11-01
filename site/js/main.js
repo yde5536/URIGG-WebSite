@@ -142,31 +142,6 @@ function renderNews(data) {
     <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('');
 }
 
-// Feed 칸의 탭: security.log ↔ 보안 뉴스 (고른 탭은 이 브라우저에 기억)
-const tabs = [$('#tab-log'), $('#tab-news')];
-const panels = [$('#panel-log'), $('#panel-news')];
-const pickTab = (i) => {
-  tabs.forEach((t, j) => t.setAttribute('aria-selected', i === j));
-  panels.forEach((p, j) => { p.hidden = i !== j; });
-  try { localStorage.setItem('urigg.feed', i); } catch {}
-};
-tabs.forEach((t, i) => t.addEventListener('click', () => pickTab(i)));
-try { if (localStorage.getItem('urigg.feed') === '1') pickTab(1); } catch {}
-
-/* ── D-day: index.html의 #st-dday에 data-date="YYYY-MM-DD" data-label="이름"을 넣으면 나타난다 ── */
-{
-  const dd = $('#st-dday');
-  const date = dd.dataset.date;
-  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-    // 둘 다 "YYYY-MM-DD"(UTC 자정)로 두고 빼면 날짜 차이가 된다
-    const today = new Date(Date.now() + 9 * 3_600_000).toISOString().slice(0, 10);
-    const left = Math.round((Date.parse(date) - Date.parse(today)) / 86_400_000);
-    $('#dday-label').textContent = dd.dataset.label || 'D-day';
-    dd.textContent = left > 0 ? `D-${left}` : left === 0 ? 'D-DAY' : `D+${-left}`;
-    $('#dday-item').hidden = false;
-  }
-}
-
 /* ── 앱처럼 설치 (PWA) ───────────────────── */
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));

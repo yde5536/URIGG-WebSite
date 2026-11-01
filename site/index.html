@@ -30,6 +30,7 @@
   <script>document.documentElement.classList.add('js')</script>
   <script src="js/main.js" defer></script>
   <script src="js/scenes.js" defer></script>
+  <script src="js/dday.js" defer></script>
 </head>
 <body>
   <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -65,7 +66,6 @@
             <div><dt>last post</dt><dd id="st-post">—</dd></div>
             <div><dt>last push</dt><dd id="st-push">—</dd></div>
             <div><dt>calendar</dt><dd id="st-app">—</dd></div>
-            <div id="dday-item" hidden><dt id="dday-label">D-day</dt><dd id="st-dday" data-date="" data-label=""></dd></div>
           </dl>
         </div>
       </header>
@@ -81,20 +81,36 @@
           <iframe class="widget-frame" src="calendar/" title="코워크 캘린더 위젯" loading="lazy"></iframe>
         </article>
 
+        <!-- D-day: 메인 하나는 크게, 나머지는 아래 목록. Supabase에 저장 (db/ddays.sql) -->
+        <article class="tile tile--dday glass glass--dark" aria-labelledby="dday-title">
+          <div class="tile__head">
+            <h2 id="dday-title">D-day</h2>
+            <button type="button" class="tile__more link dday__add-btn" id="dday-add" hidden>+ 추가</button>
+          </div>
+          <div class="dday__main" id="dday-main"><p class="dday__hint">캘린더 위젯에 로그인하면 D-day를 저장할 수 있어요.</p></div>
+          <ul class="dday__list" id="dday-list"></ul>
+          <form class="dday__form" id="dday-form" hidden>
+            <input id="dday-name" type="text" placeholder="이름 (예: 리눅스마스터 2차)" maxlength="60" required aria-label="D-day 이름">
+            <input id="dday-date" type="date" required aria-label="날짜">
+            <label class="dday__check"><input id="dday-main-check" type="checkbox"> 메인</label>
+            <button class="btn btn--small" type="submit">저장</button>
+            <button class="link dday__cancel" type="button" id="dday-cancel">취소</button>
+          </form>
+        </article>
+
+        <!-- 보안 뉴스 -->
+        <article class="tile tile--news glass glass--dark" aria-labelledby="news-title">
+          <div class="tile__head"><h2 id="news-title">News</h2><span class="tile__more">KISA · 데일리시큐 · THN</span></div>
+          <ol class="news" id="panel-news"></ol>
+        </article>
+
         <!-- 최근 글 -->
         <article class="tile tile--log glass glass--dark" aria-labelledby="latest-title">
-          <div class="tile__head">
-            <h2 id="latest-title">Feed</h2>
-            <div class="feed-tabs" role="tablist" aria-label="피드 고르기">
-              <button type="button" role="tab" id="tab-log" aria-selected="true" aria-controls="panel-log">security.log</button>
-              <button type="button" role="tab" id="tab-news" aria-selected="false" aria-controls="panel-news">보안 뉴스</button>
-            </div>
-          </div>
-          <div class="term" id="panel-log" role="tabpanel" aria-labelledby="tab-log">
+          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a></div>
+          <div class="term" aria-label="최신 글">
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
             <ol class="tail" id="tail"></ol>
           </div>
-          <ol class="news" id="panel-news" role="tabpanel" aria-labelledby="tab-news" hidden></ol>
         </article>
 
         <!-- 바로가기 -->
