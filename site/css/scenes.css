@@ -28,20 +28,22 @@
 .dash__status dd { margin: 0; color: var(--ink); }
 .dash__more { justify-self: center; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 
-.dash__grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: clamp(280px, 33svh, 340px) clamp(280px, 33svh, 340px) auto; gap: 16px; min-height: 0; }
+.dash__grid { display: grid; grid-template-columns: clamp(300px, 20vw, 400px) repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
 .tile { padding: 18px 22px; display: grid; gap: 10px; align-content: start; min-height: 0; overflow: hidden; }
 .tile__head { display: flex; align-items: baseline; gap: 14px; }
 .tile__head h2 { font-size: var(--step-lead); }
 .tile__more { margin-left: auto; font-size: var(--step-small); color: var(--muted); text-decoration: none; white-space: nowrap; }
 .tile__more:hover { color: var(--ink); }
-/* 위 두 줄: Today | D-day·News | Shortcuts·Log,  아래 한 줄: Progress | Programs */
-.tile--today { grid-column: 1 / span 4; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--dday { grid-column: 5 / span 4; grid-row: 1; }
-.tile--news { grid-column: 5 / span 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--alias { grid-column: 9 / span 4; grid-row: 1; }
-.tile--log { grid-column: 9 / span 4; grid-row: 2; }
-.tile--progress { grid-column: 1 / span 7; grid-row: 3; height: 300px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--app { grid-column: 8 / span 5; grid-row: 3; height: 300px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+/* 왼쪽 Today(좁게, 두 줄 높이) + 오른쪽 6칸(3열 × 2줄, 모두 같은 크기)
+   D-day | Shortcuts | Progress
+   News  | Log       | Programs */
+.tile--today { grid-column: 1; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--dday { grid-column: 2; grid-row: 1; }
+.tile--alias { grid-column: 3; grid-row: 1; }
+.tile--progress { grid-column: 4; grid-row: 1; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--news { grid-column: 2; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--log { grid-column: 3; grid-row: 2; }
+.tile--app { grid-column: 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 
 /* 최근 글 (tail) */
 .tail { display: grid; gap: 2px; margin-top: 8px; color: var(--muted); }
@@ -68,9 +70,9 @@
 
 /* 진행도 */
 .progress { display: grid; gap: 4px; align-content: start; min-height: 0; overflow: auto; }
-.progress li { display: grid; grid-template-columns: 5em auto 1fr; gap: 12px; align-items: baseline; }
+.progress li { display: grid; grid-template-columns: 4.6em auto minmax(0, 1fr); gap: 10px; align-items: baseline; }
 .progress__cells { font-family: var(--mono); letter-spacing: 0.12em; color: var(--accent-text); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.progress__next { color: var(--muted); font-size: var(--step-small); text-align: right; }
+.progress__next { color: var(--muted); font-size: var(--step-small); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* 캘린더 앱 */
 .tile__app { display: flex; align-items: center; gap: 14px; }
@@ -118,7 +120,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 
 /* 넓은 화면에서는 대시보드가 정확히 한 화면, 넘치는 목록은 타일 안에서 스크롤 */
 @media (min-width: 1025px) {
-  .dash { min-height: 100svh; }
+  .dash { height: 100svh; min-height: 680px; }
 }
 
 /* ── 태블릿 ─────────────────────────────── */
