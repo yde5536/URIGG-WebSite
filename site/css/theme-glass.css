@@ -64,31 +64,3 @@
   .lens { left: 40%; top: 90px; }
 }
 
-/* ── 무지갯빛 테두리 (Apple Music 아이콘 느낌) ──────────────
-   ::before = 얇고 선명한 테두리, ::after = 안쪽으로 번지는 빛. 색은 천천히 돈다. */
-@property --rim-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-
-.rim { --rim-w: 1.5px; --rim-glow: 0.5; --rim-spread: 7px; --rim-blur: 9px; }
-.grep.rim, .desk__panel.rim { position: relative; }
-.rim::before, .rim::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background: conic-gradient(from var(--rim-angle), #5aa9ff, #ffffff 10%, #ffb067 22%, #ff3d5e 32%, #8a63ff 46%, #5aa9ff 58%, #e9f4ff 70%, #ff8a4c 84%, #5aa9ff); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  animation: rim-spin 14s linear infinite;
-}
-.rim::before { padding: var(--rim-w); opacity: 0.95; }
-.rim::after { padding: var(--rim-spread); filter: blur(var(--rim-blur)); opacity: var(--rim-glow); }
-@keyframes rim-spin { to { --rim-angle: 360deg; } }
-
-/* 렌즈는 아이콘처럼 두껍고 진하게 */
-.lens.rim { --rim-w: 2.5px; --rim-glow: 0.9; --rim-spread: 14px; --rim-blur: 12px; }
-/* 상단 바는 스크롤했을 때만, 은은하게 */
-.top.rim { --rim-w: 1px; --rim-glow: 0.25; --rim-spread: 5px; }
-.top.rim:not(.is-stuck)::before, .top.rim:not(.is-stuck)::after { opacity: 0; }
-.top.rim::before, .top.rim::after { transition: opacity 300ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  .rim::before, .rim::after { animation: none; }
-}
