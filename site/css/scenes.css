@@ -26,7 +26,6 @@
 .dash__status div { display: grid; gap: 2px; }
 .dash__status dt { font-family: var(--mono); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 .dash__status dd { margin: 0; color: var(--ink); }
-.dash .lens { width: 68px; left: 150px; top: auto; bottom: -14px; animation: none; }
 .dash__more { justify-self: center; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 
 .dash__grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }

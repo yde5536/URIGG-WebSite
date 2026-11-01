@@ -158,11 +158,6 @@ function renderGithub(data) {
   refresh();
 }
 
-// 렌즈는 첫 화면이 보일 때만 떠다닌다 (화면 밖에서 유리 필터를 다시 그리지 않도록)
-const lens = $('.lens');
-if (lens && 'IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => lens.classList.toggle('is-paused', !e.isIntersecting)).observe($('.dash'));
-}
 
 load('blog').then((d) => d?.posts?.length && renderBlog(d));
 load('github').then((d) => d?.groups && renderGithub(d));

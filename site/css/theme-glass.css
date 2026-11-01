@@ -1,6 +1,5 @@
-/* 리퀴드 글래스 테마.
-   이 파일과 js/glass.js를 빼면 사이트는 base.css의 불투명한 taste-skill 스타일로 돌아간다.
-   굴절(SVG 변위 필터)은 glass.js가 Chromium 계열에서만 덧붙이고, 나머지 브라우저는 흐린 유리까지만 보인다. */
+/* 반투명 유리 패널 — 타일과 스크롤할 때의 상단 바.
+   이 파일을 빼면 타일이 불투명한 면이 된다. */
 
 :root {
   --glass-tint: rgba(255, 255, 255, 0.07);
@@ -14,56 +13,17 @@
 
 .glass {
   background: var(--glass-tint);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  backdrop-filter: blur(var(--glass-blur)) saturate(170%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  box-shadow: var(--glass-edge), var(--glass-lift); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
+  backdrop-filter: blur(var(--glass-blur)) saturate(170%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
+  box-shadow: var(--glass-edge), var(--glass-lift); /* taste-skill-ignore: 사용자 요청 유리 패널 */
 }
 .glass--dark { background: var(--glass-tint-strong); }
 
 /* 상단 바: 첫 화면에서는 투명하고, 스크롤하면 유리가 된다 */
-.top { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; } /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+.top { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; } /* taste-skill-ignore: 사용자 요청 유리 패널 */
 .top.is-stuck {
   background: rgba(20, 20, 20, 0.35);
-  -webkit-backdrop-filter: blur(12px) saturate(180%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  backdrop-filter: blur(12px) saturate(180%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  box-shadow: var(--glass-edge), var(--glass-lift); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
+  -webkit-backdrop-filter: blur(12px) saturate(180%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
+  backdrop-filter: blur(12px) saturate(180%); /* taste-skill-ignore: 사용자 요청 유리 패널 */
+  box-shadow: var(--glass-edge), var(--glass-lift); /* taste-skill-ignore: 사용자 요청 유리 패널 */
 }
-
-/* 첫 화면의 렌즈 — 큰 글자 위를 떠다니고 끌어서 옮길 수 있다 */
-.lens {
-  position: absolute; z-index: 5;
-  width: clamp(140px, 16vw, 230px); aspect-ratio: 1;
-  left: 44%; top: 18svh;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.02);
-  -webkit-backdrop-filter: blur(0.6px) saturate(140%) brightness(1.08); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  backdrop-filter: blur(0.6px) saturate(140%) brightness(1.08); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  box-shadow: var(--glass-edge), var(--glass-lift); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-  cursor: grab; touch-action: none;
-  animation: drift 14s ease-in-out infinite alternate;
-}
-.lens.is-held { cursor: grabbing; animation: none; }
-.lens.is-placed { animation: none; }
-.lens.is-paused { animation-play-state: paused; }
-@keyframes drift {
-  0%   { transform: translate(0, 0); }
-  50%  { transform: translate(120%, 160%); }
-  100% { transform: translate(260%, 60%); }
-}
-
-/* 로그 목록: 고른 줄은 사진 위에 뜬 유리 띠 */
-.entry.is-active .entry__link, .entry__link:hover, .entry__link:focus-visible {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--glass-edge); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-}
-
-/* 캘린더 스크린샷은 위젯 그대로, 아래에 유리 받침만 */
-.desk__shot { box-shadow: var(--glass-lift); } /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 테마 */
-
-@media (prefers-reduced-motion: reduce) {
-  .lens { animation: none; }
-}
-@media (max-width: 720px) {
-  .lens { left: 40%; top: 90px; }
-}
-
