@@ -1,0 +1,1970 @@
+{
+ "url": "https://urigg.pages.dev",
+ "at": "2026-11-01T05:26:09.842Z",
+ "allow": [
+  "glass",
+  "shadow"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.19,
+    0.3,
+    0.38,
+    0.38,
+    0.39,
+    0.88,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 37,
+    "css": 35,
+    "transitions": 0,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 6930,
+     "screens": 7.7,
+     "words": 607,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 2,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ibm-machine-room.jpg",
+      "img.png",
+      "asr-33-teletype.jpg",
+      "network-cables.jpg",
+      "calendar-widget.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "chars": 25,
+     "lines": 2,
+     "size": 115.2,
+     "vw": 8,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "right",
+     "widthRatio": 0.54,
+     "top": 609,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "lines": 2,
+     "size": 115.2,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "URIGG — Security, logged.",
+      "words": 4,
+      "chars": 25,
+      "lines": 2,
+      "size": 115.2,
+      "vw": 8,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.54,
+      "top": 609,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "The log",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.09,
+      "top": 1643,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "security.log on GitHub",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 2701,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cowork Calendar",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 4642,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "대화",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 489.6,
+      "vw": 34,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 4779,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "위젯",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 489.6,
+      "vw": 34,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.55,
+      "top": 4779,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "코워크 캘린더",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.15,
+      "top": 5375,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 2,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      19,
+      24,
+      40,
+      115,
+      490
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Switzer",
+      "size": 24,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": -0.004,
+      "contrast": 7.8
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 489.6,
+      "vw": 34,
+      "font": "Switzer",
+      "text": "대화"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.12,
+     "centerShare": 0.1,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0a0a",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0.04
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#efefef",
+       "top": 6030,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.94
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#a3a3a3",
+       "share": 0.41
+      },
+      {
+       "color": "#efefef",
+       "share": 0.38
+      },
+      {
+       "color": "#0a0a0a",
+       "share": 0.1
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.06
+      },
+      {
+       "color": "#3d3d3d",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#b11226",
+      "hsl": {
+       "h": 352,
+       "s": 0.82,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "블로그 가기"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 14,
+     "shadowOverlay": 1,
+     "shadowSamples": [
+      "div.lens → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "div.grep.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 14,
+     "roundedBoxes": 2,
+     "boxRadius": 28,
+     "squareMedia": 3,
+     "roundedMedia": 2,
+     "mediaRadius": 14,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "switzer",
+     "pretendard variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 6930,
+    "margins": {
+     "left": 48,
+     "right": 50
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 0,
+      "height": 900,
+      "words": 59,
+      "media": 0,
+      "middle": 252,
+      "heading": null,
+      "left": 48,
+      "right": 409,
+      "textLeft": 48,
+      "textRight": 409,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.about",
+      "tag": "section",
+      "top": 900,
+      "height": 581,
+      "words": 95,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 48,
+      "right": 72,
+      "textLeft": 48,
+      "textRight": 72,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#log.log",
+      "tag": "section",
+      "top": 1481,
+      "height": 1000,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "section#repo.repo",
+      "tag": "section",
+      "top": 2480,
+      "height": 1961,
+      "words": 185,
+      "media": 1,
+      "middle": 32,
+      "heading": {
+       "text": "security.log on GitHub",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 277,
+      "right": 48,
+      "textLeft": 277,
+      "textRight": 293,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.specimens",
+      "tag": "div",
+      "top": 4671,
+      "height": 460,
+      "words": 2,
+      "media": 0,
+      "middle": 32,
+      "heading": {
+       "text": "대화",
+       "size": 490,
+       "tag": "p"
+      },
+      "left": 48,
+      "right": 0,
+      "textLeft": 48,
+      "textRight": 0,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 5130,
+      "height": 900,
+      "words": 42,
+      "media": 1,
+      "middle": 120,
+      "heading": {
+       "text": "코워크 캘린더",
+       "size": 40,
+       "tag": "h3"
+      },
+      "left": 96,
+      "right": 199,
+      "textLeft": 776,
+      "textRight": 199,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.end",
+      "tag": "footer",
+      "top": 6030,
+      "height": 900,
+      "words": 58,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 48,
+      "right": 48,
+      "textLeft": 48,
+      "textRight": 50,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 840,
+      "height": 280
+     },
+     {
+      "top": 6220,
+      "height": 336
+     }
+    ],
+    "h1s": [
+     {
+      "text": "URIGG — Security, logged.",
+      "size": 115,
+      "top": 609,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 48,
+      "n": 2
+     },
+     {
+      "x": 277,
+      "n": 2
+     },
+     {
+      "x": 612,
+      "n": 2
+     },
+     {
+      "x": 736,
+      "n": 2
+     },
+     {
+      "x": 866,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 24,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.28,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 600,
+     "h": 600
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.23,
+    0.45,
+    0.84,
+    0.38,
+    0.33,
+    0.91,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 37,
+    "css": 35,
+    "transitions": 0,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 7633,
+     "screens": 7.5,
+     "words": 607,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 2,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ibm-machine-room.jpg",
+      "img.png",
+      "asr-33-teletype.jpg",
+      "network-cables.jpg",
+      "calendar-widget.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "chars": 25,
+     "lines": 2,
+     "size": 99.8,
+     "vw": 13,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.93,
+     "top": 643,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "lines": 2,
+     "size": 99.8,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "URIGG — Security, logged.",
+      "words": 4,
+      "chars": 25,
+      "lines": 2,
+      "size": 99.8,
+      "vw": 13,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 643,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "The log",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 31.5,
+      "vw": 4.1,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 1674,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "security.log on GitHub",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 31.5,
+      "vw": 4.1,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 3339,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cowork Calendar",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 31.5,
+      "vw": 4.1,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 5091,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "대화",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 261.1,
+      "vw": 34,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 5293,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "위젯",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 261.1,
+      "vw": 34,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.55,
+      "top": 5293,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "코워크 캘린더",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 31.5,
+      "vw": 4.1,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 6362,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 2,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      18,
+      21,
+      32,
+      100,
+      261
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Switzer",
+      "size": 20.6,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": -0.004,
+      "contrast": 7.8
+     },
+     "measureChars": 33,
+     "max": {
+      "size": 261.1,
+      "vw": 34,
+      "font": "Switzer",
+      "text": "대화"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.12,
+     "centerShare": 0.1,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0a0a",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0.04
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#1f1f1f",
+       "top": 2544,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.12
+       }
+      },
+      {
+       "color": "#efefef",
+       "top": 6896,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.94
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#a3a3a3",
+       "share": 0.41
+      },
+      {
+       "color": "#efefef",
+       "share": 0.38
+      },
+      {
+       "color": "#0a0a0a",
+       "share": 0.1
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.06
+      },
+      {
+       "color": "#3d3d3d",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#b11226",
+      "hsl": {
+       "h": 352,
+       "s": 0.82,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "블로그 가기"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 15,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.lens → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "div.grep.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 14,
+     "roundedBoxes": 2,
+     "boxRadius": 28,
+     "squareMedia": 3,
+     "roundedMedia": 2,
+     "mediaRadius": 14,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "switzer",
+     "pretendard variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 7633,
+    "margins": {
+     "left": 26,
+     "right": 27
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 0,
+      "height": 1024,
+      "words": 59,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 26,
+      "right": 378,
+      "textLeft": 26,
+      "textRight": 378,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.about",
+      "tag": "section",
+      "top": 1024,
+      "height": 502,
+      "words": 95,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 26,
+      "right": 27,
+      "textLeft": 26,
+      "textRight": 27,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__bg",
+      "tag": "div",
+      "top": 1526,
+      "height": 1670,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__head",
+      "tag": "div",
+      "top": 1646,
+      "height": 161,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__body",
+      "tag": "div",
+      "top": 1855,
+      "height": 1220,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#repo.repo",
+      "tag": "section",
+      "top": 3195,
+      "height": 1772,
+      "words": 185,
+      "media": 1,
+      "middle": 32,
+      "heading": {
+       "text": "security.log on GitHub",
+       "size": 31,
+       "tag": "h2"
+      },
+      "left": 26,
+      "right": 26,
+      "textLeft": 26,
+      "textRight": 59,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.specimens",
+      "tag": "div",
+      "top": 5171,
+      "height": 333,
+      "words": 2,
+      "media": 0,
+      "middle": 32,
+      "heading": {
+       "text": "대화",
+       "size": 261,
+       "tag": "p"
+      },
+      "left": 26,
+      "right": 0,
+      "textLeft": 26,
+      "textRight": 0,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 5503,
+      "height": 1393,
+      "words": 42,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 104,
+      "right": 104,
+      "textLeft": 124,
+      "textRight": 139,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.end",
+      "tag": "footer",
+      "top": 6896,
+      "height": 737,
+      "words": 58,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 26,
+      "right": 26,
+      "textLeft": 26,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "URIGG — Security, logged.",
+      "size": 100,
+      "top": 643,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 26,
+      "n": 6
+     },
+     {
+      "x": 400,
+      "n": 2
+     },
+     {
+      "x": 214,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 21,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 10,
+   "filled": [
+    0.31,
+    0.48,
+    0.72,
+    0.73,
+    0.37,
+    0.33,
+    0.63,
+    0.83,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 34,
+    "css": 32,
+    "transitions": 0,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 8305,
+     "screens": 9.8,
+     "words": 581,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 2,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ibm-machine-room.jpg",
+      "img.png",
+      "asr-33-teletype.jpg",
+      "network-cables.jpg",
+      "calendar-widget.png"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "chars": 25,
+     "lines": 2,
+     "size": 70.2,
+     "vw": 18,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 582,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "URIGG — Security, logged.",
+     "words": 4,
+     "lines": 2,
+     "size": 70.2,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "URIGG — Security, logged.",
+      "words": 4,
+      "chars": 25,
+      "lines": 2,
+      "size": 70.2,
+      "vw": 18,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 582,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "The log",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1708,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "security.log on GitHub",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3429,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cowork Calendar",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5709,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "대화",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 171.6,
+      "vw": 44,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5908,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "위젯",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 171.6,
+      "vw": 44,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.06,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6229,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "코워크 캘린더",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.53,
+      "top": 7078,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 2,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      17,
+      20,
+      28,
+      70,
+      172
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Switzer",
+      "size": 20,
+      "leading": 1.3,
+      "weight": 400,
+      "tracking": -0.004,
+      "contrast": 7.8
+     },
+     "measureChars": 35,
+     "max": {
+      "size": 171.6,
+      "vw": 44,
+      "font": "Switzer",
+      "text": "대화"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.12,
+     "centerShare": 0.06,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0a0a",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0.04
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#efefef",
+       "top": 6213,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.94
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#efefef",
+       "share": 0.39
+      },
+      {
+       "color": "#a3a3a3",
+       "share": 0.39
+      },
+      {
+       "color": "#0a0a0a",
+       "share": 0.11
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.06
+      },
+      {
+       "color": "#3d3d3d",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#b11226",
+      "hsl": {
+       "h": 352,
+       "s": 0.82,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "블로그 가기"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 15,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.lens → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "div.grep.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px",
+      "button.spine.glass → rgba(255, 255, 255, 0.14) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.55) 1.5px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 14,
+     "roundedBoxes": 2,
+     "boxRadius": 22,
+     "squareMedia": 3,
+     "roundedMedia": 2,
+     "mediaRadius": 14,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": true,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "switzer",
+     "pretendard variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 8305,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 0,
+      "height": 844,
+      "words": 36,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 61,
+      "textLeft": 20,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.about",
+      "tag": "section",
+      "top": 844,
+      "height": 740,
+      "words": 95,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 23,
+      "textLeft": 20,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__bg",
+      "tag": "div",
+      "top": 1584,
+      "height": 1701,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__head",
+      "tag": "div",
+      "top": 1680,
+      "height": 156,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.log__body",
+      "tag": "div",
+      "top": 1884,
+      "height": 1305,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.repo__col",
+      "tag": "div",
+      "top": 3381,
+      "height": 1638,
+      "words": 168,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "security.log on GitHub",
+       "size": 28,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "figure.repo__figure",
+      "tag": "figure",
+      "top": 5132,
+      "height": 405,
+      "words": 12,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 94,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.app__head",
+      "tag": "div",
+      "top": 5681,
+      "height": 147,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.specimens",
+      "tag": "div",
+      "top": 5828,
+      "height": 705,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "대화",
+       "size": 172,
+       "tag": "p"
+      },
+      "left": 20,
+      "right": 94,
+      "textLeft": 20,
+      "textRight": 94,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 6534,
+      "height": 1164,
+      "words": 42,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 18,
+      "textLeft": 44,
+      "textRight": 51,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.end",
+      "tag": "footer",
+      "top": 7697,
+      "height": 608,
+      "words": 58,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 224,
+      "height": 356
+     }
+    ],
+    "h1s": [
+     {
+      "text": "URIGG — Security, logged.",
+      "size": 70,
+      "top": 582,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 8
+     },
+     {
+      "x": 134,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 20,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "28% of the first screen is one empty block (600×600px at 0,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  },
+  {
+   "level": "WARN",
+   "id": "pill-nav",
+   "width": 390,
+   "message": "Floating rounded pill navigation.",
+   "fix": "Use a plain bar: wordmark left, a few links, one action."
+  },
+  {
+   "level": "WARN",
+   "id": "blank-gap",
+   "width": 390,
+   "message": "A 356px stretch at 224px holds nothing.",
+   "fix": "Check that it is a deliberate rest (once per page at most); otherwise close it to the normal section gap."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\desktop-fold.jpg",
+   "pages": [
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\desktop-page-01.jpg",
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\tablet-fold.jpg",
+   "pages": [
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\tablet-page-01.jpg",
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\mobile-fold.jpg",
+   "pages": [
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\mobile-page-01.jpg",
+    "D:\\claudeCodeTest\\URIGG-WebSite\\.taste-skill\\live\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
