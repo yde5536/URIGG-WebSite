@@ -172,3 +172,43 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 /* Today: 코워크 캘린더 위젯을 그대로 띄운다 */
 .today__date { color: var(--muted); font-size: var(--step-small); }
 .widget-frame { display: block; width: 100%; height: 100%; min-height: 420px; border: 0; border-radius: 18px; background: transparent; color-scheme: dark; }
+
+/* ── 잔디: 지난 26주 커밋 ─────────────────── */
+.activity { margin: 0; display: grid; gap: 8px; justify-items: start; align-self: end; }
+.activity__grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px; gap: 3px; }
+.activity__grid i { border-radius: 3px; background: rgba(255, 255, 255, 0.06); }
+.activity__grid .lv1 { background: rgba(140, 170, 235, 0.38); }
+.activity__grid .lv2 { background: rgba(160, 190, 245, 0.66); }
+.activity__grid .lv3 { background: rgba(215, 228, 255, 0.95); }
+.activity figcaption { font-size: var(--step-small); color: var(--muted); }
+.activity figcaption b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── Feed 칸: 탭과 보안 뉴스 ───────────────── */
+.tile--log { grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.feed-tabs { margin-left: auto; display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); }
+.feed-tabs button { border: 0; padding: 5px 12px; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-size: var(--step-small); cursor: pointer; transition: background-color 200ms, color 200ms; }
+.feed-tabs button[aria-selected='true'] { background: rgba(255, 255, 255, 0.14); color: var(--ink); }
+.feed-tabs button:hover { color: var(--ink); }
+.news[hidden], .term[hidden] { display: none; }
+.news { display: grid; align-content: start; gap: 0; min-height: 0; overflow: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.news a { display: grid; grid-template-columns: 5.4em minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 6px 8px; margin-inline: -8px; border-radius: 10px; text-decoration: none; font-size: var(--step-small); }
+.news a:hover, .news a:focus-visible { background: rgba(255, 255, 255, 0.07); }
+.news__src { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.news__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.news time { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 1024px) {
+  .activity { order: 3; width: 100%; }
+}
+@media (max-width: 720px) {
+  .activity__grid { grid-template-rows: repeat(7, 9px); grid-auto-columns: 9px; gap: 2px; }
+  .news a { grid-template-columns: 1fr auto; }
+  .news__src { grid-column: 1 / -1; }
+}
+
+/* 오른쪽: 잔디 위, 상태줄 아래 */
+.dash__side { display: grid; gap: 14px; justify-items: end; }
+.dash__status [hidden] { display: none; }
+@media (max-width: 1024px) {
+  .dash__side { justify-items: start; width: 100%; }
+}

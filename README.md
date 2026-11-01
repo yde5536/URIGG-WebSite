@@ -2,7 +2,7 @@
 
 URIGG의 개인 거점 사이트. 나를 소개하는 페이지가 아니라 내가 쓰는 대시보드다. Cloudflare Pages(`*.pages.dev`)에 배포한다.
 
-- 첫 화면 대시보드: 상태, 오늘 일정(접근 키), 최근 글, 바로가기, 공부 진행도, 캘린더 앱
+- 첫 화면 대시보드: 상태(D-day 포함), 커밋 잔디, 오늘 일정(캘린더 위젯), 블로그·보안 뉴스 피드, 바로가기, 공부 진행도, 프로그램
 - 아래 스크롤 장면: 블로그 로그 카드, security.log `tree` 출력, 캘린더 패킷 경로
 - 블로그: 티스토리 [security.log](https://urigg-security.tistory.com/) RSS → `/api/blog`
 - 저장소: [URIGG-security.log](https://github.com/yde5536/URIGG-security.log) README 목차 → `/api/github`
@@ -19,10 +19,11 @@ site/                  정적 파일 (Pages 출력 폴더)
   js/main.js           데이터 불러오기, 대시보드, grep, tree
   js/scenes.js         스크롤 장면 엔진
   data/*.json          API가 실패할 때 쓰는 예비 데이터
+  manifest.webmanifest, sw.js  앱처럼 설치(PWA)
   images/
-functions/api/         Cloudflare Pages Functions (blog, github)
+functions/api/         Cloudflare Pages Functions (blog, github, news)
 calendar-web/          캘린더 위젯 웹 빌드용 빈 껍데기(Tauri 대체)와 스타일
-lib/                   RSS·GitHub 파싱
+lib/                   RSS·GitHub·보안 뉴스 파싱
 scripts/snapshot.mjs   예비 데이터 갱신: npm run snapshot
 scripts/build-calendar.mjs  캘린더 위젯 웹 빌드: npm run build:calendar (앱을 업데이트한 뒤 다시 실행)
 ```
@@ -51,3 +52,15 @@ npm run dev     # http://127.0.0.1:8788 (wrangler로 함수까지 실행)
 ## 백업
 
 리퀴드 글래스 첫 버전은 태그 `v1-liquid-glass`에 있다.
+
+## D-day
+
+`site/index.html`에서 `id="st-dday"`인 줄에 날짜와 이름을 넣으면 상태줄에 나타난다.
+
+```html
+<dd id="st-dday" data-date="2026-12-12" data-label="리눅스마스터 2차"></dd>
+```
+
+## 캘린더 위젯 자동 갱신
+
+`.github/workflows/calendar-widget.yml`이 매일 새벽 3시(한국 시간)에 앱을 받아 다시 빌드하고, 바뀌었을 때만 커밋한다. GitHub 저장소의 Actions 탭에서 바로 돌릴 수도 있다.

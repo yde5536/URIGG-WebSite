@@ -1,0 +1,34 @@
+# 코워크 캘린더 앱이 바뀌면 사이트의 웹용 위젯(site/calendar)도 다시 빌드한다.
+# 매일 새벽 3시(한국 시간)에 확인하고, 바뀐 게 있을 때만 커밋한다 → Cloudflare Pages가 자동으로 다시 배포.
+# Actions 탭에서 "Run workflow"로 바로 돌릴 수도 있다.
+name: Rebuild calendar widget
+
+on:
+  schedule:
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build the web widget from the latest app
+        run: node scripts/build-calendar.mjs
+      - name: Commit if it changed
+        run: |
+          if git diff --quiet -- site/calendar && [ -z "$(git ls-files --others --exclude-standard site/calendar)" ]; then
+            echo "캘린더 위젯 변경 없음"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A site/calendar
+          git commit -m "Rebuild calendar widget ($(cut -d' ' -f2 site/calendar/BUILD.txt))"
+          git push

@@ -12,6 +12,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
   <link rel="apple-touch-icon" href="/images/favicon-180.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="URIGG">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -50,17 +54,24 @@
           <span class="dash__tag" aria-hidden="true" data-decrypt>Security, logged.</span>
         </h1>
         </div>
-        <dl class="dash__status">
-          <div><dt>today</dt><dd id="st-today">—</dd></div>
-          <div><dt>time</dt><dd id="st-clock">--:--:--</dd></div>
-          <div><dt>last post</dt><dd id="st-post">—</dd></div>
-          <div><dt>last push</dt><dd id="st-push">—</dd></div>
-          <div><dt>calendar</dt><dd id="st-app">—</dd></div>
-        </dl>
+        <div class="dash__side">
+          <figure class="activity" aria-labelledby="activity-cap">
+            <div class="activity__grid" id="activity" role="img" aria-label="security.log 커밋 잔디"></div>
+            <figcaption id="activity-cap">security.log · 지난 26주 <b id="activity-total">0</b> commits</figcaption>
+          </figure>
+          <dl class="dash__status">
+            <div><dt>today</dt><dd id="st-today">—</dd></div>
+            <div><dt>time</dt><dd id="st-clock">--:--:--</dd></div>
+            <div><dt>last post</dt><dd id="st-post">—</dd></div>
+            <div><dt>last push</dt><dd id="st-push">—</dd></div>
+            <div><dt>calendar</dt><dd id="st-app">—</dd></div>
+            <div id="dday-item" hidden><dt id="dday-label">D-day</dt><dd id="st-dday" data-date="" data-label=""></dd></div>
+          </dl>
+        </div>
       </header>
 
       <div class="dash__grid">
-        <!-- 오늘 일정: 접근 키를 넣으면 기밀이 해제되듯 드러난다 -->
+        <!-- 오늘 일정: 코워크 캘린더 위젯 -->
         <article class="tile tile--today glass glass--dark" aria-labelledby="today-title">
           <div class="tile__head">
             <h2 id="today-title">Today</h2>
@@ -72,11 +83,18 @@
 
         <!-- 최근 글 -->
         <article class="tile tile--log glass glass--dark" aria-labelledby="latest-title">
-          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a></div>
-          <div class="term" aria-label="최신 글">
+          <div class="tile__head">
+            <h2 id="latest-title">Feed</h2>
+            <div class="feed-tabs" role="tablist" aria-label="피드 고르기">
+              <button type="button" role="tab" id="tab-log" aria-selected="true" aria-controls="panel-log">security.log</button>
+              <button type="button" role="tab" id="tab-news" aria-selected="false" aria-controls="panel-news">보안 뉴스</button>
+            </div>
+          </div>
+          <div class="term" id="panel-log" role="tabpanel" aria-labelledby="tab-log">
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
             <ol class="tail" id="tail"></ol>
           </div>
+          <ol class="news" id="panel-news" role="tabpanel" aria-labelledby="tab-news" hidden></ol>
         </article>
 
         <!-- 바로가기 -->
