@@ -58,9 +58,18 @@
     filter.id = id;
     filter.setAttribute('color-interpolation-filters', 'sRGB');
     filter.setAttribute('filterUnits', 'userSpaceOnUse');
-    filter.innerHTML = '<feImage result="map" preserveAspectRatio="none"/><feDisplacementMap in="SourceGraphic" in2="map" xChannelSelector="R" yChannelSelector="G"/>';
+    // 빨강·초록·파랑을 조금씩 다르게 휘게 해서 가장자리에 프리즘 같은 색 번짐을 만든다
+    const channel = (name, row) =>
+      `<feDisplacementMap in="SourceGraphic" in2="map" xChannelSelector="R" yChannelSelector="G" result="d${name}"/>` +
+      `<feColorMatrix in="d${name}" type="matrix" values="${row} 0 0 0 1 0" result="${name}"/>`;
+    filter.innerHTML = '<feImage result="map" preserveAspectRatio="none"/>' +
+      channel('r', '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0') +
+      channel('g', '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0') +
+      channel('b', '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0') +
+      '<feBlend in="r" in2="g" mode="screen" result="rg"/><feBlend in="rg" in2="b" mode="screen"/>';
     defs.append(filter);
-    const image = filter.firstChild, disp = filter.lastChild;
+    const image = filter.querySelector('feImage');
+    const disps = filter.querySelectorAll('feDisplacementMap');
     const blur = el.dataset.blur ?? '2px';
     const extra = el.dataset.extra ?? 'saturate(160%)';
 
@@ -76,7 +85,8 @@
         node.setAttribute('width', w); node.setAttribute('height', h);
       }
       image.setAttribute('href', drawMap(w, h, r, bezel));
-      disp.setAttribute('scale', el.dataset.depth || 36);
+      const depth = +(el.dataset.depth || 36), spread = +(el.dataset.disperse ?? 0.14);
+      disps.forEach((d, i) => d.setAttribute('scale', depth * (1 - spread * i)));
       const f = `url(#${id}) blur(${blur}) ${extra}`;
       el.style.backdropFilter = f;
       el.style.webkitBackdropFilter = f;
