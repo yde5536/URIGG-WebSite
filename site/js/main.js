@@ -45,7 +45,7 @@ if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').match
   </filter>`;
   document.body.append(svg);
   const filter = svg.querySelector('filter'), img = svg.querySelector('feImage');
-  const BAND = 20, SCALE = 46;
+  const BAND = 18, SCALE = 30;
   // 알약 모양의 가장자리에서 안쪽으로 얼마나 들어왔는지(거리)와 바깥 방향(법선)으로 변위 지도를 그린다
   const build = () => {
     const w = Math.round(topBar.offsetWidth), h = Math.round(topBar.offsetHeight);
