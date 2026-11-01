@@ -1,4 +1,4 @@
-// 페이지 데이터 — 대시보드(상태·시계·일정·tail·진행도·프로그램)와 tree 출력
+// 페이지 데이터 — 대시보드(상태·시계·tail·알림·뉴스·프로그램)와 tree 출력·잔디
 // 화면을 움직이는 일은 scenes.js가 한다. 여기서 내용이 바뀌면 'scenes:refresh'를 알린다.
 const $ = (s, root = document) => root.querySelector(s);
 const esc = (s = '') => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -46,29 +46,32 @@ if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').match
   document.body.append(svg);
   const filter = svg.querySelector('filter'), img = svg.querySelector('feImage');
   const BAND = 20, SCALE = 46;
-  // 알약 모양의 가장자리에서 안쪽으로 얼마나 들어왔는지(거리)와 바깥 방향(법선)으로 변위 지도를 그린다
+  // 알약 모양의 가장자리에서 안쪽으로 얼마나 들어왔는지(거리)와 바깥 방향(법선)으로 변위 지도를 그린다.
+  // 크롬은 이 필터를 화면의 실제 픽셀 단위로 계산하므로, 배율(devicePixelRatio)만큼 키워서 만들어야 글자가 뭉개지지 않는다.
   const build = () => {
-    const w = Math.round(topBar.offsetWidth), h = Math.round(topBar.offsetHeight);
+    const dpr = devicePixelRatio || 1;
+    const w = topBar.offsetWidth, h = topBar.offsetHeight;
     if (!w || !h) return;
+    const W = Math.round(w * dpr), H = Math.round(h * dpr), r = h / 2;
     const cv = document.createElement('canvas');
-    cv.width = w; cv.height = h;
-    const ctx = cv.getContext('2d'), data = ctx.createImageData(w, h), r = h / 2;
-    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-      const px = x + 0.5 - w / 2, py = y + 0.5 - h / 2;
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d'), data = ctx.createImageData(W, H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const px = (x + 0.5) / dpr - w / 2, py = (y + 0.5) / dpr - h / 2;
       const qx = Math.abs(px) - (w / 2 - r), qy = Math.abs(py) - (h / 2 - r);
       let nx, ny, depth;
-      if (qx > 0) { const l = Math.hypot(qx, qy > 0 ? qy : 0) || 1; depth = r - Math.hypot(qx, Math.max(qy, 0)); nx = Math.sign(px) * qx / l; ny = qy > 0 ? Math.sign(py) * qy / l : 0; }
+      if (qx > 0) { const l = Math.hypot(qx, Math.max(qy, 0)) || 1; depth = r - l; nx = Math.sign(px) * qx / l; ny = qy > 0 ? Math.sign(py) * qy / l : 0; }
       else { depth = r - Math.abs(py); nx = 0; ny = Math.sign(py); }
       const t = Math.max(0, 1 - depth / BAND), mag = t * t;
-      const i = (y * w + x) * 4;
+      const i = (y * W + x) * 4;
       data.data[i] = 128 - nx * mag * 127;
       data.data[i + 1] = 128 - ny * mag * 127;
       data.data[i + 2] = 128; data.data[i + 3] = 255;
     }
     ctx.putImageData(data, 0, 0);
-    for (const el of [filter, img]) { el.setAttribute('x', 0); el.setAttribute('y', 0); el.setAttribute('width', w); el.setAttribute('height', h); }
+    for (const el of [filter, img]) { el.setAttribute('x', 0); el.setAttribute('y', 0); el.setAttribute('width', W); el.setAttribute('height', H); }
     img.setAttribute('href', cv.toDataURL());
-    svg.querySelectorAll('feDisplacementMap').forEach((d) => d.setAttribute('scale', SCALE * d.dataset.k));
+    svg.querySelectorAll('feDisplacementMap').forEach((d) => d.setAttribute('scale', SCALE * dpr * d.dataset.k));
   };
   build();
   addEventListener('resize', build);
@@ -100,10 +103,59 @@ setInterval(tick, 1000);
 $('#today-date').textContent = todayLabel;
 
 /* ── 블로그: 대시보드의 tail 로그 ─────────── */
+/* ── Log 칸 탭: Log ↔ 알림 ──────────────── */
+const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+const showTab = (tab) => {
+  for (const t of tabs) {
+    const on = t === tab;
+    t.setAttribute('aria-selected', on);
+    t.tabIndex = on ? 0 : -1;
+    $('#' + t.getAttribute('aria-controls')).hidden = !on;
+  }
+  try { localStorage.setItem('urigg-log-tab', tab.id); } catch {}
+};
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => showTab(t));
+  t.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+    showTab(next); next.focus();
+  });
+});
+try { const saved = $('#' + localStorage.getItem('urigg-log-tab')); if (saved) showTab(saved); } catch {}
+
+/* ── 주요 알림: 여러 곳(블로그·릴리스·뉴스·D-day·캘린더)에서 모아 한 목록으로 ──
+   각 출처가 window.alerts.set(이름, [{ text, href?, time?, icon?, warn?, at? }])로 자기 몫을 바꾼다. */
+const alertBox = $('#pane-alerts'), alertCount = $('#alert-count');
+const alertSources = {};
+window.alerts = {
+  set(source, items) {
+    alertSources[source] = items;
+    const all = Object.values(alertSources).flat().sort((a, b) => (!!b.warn - !!a.warn) || (a.at ?? 0) - (b.at ?? 0));
+    alertBox.innerHTML = all.length
+      ? all.map((a) => {
+          const inner = `<b>${a.icon || '·'}</b><span>${esc(a.text)}</span><time>${esc(a.time || '')}</time>`;
+          return `<li class="${a.warn ? 'is-warn' : ''}">${a.href ? `<a href="${esc(a.href)}" target="_blank" rel="noopener">${inner}</a>` : `<p>${inner}</p>`}</li>`;
+        }).join('')
+      : '<li class="is-empty">새 알림이 없어요</li>';
+    const warn = all.filter((a) => a.warn).length;
+    alertCount.textContent = warn;
+    alertCount.hidden = !warn;
+  },
+};
+window.alerts.set('init', []);
+const daysAgo = (iso) => kstDay(Date.now()) - kstDay(new Date(iso).getTime());
+
 function renderBlog(data) {
   $('#tail').innerHTML = data.posts.slice(0, 5).map((p, i) => `
     <li style="--i:${i}"><time datetime="${p.date}">${stamp(p.date).slice(5)}</time><span class="lvl">INFO</span><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a></li>`).join('');
   setStatus('st-post', data.posts[0]?.date);
+  const last = data.posts[0];
+  if (!last) return;
+  const d = daysAgo(last.date);
+  window.alerts.set('blog', d <= 2
+    ? [{ icon: '¶', text: `새 글: ${last.title}`, time: ago(last.date), href: last.link }]
+    : d >= 14 ? [{ icon: '¶', text: `블로그에 ${d}일째 새 글이 없어요`, time: '새 글 쓰기', href: 'https://urigg-security.tistory.com/manage/newpost' }] : []);
 }
 
 /* ── security.log: tree 출력 ─────────────── */
@@ -146,6 +198,7 @@ function renderGithub(data) {
   if (release) {
     $('#app-ver').textContent = `${release.tag} · ${stamp(release.publishedAt).slice(5, 10)}`;
     $('#st-app').textContent = release.tag;
+    if (daysAgo(release.publishedAt) <= 3) window.alerts.set('release', [{ icon: '⬇', text: `코워크 캘린더 ${release.tag} 나왔어요`, time: ago(release.publishedAt), href: release.url }]);
   }
   renderActivity(data.activity || {});
   refresh();
@@ -178,7 +231,13 @@ function renderActivity(days) {
 }
 
 /* ── 보안 뉴스 ──────────────────────────── */
+// 꼭 볼 보안 뉴스: 최근 이틀 안에, 제목에 긴급·제로데이·치명적·CVSS 9~10 같은 말이 있는 기사
+const URGENT = /긴급|제로데이|0-?day|zero-day|critical|치명|CVSS\s*(9|10)|actively exploited|악용 중/i;
 function renderNews(data) {
+  window.alerts.set('news', data.items
+    .filter((n) => daysAgo(n.date) <= 2 && URGENT.test(n.title))
+    .slice(0, 4)
+    .map((n) => ({ icon: '!', warn: true, text: `${n.source} · ${n.title}`, time: ago(n.date), href: n.link })));
   $('#panel-news').innerHTML = data.items.map((n) => `
     <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('');
 }

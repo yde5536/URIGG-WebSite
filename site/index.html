@@ -104,12 +104,19 @@
         </article>
 
         <!-- 최근 글 -->
-        <article class="tile tile--log glass glass--dark" aria-labelledby="latest-title">
-          <div class="tile__head"><h2 id="latest-title">Log</h2><a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a></div>
-          <div class="term" aria-label="최신 글">
+        <article class="tile tile--log glass glass--dark" aria-label="Log · 알림">
+          <div class="tile__head">
+            <div class="tabs" role="tablist" aria-label="Log 칸 보기">
+              <button type="button" role="tab" id="tab-log" aria-selected="true" aria-controls="pane-log">Log</button>
+              <button type="button" role="tab" id="tab-alerts" aria-selected="false" aria-controls="pane-alerts" tabindex="-1">알림<span class="tabs__count" id="alert-count" hidden></span></button>
+            </div>
+            <a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a>
+          </div>
+          <div class="term" id="pane-log" role="tabpanel" aria-labelledby="tab-log">
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
             <ol class="tail" id="tail"></ol>
           </div>
+          <ul class="alerts" id="pane-alerts" role="tabpanel" aria-labelledby="tab-alerts" hidden></ul>
         </article>
 
         <!-- 바로가기 -->

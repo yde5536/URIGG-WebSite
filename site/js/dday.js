@@ -78,11 +78,28 @@
     }).join('') + (top ? `<li class="dday__top-actions"><button type="button" class="link" data-del="${top.id}">메인 D-day 삭제</button></li>` : '');
   }
 
+  // Log 칸 알림: 7일 안에 다가오는 D-day
+  const ddayAlerts = () => window.alerts?.set('dday', items
+    .map((d) => ({ d, n: left(d.target) }))
+    .filter(({ n }) => n >= 0 && n <= 7)
+    .map(({ d, n }) => ({ icon: '◷', warn: n <= 3, at: n, text: `${d.title} ${label(n)}`, time: md(d.target) })));
+
+  // Log 칸 알림: 캘린더의 오늘 일정 (한국 시간 오늘 0시 ~ 내일 0시)
+  async function todayEvents() {
+    const from = `${todayKey()}T00:00:00+09:00`;
+    const to = new Date(Date.parse(from) + 86_400_000).toISOString();
+    const rows = await api(`events?select=title,emoji,start_at,all_day&start_at=gte.${encodeURIComponent(from)}&start_at=lt.${encodeURIComponent(to)}&order=start_at.asc&limit=10`);
+    const hm = (iso) => new Date(Date.parse(iso) + 9 * 3_600_000).toISOString().slice(11, 16);
+    window.alerts?.set('today', rows.map((r) => ({ icon: r.emoji || '•', at: Date.parse(r.start_at) / 1e12, text: `오늘 ${r.title}`, time: r.all_day ? '종일' : hm(r.start_at) })));
+  }
+
   async function load() {
-    if (!session()) return render('login');
+    if (!session()) { window.alerts?.set('dday', []); window.alerts?.set('today', []); return render('login'); }
+    todayEvents().catch(() => {});
     try {
       items = await api('ddays?select=id,title,target,is_main&order=target.asc');
       render();
+      ddayAlerts();
     } catch (e) {
       render(e.message === 'login' ? 'login' : e.message === 'no-table' ? 'no-table' : 'error');
     }

@@ -39,7 +39,7 @@
 .tile--news { grid-column: 2; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--dday { grid-column: 3; grid-row: 1; }
 .tile--alias { grid-column: 4; grid-row: 1; }
-.tile--log { grid-column: 3; grid-row: 2; }
+.tile--log { grid-column: 3; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--app { grid-column: 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 
 /* 최근 글 (tail) */
@@ -247,3 +247,19 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .dday__suggest .is-empty { display: block; color: var(--muted); cursor: default; }
 /* 목록이 열려 있는 동안은 칸 밖으로 나와 보이게 */
 .tile--dday:has(.dday__suggest:not([hidden])) { overflow: visible; z-index: 3; }
+
+/* Log 칸의 탭: Log(최신 글) ↔ 알림 */
+.tabs { display: flex; gap: 16px; }
+.tabs button { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.tabs button[aria-selected='true'] { color: var(--ink); }
+.tabs button:hover { color: var(--ink); }
+.tabs__count { min-width: 1.5em; padding: 1px 6px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.7rem; font-weight: 700; line-height: 1.5; text-align: center; letter-spacing: 0; }
+.tabs__count[hidden], .alerts[hidden], .term[hidden] { display: none; }
+.alerts { display: grid; gap: 2px; align-content: start; overflow: auto; overflow-x: hidden; min-height: 0; margin: 4px 0 0; padding: 0; list-style: none; font-size: var(--step-small); scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.alerts li > * { display: grid; grid-template-columns: 1.2em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; margin: 0; padding: 5px 6px; border-radius: 8px; color: var(--ink); text-decoration: none; }
+.alerts a:hover { background: rgba(255, 255, 255, 0.07); }
+.alerts span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.alerts time { font-size: var(--step-small); color: var(--muted); white-space: nowrap; }
+.alerts .is-warn b { color: var(--accent-text); }
+.alerts .is-empty { display: block; color: var(--muted); padding: 5px 6px; }
+.alerts b { font-weight: 700; text-align: center; color: var(--muted); }
