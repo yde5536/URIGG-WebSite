@@ -30,6 +30,26 @@ const onScroll = () => topBar.classList.toggle('is-stuck', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+/* ── 오로라: 아주 느리게(초당 1~2px) 흐르므로 초당 8번만 옮긴다.
+   CSS 애니메이션은 초당 60번 그려서, 위에 겹친 유리 칸들의 흐림을 매번 다시 계산해 GPU를 많이 쓴다.
+   [주기(초), 시작 x(vw), y(vh), 크기, 끝 x, y, 크기] — 끝까지 갔다가 되돌아온다 */
+const AURORA = [[58, 0, 0, 1, -5, 4, 1.06], [67, 0, 0, 1.04, 4, -3, 1], [74, -4, 3, 0.96, 5, -4, 1.05]];
+const auroraSpans = document.querySelectorAll('.aurora span');
+if (auroraSpans.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const t0 = performance.now();
+  const drift = () => {
+    if (document.hidden) return;
+    const s = (performance.now() - t0) / 1000;
+    auroraSpans.forEach((el, i) => {
+      const [dur, x0, y0, k0, x1, y1, k1] = AURORA[i];
+      const p = (s / dur) % 2, e = (1 - Math.cos(Math.PI * (p < 1 ? p : 2 - p))) / 2; // ease-in-out
+      el.style.transform = `translate3d(${x0 + (x1 - x0) * e}vw, ${y0 + (y1 - y0) * e}vh, 0) scale(${k0 + (k1 - k0) * e})`;
+    });
+  };
+  drift();
+  setInterval(drift, 125);
+}
+
 /* ── 상단 바 유리 렌즈 (크롬·엣지만: 배경 필터에 SVG를 쓸 수 있는 브라우저) ──
    가장자리 띠에서 뒤 화면을 안쪽으로 당겨 굴절처럼 보이게 하고, 빨강·초록·파랑을 조금씩 다르게 당겨 프리즘처럼 갈라지게 한다. */
 if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').matches) {

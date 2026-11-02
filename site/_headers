@@ -1,0 +1,8 @@
+# Cloudflare Pages 캐시 설정. 기본값은 모든 파일을 매번 서버에 다시 확인(max-age=0)한다.
+# 캘린더 위젯 assets는 이름에 해시가 붙어 내용이 바뀌면 이름도 바뀌므로 1년 동안 그대로 쓴다.
+/calendar/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 이미지는 하루 동안 그대로 쓰고, 그 뒤 일주일까지는 저장본을 먼저 보여 주며 뒤에서 새로 받는다
+/images/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

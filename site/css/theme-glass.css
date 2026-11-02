@@ -35,36 +35,27 @@
 /* ── 리퀴드 글래스 분위기 ─────────────────────
    화면 뒤의 빛(네이비·푸른 회색, 크림슨은 아주 조금)을 유리 타일이 흐리게 비춘다. */
 /* 오로라: 아주 넓고 부드러운 빛 세 줄기가 느리게, 조금만 흐른다.
-   가장자리가 보이지 않도록 빛이 끝까지 서서히 사라지게 하고, 움직임은 위치·크기만(GPU). */
+   가장자리가 보이지 않도록 빛이 끝까지 서서히 사라지게 하고, 움직임은 위치·크기만(GPU). 움직이는 건 main.js가 초당 8번. */
 .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
 .aurora span { position: absolute; width: 95vmax; height: 95vmax; border-radius: 50%; will-change: transform; }
 .aurora span:nth-child(1) {
   right: -38vmax; top: -48vmax;
   background: radial-gradient(closest-side, rgba(58, 86, 150, 0.42), rgba(58, 86, 150, 0.16) 50%, rgba(58, 86, 150, 0) 100%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-  animation: aurora-1 58s ease-in-out infinite alternate;
 }
 .aurora span:nth-child(2) {
   left: -42vmax; bottom: -50vmax;
   background: radial-gradient(closest-side, rgba(34, 52, 89, 0.55), rgba(34, 52, 89, 0.2) 50%, rgba(34, 52, 89, 0) 100%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-  animation: aurora-2 67s ease-in-out infinite alternate;
 }
 .aurora span:nth-child(3) {
   left: 18vw; top: 10vh; width: 70vmax; height: 70vmax;
   background: radial-gradient(closest-side, rgba(140, 40, 70, 0.14), rgba(80, 70, 140, 0.07) 55%, rgba(80, 70, 140, 0) 100%); /* taste-skill-ignore: 사용자 요청 리퀴드 글래스 */
-  animation: aurora-3 74s ease-in-out infinite alternate;
 }
-@keyframes aurora-1 { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-5vw, 4vh, 0) scale(1.06); } }
-@keyframes aurora-2 { from { transform: translate3d(0, 0, 0) scale(1.04); } to { transform: translate3d(4vw, -3vh, 0) scale(1); } }
-@keyframes aurora-3 { from { transform: translate3d(-4vw, 3vh, 0) scale(0.96); } to { transform: translate3d(5vw, -4vh, 0) scale(1.05); } }
 
 /* 아주 옅은 필름 입자: 어두운 그라데이션의 줄무늬(밴딩)를 없앤다. 움직이지 않는다. */
 body::after {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.05; mix-blend-mode: overlay;
-}
-@media (prefers-reduced-motion: reduce) {
-  .aurora span { animation: none; }
 }
 
 .glass--dark { background: rgba(18, 20, 26, 0.16); }
