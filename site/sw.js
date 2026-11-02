@@ -1,8 +1,8 @@
 // 앱처럼 설치했을 때 쓰는 서비스 워커.
 // 페이지와 데이터는 늘 네트워크를 먼저 쓰고(최신 우선), 끊겼을 때만 저장해 둔 것을 보여 준다.
 // 이름에 해시가 붙은 파일(캘린더 위젯 assets)과 이미지는 저장본을 먼저 쓴다.
-const CACHE = 'urigg-v3';
-const SHELL = ['/', '/css/base.css', '/css/scenes.css', '/css/theme-glass.css', '/js/main.js', '/js/scenes.js', '/js/dday.js', '/js/osk.js', '/images/favicon-192.png'];
+const CACHE = 'urigg-v4';
+const SHELL = ['/', '/css/base.css', '/css/scenes.css', '/css/theme-glass.css', '/js/main.js', '/js/scenes.js', '/js/dday.js', '/js/osk.js', '/js/drag.js', '/images/favicon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
