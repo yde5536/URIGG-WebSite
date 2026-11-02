@@ -36,7 +36,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - `/api/github` needs `GITHUB_TOKEN` (set in Cloudflare for Production and Preview). The grass uses the GraphQL contribution calendar (all repos).
 - Today tile = the real Cowork Calendar app built for the web: `scripts/build-calendar.mjs` → `site/calendar/`. `.github/workflows/calendar-widget.yml` rebuilds hourly and commits to main when the app changed.
 - D-day data: Supabase table `ddays` (`db/ddays.sql`, owner-only RLS), same project as the calendar; the site borrows the widget's login from localStorage (`sb-dfvcgacadkaglgtooxdy-auth-token`).
-- Wallpaper mode: `?wall` (dashboard only, no scroll, taskbar padding, reload every 30 min). Used with Lively Wallpaper on Windows.
+- Wallpaper mode: `?wall` (dashboard only, no scroll, taskbar padding, reload every 30 min). Used with Lively Wallpaper on the user's **laptop only** (ultrawide layout doesn't matter for wall). Lively forwards the mouse but not the keyboard, and its preview window doesn't share storage with the wallpaper, so `js/osk.js` shows a mouse-driven on-screen keyboard for inputs (widget login, D-day name). Desktop icons hidden. User declined battery saving.
 
 ## Design decisions (keep unless the user changes them)
 
@@ -63,6 +63,7 @@ Gotchas: `core.autocrlf=true` (normalize `\r\n` in Node edit scripts); write reg
 
 ## Open threads (as of 2026-11-02)
 
-- Lively Wallpaper setup with `?wall` was just explained; the user may need help with it (keyboard input inside Lively may not work; desktop icons: suggested hiding them).
+- Lively: on-screen keyboard just shipped; confirm the user could log in to the widget on the wallpaper.
+- Wall mode: replace the Programs tile with something glanceable (big clock, time to next event, GitHub grass…). Agreed in principle; **wait for the user to say go** and pick the content.
 - Command palette: **on hold** (2026-11-02). The user agreed it isn't needed now: the dashboard already shows everything on one screen, there is little to search, and the main use is the `?wall` wallpaper where keyboard input may not work. If notes/blog posts pile up, add a plain notes + blog search box in the Notes scene instead. Design notes kept in case: Spotlight-style centered glass bar, sliding glass pill selection, grouped results, Korean initial-consonant (초성) search, Ctrl+K and `/`.
 - Feature ideas offered: Linux Master mock-exam score chart from commit messages, study timer, next-post reminder, news keyword highlight.
