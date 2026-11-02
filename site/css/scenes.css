@@ -334,3 +334,17 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .wall .dash__brand { gap: 22px; }
 .wall .dash__name { font-size: 4rem; }
 .wall .dash__tag { font-size: var(--step-lead); }
+
+/* 바탕화면 모드: 오른쪽 열은 Shortcuts(3 × 3)를 길게, Commits를 짧게.
+   줄을 10 : 3 : 7로 나눠 D-day/Log 경계는 가운데, Shortcuts/Commits 경계는 65% 지점 */
+.keys .key--wall { display: none; }
+.wall .keys .key--wall { display: grid; }
+.wall .keys { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+.wall .dash__grid { grid-template-rows: minmax(0, 10fr) minmax(0, 3fr) minmax(0, 7fr); }
+.wall .tile--today, .wall .tile--news { grid-row: 1 / -1; }
+.wall .tile--dday { grid-row: 1; }
+.wall .tile--log { grid-row: 2 / -1; }
+.wall .tile--alias { grid-row: 1 / span 2; }
+.wall .tile--grass { grid-row: 3; }
+/* VMware 아이콘은 가로로 긴 글자 로고라 크게 */
+.key__glass img[src$='vmware.svg'] { inset: 14%; width: 72%; height: 72%; }

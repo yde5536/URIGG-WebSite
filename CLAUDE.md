@@ -44,7 +44,8 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Top bar: fully clear when stuck, only edge refraction + RGB prism (SVG backdrop filter, Chromium only, map built at devicePixelRatio) and a thin rim.
 - Crimson only on main buttons. Fonts: Switzer + Pretendard, mono for small labels/times.
 - Round URIGG logo with a soft halo, no ring, no float.
-- Dashboard grid: Today | News (2 rows); all four columns the same width | D-day · Shortcuts / 알림·Log · Programs. In `?wall` only, Programs is swapped for Commits (GitHub grass + 연속 / 이번 주 / 26주).
+- Dashboard grid: Today | News (2 rows); all four columns the same width | D-day · Shortcuts / 알림·Log · Programs. In `?wall` only, Programs is swapped for Commits (GitHub grass + 연속 / 이번 주 / 26주), and the right column is split 65/35: Shortcuts tall (3 × 3, adds Chrome, 파일 탐색기, VMware), Commits short (rows `10fr 3fr 7fr`).
+- Wall-only shortcuts: Chrome opens https://www.google.com/ (Chrome is the laptop's default browser); 파일 탐색기 and VMware use `urigg-explorer:` / `urigg-vmware:`, registered per user by `scripts/windows/urigg-launchers.reg` (remove with `urigg-launchers-remove.reg`). They take no arguments, so nothing in the URL reaches the program. Claude's auto mode refuses to import registry files; the user double-clicks the .reg.
 - 알림/Log tabs: 알림 first; sliding glass pill; red unread count clears after the list is seen for 2 s.
 - Title scrambles between "URIGG" and "Security.log Website" every 15 s ("Security.log HUB" in `?wall`); tagline is `urigg.pages.dev`. In `?wall` the logo (104px) and title (4rem) are larger, so tiles are shorter.
 - Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (desktop app, `claude://`), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
