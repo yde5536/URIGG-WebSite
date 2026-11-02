@@ -238,6 +238,7 @@ function renderGithub(data) {
   $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
 
   if (release) {
+    $('#app-ver').textContent = `${release.tag} · ${stamp(release.publishedAt).slice(5, 10)}`;
     $('#st-app').textContent = release.tag;
     if (daysAgo(release.publishedAt) <= 3) window.alerts.set('release', [{ icon: '⬇', text: `코워크 캘린더 ${release.tag} 나왔어요`, time: ago(release.publishedAt), href: release.url }]);
   }

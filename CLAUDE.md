@@ -44,7 +44,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Top bar: fully clear when stuck, only edge refraction + RGB prism (SVG backdrop filter, Chromium only, map built at devicePixelRatio) and a thin rim.
 - Crimson only on main buttons. Fonts: Switzer + Pretendard, mono for small labels/times.
 - Round URIGG logo with a soft halo, no ring, no float.
-- Dashboard grid: Today | News (2 rows) | D-day · Shortcuts / 알림·Log · Commits (GitHub grass + 연속 / 이번 주 / 26주; replaced Programs on 2026-11-02, the calendar download stays in the footer).
+- Dashboard grid: Today | News (2 rows, **same width**, columns `1fr 1fr 0.9fr 0.9fr`) | D-day · Shortcuts / 알림·Log · Programs. In `?wall` only, Programs is swapped for Commits (GitHub grass + 연속 / 이번 주 / 26주).
 - 알림/Log tabs: 알림 first; sliding glass pill; red unread count clears after the list is seen for 2 s.
 - Title scrambles between "URIGG" and "Security.log Website" every 15 s ("Security.log HUB" in `?wall`); tagline is `urigg.pages.dev`.
 - Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (desktop app, `claude://`), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).

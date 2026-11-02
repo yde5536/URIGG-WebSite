@@ -28,19 +28,22 @@
 .dash__status dd { margin: 0; color: var(--ink); }
 .dash__more { justify-self: center; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 
-.dash__grid { display: grid; grid-template-columns: clamp(300px, 20vw, 400px) repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
+.dash__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) repeat(2, minmax(0, 0.9fr)); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
 .tile { padding: 18px 22px; display: grid; gap: 10px; align-content: start; min-height: 0; overflow: hidden; }
 .tile__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
 .tile__head h2 { font-size: var(--step-lead); }
 .tile__more { margin-left: auto; font-size: var(--step-small); color: var(--muted); text-decoration: none; white-space: nowrap; }
 .tile__more:hover { color: var(--ink); }
-/* Today(좁게) | News(크게, 두 줄 높이) | D-day · Shortcuts / Log · Programs (2 × 2) */
+/* Today | News (같은 너비, 두 줄 높이) | D-day · Shortcuts / Log · Programs (2 × 2, 조금 좁게).
+   바탕화면 모드에서는 Programs 자리에 잔디(Commits) */
 .tile--today { grid-column: 1; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--news { grid-column: 2; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--dday { grid-column: 3; grid-row: 1; }
 .tile--alias { grid-column: 4; grid-row: 1; }
 .tile--log { grid-column: 3; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
-.tile--app { grid-column: 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--app, .tile--grass { grid-column: 4; grid-row: 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--grass, .wall .tile--app { display: none; }
+.wall .tile--grass { display: grid; }
 
 /* 최근 글 (tail) */
 .tail { display: grid; gap: 2px; margin-top: 8px; color: var(--muted); }
@@ -53,13 +56,14 @@
 @keyframes type-in { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
 
 /* 바로가기: 3 × 2 리퀴드 글라스 정사각형 아이콘, 이름은 아래. 칸 높이에 맞춰 정사각형 크기가 정해진다 */
-.tile--alias { grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+.tile--alias { grid-template-rows: auto minmax(0, 1fr); align-content: stretch; container-type: inline-size; }
 .keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 10px 8px; min-height: 0; }
 .keys li { display: grid; min-height: 0; }
 /* 칸이 높으면 남는 공간은 아이콘 위로 가고, 이름표는 아이콘 바로 아래에 붙는다 */
 .key { display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; align-content: center; gap: 6px; min-height: 0; text-decoration: none; }
 .key__glass {
-  display: grid; place-items: center; height: 100%; max-height: 104px; align-self: end; min-height: 52px; aspect-ratio: 1; border-radius: 26%;
+  /* 칸 높이와 너비(한 칸의 1/3에서 틈을 뺀 만큼) 중 작은 쪽에 맞춘다 */
+  display: grid; place-items: center; height: 100%; max-height: min(104px, calc(100cqi / 3 - 24px)); align-self: end; min-height: 52px; aspect-ratio: 1; border-radius: 26%;
   background: rgba(255, 255, 255, 0.07);
   -webkit-backdrop-filter: blur(8px) saturate(170%); backdrop-filter: blur(8px) saturate(170%); /* taste-skill-ignore: 사용자 요청 리퀴드 글라스 아이콘 */
   box-shadow: var(--glass-edge), 0 10px 22px -12px rgba(0, 0, 0, 0.8); /* taste-skill-ignore: 사용자 요청 리퀴드 글라스 아이콘 */
@@ -76,9 +80,15 @@
 .key:focus-visible { outline: none; }
 .key:focus-visible .key__glass { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-/* 진행도 */
-
+/* 캘린더 앱 */
+.tile__app { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.tile__app img { width: 40px; height: 40px; }
+.tile__app p { display: grid; flex: 1 1 0; min-width: max-content; }
+.tile__app b { white-space: nowrap; }
+.tile__app span { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
+.tile__desc { order: 1; flex: 1 0 100%; font-style: normal; font-size: var(--step-small); color: var(--muted); line-height: 1.4; }
 .btn--small { min-height: 36px; padding: 0 14px; font-size: var(--step-small); }
+.programs { display: grid; gap: 14px; min-height: 0; overflow: auto; overflow-x: hidden; align-content: start; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
 
 /* ── 장면 4: tree 출력 ───────────────────── */
 .repo { display: grid; grid-template-columns: max-content minmax(0, clamp(280px, 18vw, 440px)) minmax(0, 1fr); gap: 32px clamp(40px, 4vw, 72px); align-items: center; padding: 104px var(--gutter) 40px; }
@@ -128,7 +138,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .tile--dday, .tile--news, .tile--log, .tile--alias, .tile--app { grid-column: auto; grid-row: auto; height: auto; }
   .tile--news { height: 320px; }
   .keys { grid-template-rows: none; }
-  .key__glass { height: auto; width: min(100%, 84px); }
+  .key__glass { height: auto; max-height: none; width: min(100%, 84px); }
   .repo { grid-template-columns: max-content minmax(0, 300px); justify-content: space-between; }
   .repo .activity { grid-column: 2; }
 

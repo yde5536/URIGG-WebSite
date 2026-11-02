@@ -136,8 +136,21 @@
         </nav>
 
 
-        <!-- GitHub 잔디: Notes 장면과 같은 데이터 (main.js renderActivity) -->
-        <article class="tile tile--app glass glass--dark" aria-labelledby="dash-grass-title">
+        <!-- 내가 배포하는 프로그램 (일반 사이트). 새 프로그램은 <li class="tile__app"> 한 줄을 복사해 추가한다. -->
+        <article class="tile tile--app glass glass--dark" aria-labelledby="dash-app-title">
+          <div class="tile__head"><h2 id="dash-app-title">Programs</h2></div>
+          <ul class="programs" aria-label="배포 중인 프로그램">
+            <li class="tile__app">
+              <img src="images/calendar-icon.png" alt="" width="40" height="40">
+              <p><b>코워크 캘린더</b><span id="app-ver">Windows · 최신 버전</span></p>
+              <a class="btn btn--small" href="https://github.com/yde5536/URIGG-ClaudeCalender/releases/latest/download/CoworkCalendar-setup.exe">Windows 다운로드</a>
+              <em class="tile__desc">대화로 짠 일정을 위젯·아이폰에 띄우는 캘린더</em>
+            </li>
+          </ul>
+        </article>
+
+        <!-- GitHub 잔디 (바탕화면 모드에서 Programs 대신). Notes 장면과 같은 데이터 (main.js renderActivity) -->
+        <article class="tile tile--grass glass glass--dark" aria-labelledby="dash-grass-title">
           <div class="tile__head"><h2 id="dash-grass-title">Commits</h2><a class="link tile__more" href="https://github.com/yde5536" target="_blank" rel="noopener">GitHub ↗</a></div>
           <figure class="activity grass">
             <div class="activity__grid" id="dash-activity" role="img" aria-label="GitHub 전체 저장소 지난 26주 커밋 잔디"></div>
