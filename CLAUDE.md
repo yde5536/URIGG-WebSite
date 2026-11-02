@@ -51,7 +51,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (desktop app, `claude://`), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
 - Short laptop windows (≤960px tall): compact header, Today without its title row, side-by-side D-day, so the dashboard fits one screen without cutting tiles.
 - The footer (`.end`) is liked; keep it.
-- Rejected before: green hacker theme, ASCII banners, rim glow, red-heavy looks, decorative photos, Progress gauges.
+- Rejected before: green hacker theme, ASCII banners, rim glow, red-heavy looks, decorative photos, Progress gauges, refraction/prism lens on the moving 알림/Log pill (tried and reverted 2026-11-02).
 
 ## Checking work
 
