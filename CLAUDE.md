@@ -36,7 +36,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - `/api/github` needs `GITHUB_TOKEN` (set in Cloudflare for Production and Preview). The grass uses the GraphQL contribution calendar (all repos).
 - Today tile = the real Cowork Calendar app built for the web: `scripts/build-calendar.mjs` → `site/calendar/`. `.github/workflows/calendar-widget.yml` rebuilds hourly and commits to main when the app changed.
 - D-day data: Supabase table `ddays` (`db/ddays.sql`, owner-only RLS), same project as the calendar; the site borrows the widget's login from localStorage (`sb-dfvcgacadkaglgtooxdy-auth-token`).
-- Wallpaper mode: `?wall` (dashboard only, no scroll, taskbar padding, reload every 30 min). Used with Lively Wallpaper on the user's **laptop only** (ultrawide layout doesn't matter for wall). Lively forwards the mouse but not the keyboard, and its preview window doesn't share storage with the wallpaper, so `js/osk.js` shows a mouse-driven on-screen keyboard for inputs (widget login, D-day name). Desktop icons hidden. User declined battery saving.
+- Wallpaper mode: `?wall` (dashboard only, no scroll, taskbar padding, reload every 30 min). Used with Lively Wallpaper on the user's **laptop only** (ultrawide layout doesn't matter for wall). Lively forwards the mouse but not the keyboard, and its preview window doesn't share storage with the wallpaper, so `js/osk.js` shows a mouse-driven on-screen keyboard for inputs (widget login, D-day name). Lively's web wallpaper (WebView2) gets a fresh temp profile every launch unless its **disk cache** setting is on (`"CefDiskCache": false` in `%LocalAppData%\Packages\12030rocksdanister.LivelyWallpaper_*\LocalCache\Local\Lively Wallpaper\Settings.json`); with it off the login is lost on every restart. Desktop icons hidden. User declined battery saving.
 
 ## Design decisions (keep unless the user changes them)
 
@@ -47,7 +47,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Dashboard grid: Today | News (2 rows) | D-day · Shortcuts / 알림·Log · Programs.
 - 알림/Log tabs: 알림 first; sliding glass pill; red unread count clears after the list is seen for 2 s.
 - Title scrambles between "URIGG" and "Security.log Website" every 15 s ("Security.log HUB" in `?wall`); tagline is `urigg.pages.dev`.
-- Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (claude.ai), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
+- Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (desktop app, `claude://`), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
 - Short laptop windows (≤960px tall): compact header, Today without its title row, side-by-side D-day, so the dashboard fits one screen without cutting tiles.
 - The footer (`.end`) is liked; keep it.
 - Rejected before: green hacker theme, ASCII banners, rim glow, red-heavy looks, decorative photos, Progress gauges.
