@@ -165,7 +165,7 @@
           <!-- 지금 연결의 공인 IP·통신사·위치 (/api/net). 보는 사람 자신의 정보, 저장 안 함 -->
           <div class="net-pane" id="pane-net" role="tabpanel" aria-labelledby="tab-net" hidden>
             <dl class="net" id="net-info"></dl>
-            <!-- 바탕화면 전용: Cloudflare까지 왕복 시간, 1분마다 · 최근 30분 꺾은선 -->
+            <!-- 바탕화면 전용: Cloudflare까지 왕복 시간, 매분 0초·30초 · 최근 30분 꺾은선 -->
             <figure class="ping" aria-labelledby="ping-cap">
               <div class="ping__head"><span id="ping-cap">지연 시간</span><b id="ping-now">— ms</b></div>
               <div class="ping__plot">
@@ -174,7 +174,7 @@
                 <span class="ping__dot" id="ping-dot" hidden></span>
                 <span class="ping__tip" id="ping-tip" hidden></span>
               </div>
-              <figcaption class="ping__stats" id="ping-stats">1분마다 재요</figcaption>
+              <figcaption class="ping__stats" id="ping-stats">30초마다 재요</figcaption>
             </figure>
           </div>
           <!-- 3 × 2 유리 아이콘. 아이콘은 images/icons/ (simple-icons CC0, 드림핵은 공식 로고의 심볼) -->

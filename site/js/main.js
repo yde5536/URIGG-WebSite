@@ -409,7 +409,7 @@ addEventListener('offline', () => netVisible() && renderNet());
 setInterval(() => netVisible() && Date.now() - netAt > 5 * 60_000 && renderNet(), 60_000);
 
 /* ── 지연 시간 꺾은선 (바탕화면 Network 탭 아래) ─────────
-   1분마다, 화면이 보일 때만 사이트의 작은 파일을 받아 오는 왕복 시간을 잰다(서버 함수 안 씀).
+   매분 0초·30초(시계 기준)에, 화면이 보일 때만 사이트의 작은 파일을 받아 오는 왕복 시간을 잰다(서버 함수 안 씀).
    탭을 안 보고 있어도 재 두어야 열었을 때 그래프가 있다. 30분마다 새로고침되므로 기록은 이 브라우저에 저장.
    실패한 측정은 null → 선이 끊긴다. */
 if (WALL) {
@@ -440,11 +440,12 @@ if (WALL) {
     const avg = ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : 0;
     $('#ping-stats').textContent = ok.length
       ? `최근 30분 · 최저 ${Math.round(Math.min(...ok))} · 평균 ${Math.round(avg)} · 최고 ${Math.round(Math.max(...ok))} ms`
-      : '1분마다 재요';
+      : '30초마다 재요';
   };
   const ping = async () => {
     if (document.hidden) return;
     let ms = null;
+    const at = Date.now(); // 잰 시각은 보낸 순간 (응답이 늦어도 0초·30초에 찍히게)
     if (navigator.onLine) {
       const t0 = performance.now();
       try {
@@ -452,7 +453,7 @@ if (WALL) {
         if (res.ok) ms = performance.now() - t0;
       } catch {}
     }
-    pts.push({ t: Date.now(), ms });
+    pts.push({ t: at, ms });
     pts = pts.filter((p) => Date.now() - p.t < WINDOW);
     try { localStorage.setItem(PING_KEY, JSON.stringify(pts)); } catch {}
     draw();
@@ -476,8 +477,11 @@ if (WALL) {
   });
   plot.addEventListener('pointerleave', () => { tip.hidden = true; dot.hidden = true; $('#ping-cross')?.setAttribute('visibility', 'hidden'); });
   draw();
-  ping();
-  setInterval(ping, 60_000);
+  // 시계 기준으로 매분 0초와 30초에 잰다. 매번 다음 정각을 다시 계산하므로 밀리지 않고,
+  // Lively가 멈췄다 풀려도 다음 0초/30초부터 다시 맞춘다
+  const STEP = 30_000;
+  const schedule = () => setTimeout(() => { ping(); schedule(); }, STEP - (Date.now() % STEP) + 20);
+  schedule();
   addEventListener('resize', draw);
 }
 
