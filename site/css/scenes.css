@@ -348,3 +348,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .wall .tile--grass { grid-row: 3; }
 /* VMware 아이콘은 가로로 긴 글자 로고라 크게 */
 .key__glass img[src$='vmware.svg'] { inset: 14%; width: 72%; height: 72%; }
+
+/* Security News: 제목은 한 줄, 자리가 모자라면 출처가 아랫줄 오른쪽으로 내려간다 */
+.tile--news .tile__head { flex-wrap: wrap; row-gap: 2px; }
+.tile--news .tile__head h2 { white-space: nowrap; }
