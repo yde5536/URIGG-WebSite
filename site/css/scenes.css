@@ -340,7 +340,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .keys .key--wall { display: none; }
 .wall .keys .key--wall { display: grid; }
 .wall .keys { grid-template-rows: repeat(3, minmax(0, 1fr)); }
-.wall .dash__grid { grid-template-rows: minmax(0, 10fr) minmax(0, 3fr) minmax(0, 7fr); }
+.wall .dash__grid { grid-template-rows: minmax(0, 10fr) minmax(0, 2.4fr) minmax(0, 7.6fr); }
 .wall .tile--today, .wall .tile--news { grid-row: 1 / -1; }
 .wall .tile--dday { grid-row: 1; }
 .wall .tile--log { grid-row: 2 / -1; }
@@ -381,3 +381,7 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .kw__term { margin: 0; font-size: clamp(1.6rem, 2.2vw, 2.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); }
 .kw__name { margin: 0; font-size: var(--step-small); color: var(--muted); }
 .kw__desc { margin: 6px 0 0; font-size: var(--step-small); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+/* Commits 칸을 조금 키운 만큼 Shortcuts 아이콘 사이 간격을 좁혀, 아이콘 크기는 거의 그대로 */
+.wall .keys { row-gap: 4px; }
+.wall .key { gap: 4px; }
+.wall .tile--grass .tile__head { margin-bottom: 6px; }
