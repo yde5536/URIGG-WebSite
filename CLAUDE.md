@@ -41,6 +41,8 @@ The user has asked for every change to go to production ("운영 사이트 반�
 
 ## Design decisions (keep unless the user changes them)
 
+- Brand kit lives in its own public repo **yde5536/URIGG-Brand** (local `../URIGG-Brand`, created 2026-11-02): `tokens/urigg.css` + `urigg.json`, `components/urigg-glass.css` (`u-` classes), logos, icons, brand page `index.html`. Other URIGG projects load it via `https://cdn.jsdelivr.net/gh/yde5536/URIGG-Brand@main/…`. The hub itself still uses its own CSS; when a design value changes here, update the kit too.
+
 - Liquid glass dashboard on a dark, slowly drifting aurora. Tiles are fairly transparent but not clear.
 - Top bar: fully clear when stuck, only edge refraction + RGB prism (SVG backdrop filter, Chromium only, map built at devicePixelRatio) and a thin rim.
 - Crimson only on main buttons. Fonts: Switzer + Pretendard, mono for small labels/times.
