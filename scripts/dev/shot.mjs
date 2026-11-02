@@ -30,6 +30,6 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
 await send('Page.navigate', { url }); await wait(+(process.env.WAIT||4000));
 if (process.env.TYPE) { await send('Runtime.evaluate', { expression: `document.querySelector('#dday-add').click(); const i=document.querySelector('#dday-name'); i.value=${JSON.stringify(process.env.TYPE)}; i.dispatchEvent(new Event('input')); setTimeout(()=>i.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown'})),600);` }); await wait(1200); }
 if (process.env.SCROLL) { await send('Runtime.evaluate', { expression: `scrollTo(0, document.querySelector(${JSON.stringify(process.env.SCROLL)}).offsetTop + innerHeight*${+process.env.K||1.2})` }); await wait(800); }
-if (process.env.EVAL) console.log(JSON.stringify((await send('Runtime.evaluate', { expression: process.env.EVAL, returnByValue: true })).result.value));
+if (process.env.EVAL) console.log(JSON.stringify((await send('Runtime.evaluate', { expression: process.env.EVAL, returnByValue: true, awaitPromise: true })).result.value));
 await writeFile(out, Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
 ws.close(); p.kill(); console.log('saved', out);
