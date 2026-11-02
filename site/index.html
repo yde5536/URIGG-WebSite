@@ -105,23 +105,30 @@
               <span class="tabs__pill" aria-hidden="true"></span>
               <button type="button" role="tab" id="tab-news" aria-selected="true" aria-controls="panel-news">Security News</button>
               <button type="button" role="tab" id="tab-kev" aria-selected="false" aria-controls="pane-kev" tabindex="-1">KEV</button>
+              <button type="button" role="tab" id="tab-vuln" aria-selected="false" aria-controls="pane-vuln" tabindex="-1">Vuln</button>
             </div>
             <span class="tile__more" data-pane="panel-news">KISA · 데일리시큐 · THN</span>
             <a class="link tile__more" data-pane="pane-kev" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener" hidden>CISA 실제 악용 취약점 ↗</a>
+            <span class="tile__more" data-pane="pane-vuln" hidden>유명 취약점 해설</span>
           </div>
           <ol class="news" id="panel-news" role="tabpanel" aria-labelledby="tab-news"></ol>
-          <div class="kev" id="pane-kev" role="tabpanel" aria-labelledby="tab-kev" hidden>
-            <!-- 유명 취약점 해설 한 개씩 (data/vulns.json). '다음'으로 넘기고, 본 위치는 이 브라우저에 기억 -->
-            <section class="vuln" aria-label="유명 취약점 해설" aria-live="polite">
-              <div class="vuln__top">
-                <p class="vuln__alias" id="vuln-alias"></p>
-                <button type="button" class="vuln__next" id="vuln-next">다음 ›</button>
-              </div>
-              <p class="vuln__meta" id="vuln-meta"></p>
-              <p class="vuln__desc" id="vuln-desc"></p>
-            </section>
-            <ol class="news" id="kev-list" aria-label="최근 추가된 실제 악용 취약점"></ol>
-          </div>
+          <ol class="news" id="pane-kev" role="tabpanel" aria-labelledby="tab-kev" hidden></ol>
+          <!-- 유명 취약점 해설 한 개씩 (data/vulns.json). '다음'으로 넘기고, 본 위치는 이 브라우저에 기억 -->
+          <section class="vuln" id="pane-vuln" role="tabpanel" aria-labelledby="tab-vuln" hidden>
+            <p class="vuln__alias" id="vuln-alias" aria-live="polite"></p>
+            <dl class="vuln__facts">
+              <div><dt>CVE</dt><dd id="vuln-cve"></dd></div>
+              <div><dt>대상</dt><dd id="vuln-target"></dd></div>
+              <div><dt>유형</dt><dd id="vuln-type"></dd></div>
+              <div><dt>공개</dt><dd id="vuln-year"></dd></div>
+              <div><dt>CVSS</dt><dd id="vuln-cvss"></dd></div>
+            </dl>
+            <p class="vuln__desc" id="vuln-desc"></p>
+            <div class="vuln__foot">
+              <span class="vuln__count" id="vuln-count"></span>
+              <button type="button" class="vuln__next" id="vuln-next">다음 취약점 ›</button>
+            </div>
+          </section>
         </article>
 
         <!-- 최근 글 -->

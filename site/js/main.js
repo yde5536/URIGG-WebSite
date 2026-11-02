@@ -319,23 +319,28 @@ function renderNews(data) {
 
 /* ── 실제 악용 중인 취약점 (CISA KEV, 뉴스 칸의 KEV 탭) ─────── */
 function renderKev(data) {
-  $('#kev-list').innerHTML = data
+  $('#pane-kev').innerHTML = data
     ? data.items.map((v) => `
     <li><a href="https://nvd.nist.gov/vuln/detail/${esc(v.cve)}" target="_blank" rel="noopener" title="${esc(v.name)}${v.ransomware ? ' · 랜섬웨어에 쓰인 적 있음' : ''}"><span class="news__src">${esc(v.vendor)}</span><span class="news__title">${v.ransomware ? '<b class="kev__rw">랜섬웨어</b> ' : ''}${esc(v.cve)} · ${esc(v.product)}</span><time datetime="${v.added}">${ago(`${v.added}T12:00:00-05:00`)}</time></a></li>`).join('')
     : '<li class="news__empty">CISA 목록을 불러오지 못했어요.</li>';
 }
 
-/* ── 유명 취약점 해설 (KEV 탭 위 카드) ─────────────────
-   data/vulns.json에서 하나씩. '다음 ›'으로 넘기고, 본 위치는 이 브라우저에만 기억한다(없으면 날짜로 시작) */
+/* ── 유명 취약점 해설 (뉴스 칸의 Vuln 탭) ─────────────────
+   data/vulns.json에서 하나씩. '다음 취약점 ›'으로 넘기고, 본 위치는 이 브라우저에만 기억한다(없으면 날짜로 시작) */
 const VULN_AT = 'urigg-vuln-index';
 fetch('data/vulns.json').then((r) => r.json()).then((list) => {
   let i = kstDay(Date.now());
   try { const saved = localStorage.getItem(VULN_AT); if (saved !== null && Number.isInteger(+saved)) i = +saved; } catch {}
   const show = () => {
-    const v = list[((i % list.length) + list.length) % list.length];
+    const n = ((i % list.length) + list.length) % list.length, v = list[n];
     $('#vuln-alias').textContent = v.alias;
-    $('#vuln-meta').textContent = [v.cve, v.target, v.year, v.type, v.cvss != null && `CVSS ${v.cvss.toFixed(1)}`].filter(Boolean).join(' · ');
+    $('#vuln-cve').textContent = v.cve;
+    $('#vuln-target').textContent = v.target;
+    $('#vuln-type').textContent = v.type;
+    $('#vuln-year').textContent = `${v.year}년`;
+    $('#vuln-cvss').textContent = v.cvss != null ? v.cvss.toFixed(1) : '—';
     $('#vuln-desc').textContent = v.desc;
+    $('#vuln-count').textContent = `${n + 1} / ${list.length}`;
   };
   show();
   $('#vuln-next').addEventListener('click', () => {
