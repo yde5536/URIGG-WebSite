@@ -163,7 +163,20 @@
             <button type="button" class="tile__more link net__refresh" data-pane="pane-net" id="net-refresh" hidden>새로고침</button>
           </div>
           <!-- 지금 연결의 공인 IP·통신사·위치 (/api/net). 보는 사람 자신의 정보, 저장 안 함 -->
-          <dl class="net" id="pane-net" role="tabpanel" aria-labelledby="tab-net" hidden></dl>
+          <div class="net-pane" id="pane-net" role="tabpanel" aria-labelledby="tab-net" hidden>
+            <dl class="net" id="net-info"></dl>
+            <!-- 바탕화면 전용: Cloudflare까지 왕복 시간, 1분마다 · 최근 30분 꺾은선 -->
+            <figure class="ping" aria-labelledby="ping-cap">
+              <div class="ping__head"><span id="ping-cap">지연 시간</span><b id="ping-now">— ms</b></div>
+              <div class="ping__plot">
+                <svg id="ping-svg" viewBox="0 0 300 100" preserveAspectRatio="none" role="img" aria-label="최근 30분 지연 시간 꺾은선"></svg>
+                <span class="ping__max" id="ping-max"></span>
+                <span class="ping__dot" id="ping-dot" hidden></span>
+                <span class="ping__tip" id="ping-tip" hidden></span>
+              </div>
+              <figcaption class="ping__stats" id="ping-stats">1분마다 재요</figcaption>
+            </figure>
+          </div>
           <!-- 3 × 2 유리 아이콘. 아이콘은 images/icons/ (simple-icons CC0, 드림핵은 공식 로고의 심볼) -->
           <ul class="keys" id="pane-keys" role="tabpanel" aria-labelledby="tab-keys">
             <li><a class="key" href="claude://"><span class="key__glass"><img src="images/icons/claude.svg" alt=""></span><b>Claude</b></a></li>

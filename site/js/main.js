@@ -371,7 +371,7 @@ function renderCtf(data) {
    보는 사람 자신의 IP라 스냅샷 없이 늘 /api/net에 직접 묻고, 탭을 볼 때만 부른다.
    VPN·프록시는 추정: 브라우저 시간대와 IP 위치의 시간대가 다르거나, 통신사가 호스팅·VPN 회사면 "사용 중"으로 본다. */
 const VPNISH = /cloud|hosting|server|data ?cent|vpn|proxy|amazon|aws|google|microsoft|azure|digitalocean|linode|akamai|ovh|hetzner|vultr|m247|datacamp|choopa|leaseweb|contabo|oracle|proton|nord|mullvad|express|surfshark|private internet/i;
-const netBox = $('#pane-net');
+const netPane = $('#pane-net'), netBox = $('#net-info');
 let netAt = 0;
 async function renderNet() {
   netAt = Date.now();
@@ -403,10 +403,83 @@ netBox.addEventListener('click', async (e) => {
 });
 $('#net-refresh').addEventListener('click', renderNet);
 $('#tab-net').closest('.tabs').addEventListener('tabchange', (e) => { if (e.detail === 'tab-net' && Date.now() - netAt > 60_000) renderNet(); });
-const netVisible = () => !netBox.hidden && !document.hidden;
+const netVisible = () => !netPane.hidden && !document.hidden;
 addEventListener('online', () => netVisible() && renderNet());
 addEventListener('offline', () => netVisible() && renderNet());
 setInterval(() => netVisible() && Date.now() - netAt > 5 * 60_000 && renderNet(), 60_000);
+
+/* ── 지연 시간 꺾은선 (바탕화면 Network 탭 아래) ─────────
+   1분마다, 화면이 보일 때만 사이트의 작은 파일을 받아 오는 왕복 시간을 잰다(서버 함수 안 씀).
+   탭을 안 보고 있어도 재 두어야 열었을 때 그래프가 있다. 30분마다 새로고침되므로 기록은 이 브라우저에 저장.
+   실패한 측정은 null → 선이 끊긴다. */
+if (WALL) {
+  const PING_KEY = 'urigg-ping', WINDOW = 30 * 60_000, W = 300, H = 100;
+  const svg = $('#ping-svg'), tip = $('#ping-tip'), dot = $('#ping-dot'), plot = svg.parentElement;
+  let pts = [];
+  try { pts = JSON.parse(localStorage.getItem(PING_KEY) || '[]').filter((p) => Date.now() - p.t < WINDOW); } catch {}
+  const hhmm = (t) => new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(t));
+  let scaleMax = 50;
+  const xOf = (t) => ((t - (Date.now() - WINDOW)) / WINDOW) * W;
+  const yOf = (ms) => H - 4 - (Math.min(ms, scaleMax) / scaleMax) * (H - 8);
+  const draw = () => {
+    const ok = pts.filter((p) => p.ms != null).map((p) => p.ms);
+    const last = pts[pts.length - 1];
+    $('#ping-now').textContent = last ? (last.ms == null ? '끊김' : `${Math.round(last.ms)} ms`) : '— ms';
+    // 눈금 최대값: 50ms 단위로 올림 (값이 작아도 50ms)
+    scaleMax = Math.max(50, Math.ceil(Math.max(0, ...ok) / 50) * 50);
+    $('#ping-max').textContent = `${scaleMax}ms`;
+    // 끊긴 곳에서 선을 나눠 그린다
+    let d = '', pen = false;
+    for (const p of pts) {
+      if (p.ms == null) { pen = false; continue; }
+      d += `${pen ? 'L' : 'M'}${xOf(p.t).toFixed(1)} ${yOf(p.ms).toFixed(1)}`;
+      pen = true;
+    }
+    const gaps = pts.filter((p) => p.ms == null).map((p) => `<line class="ping__gap" x1="${xOf(p.t).toFixed(1)}" x2="${xOf(p.t).toFixed(1)}" y1="0" y2="${H}"/>`).join('');
+    svg.innerHTML = `<line class="ping__grid" x1="0" x2="${W}" y1="4" y2="4"/><line class="ping__grid" x1="0" x2="${W}" y1="${H - 4}" y2="${H - 4}"/>${gaps}<path class="ping__line" d="${d}"/><line class="ping__cross" id="ping-cross" x1="0" x2="0" y1="0" y2="${H}" visibility="hidden"/>`;
+    const avg = ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : 0;
+    $('#ping-stats').textContent = ok.length
+      ? `최근 30분 · 최저 ${Math.round(Math.min(...ok))} · 평균 ${Math.round(avg)} · 최고 ${Math.round(Math.max(...ok))} ms`
+      : '1분마다 재요';
+  };
+  const ping = async () => {
+    if (document.hidden) return;
+    let ms = null;
+    if (navigator.onLine) {
+      const t0 = performance.now();
+      try {
+        const res = await fetch(`/images/favicon-32.png?ping=${Date.now()}`, { method: 'HEAD', cache: 'no-store' });
+        if (res.ok) ms = performance.now() - t0;
+      } catch {}
+    }
+    pts.push({ t: Date.now(), ms });
+    pts = pts.filter((p) => Date.now() - p.t < WINDOW);
+    try { localStorage.setItem(PING_KEY, JSON.stringify(pts)); } catch {}
+    draw();
+  };
+  // 마우스를 올리면 가장 가까운 측정값에 세로선과 말풍선
+  plot.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect(), x = ((e.clientX - r.left) / r.width) * W;
+    const near = pts.reduce((best, p) => (Math.abs(xOf(p.t) - x) < Math.abs(xOf(best.t) - x) ? p : best), pts[0]);
+    if (!near) return;
+    const cross = $('#ping-cross'), px = xOf(near.t);
+    cross.setAttribute('x1', px); cross.setAttribute('x2', px); cross.setAttribute('visibility', 'visible');
+    tip.textContent = `${hhmm(near.t)} · ${near.ms == null ? '끊김' : `${Math.round(near.ms)}ms`}`;
+    tip.hidden = false;
+    const left = (px / W) * r.width;
+    tip.style.left = `${Math.min(Math.max(left, 40), r.width - 40)}px`;
+    const top = near.ms == null ? r.height / 2 : (yOf(near.ms) / H) * r.height;
+    tip.style.top = `${top}px`;
+    tip.classList.toggle('is-below', top < 30); // 점이 위쪽이면 말풍선을 아래로 (위의 현재 값을 가리지 않게)
+    dot.hidden = near.ms == null;
+    dot.style.left = `${left}px`; dot.style.top = `${top}px`;
+  });
+  plot.addEventListener('pointerleave', () => { tip.hidden = true; dot.hidden = true; $('#ping-cross')?.setAttribute('visibility', 'hidden'); });
+  draw();
+  ping();
+  setInterval(ping, 60_000);
+  addEventListener('resize', draw);
+}
 
 /* ── 오늘의 보안 키워드 (바탕화면 Commits 칸의 Keyword 탭) ─────
    data/keywords.json의 [키워드, 원어·풀이, 한 줄 설명]에서 한국 날짜로 하루에 하나. 목록을 다 돌면 처음부터 */
