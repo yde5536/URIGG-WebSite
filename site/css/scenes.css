@@ -356,3 +356,8 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .tile--news .tile__more { flex-basis: 100%; margin-left: 0; }
 .wall .tile--news .tile__more { flex-basis: auto; margin-left: auto; }
 .news__empty { padding: 6px 0; font-size: var(--step-small); color: var(--muted); }
+
+/* 탭 알약 렌즈 (크롬·엣지): 알약을 글자 위로 올려, 움직이는 동안만 지나가는 글자를 굴절·프리즘으로 비춘다.
+   멈춰 있을 땐 필터가 꺼져 글자가 선명하다. 클릭은 알약을 통과해 아래 버튼으로 간다 (main.js pillLens) */
+.lens-on .tabs__pill { z-index: 2; }
+.lens-on .tabs__pill.is-moving { -webkit-backdrop-filter: url(#pill-lens); backdrop-filter: url(#pill-lens); } /* taste-skill-ignore: 사용자 요청 유리 렌즈 */
