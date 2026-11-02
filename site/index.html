@@ -176,9 +176,23 @@
         </article>
 
         <!-- GitHub 잔디 (바탕화면 모드에서 Programs 대신). Notes 장면과 같은 데이터 (main.js renderActivity) -->
-        <article class="tile tile--grass glass glass--dark" aria-labelledby="dash-grass-title">
-          <div class="tile__head"><h2 id="dash-grass-title">Commits</h2><a class="link tile__more" href="https://github.com/yde5536" target="_blank" rel="noopener">GitHub ↗</a></div>
-          <figure class="activity grass">
+        <article class="tile tile--grass glass glass--dark" aria-label="Commits · Keyword">
+          <div class="tile__head">
+            <div class="tabs" role="tablist" aria-label="잔디 칸 보기">
+              <span class="tabs__pill" aria-hidden="true"></span>
+              <button type="button" role="tab" id="tab-grass" aria-selected="true" aria-controls="pane-grass">Commits</button>
+              <button type="button" role="tab" id="tab-kw" aria-selected="false" aria-controls="pane-kw" tabindex="-1">Keyword</button>
+            </div>
+            <a class="link tile__more" data-pane="pane-grass" href="https://github.com/yde5536" target="_blank" rel="noopener">GitHub ↗</a>
+            <span class="tile__more" data-pane="pane-kw" id="kw-date" hidden></span>
+          </div>
+          <!-- 오늘의 보안 키워드: data/keywords.json에서 한국 날짜로 하루에 하나 -->
+          <div class="kw" id="pane-kw" role="tabpanel" aria-labelledby="tab-kw" hidden>
+            <p class="kw__term" id="kw-term"></p>
+            <p class="kw__name" id="kw-name"></p>
+            <p class="kw__desc" id="kw-desc"></p>
+          </div>
+          <figure class="activity grass" id="pane-grass" role="tabpanel" aria-labelledby="tab-grass">
             <div class="activity__grid" id="dash-activity" role="img" aria-label="GitHub 전체 저장소 지난 26주 커밋 잔디"></div>
             <dl class="activity__stats">
               <div><dt>연속</dt><dd id="dash-streak">0일</dd></div>

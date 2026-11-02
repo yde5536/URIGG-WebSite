@@ -383,6 +383,16 @@ addEventListener('online', () => netVisible() && renderNet());
 addEventListener('offline', () => netVisible() && renderNet());
 setInterval(() => netVisible() && Date.now() - netAt > 5 * 60_000 && renderNet(), 60_000);
 
+/* ── 오늘의 보안 키워드 (바탕화면 Commits 칸의 Keyword 탭) ─────
+   data/keywords.json의 [키워드, 원어·풀이, 한 줄 설명]에서 한국 날짜로 하루에 하나. 목록을 다 돌면 처음부터 */
+fetch('data/keywords.json').then((r) => r.json()).then((list) => {
+  const [term, name, desc] = list[kstDay(Date.now()) % list.length];
+  $('#kw-term').textContent = term;
+  $('#kw-name').textContent = name;
+  $('#kw-desc').textContent = desc;
+  $('#kw-date').textContent = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric' }).format(new Date());
+}).catch(() => { $('#kw-term').textContent = '키워드를 불러오지 못했어요'; });
+
 /* ── 바탕화면 모드: 며칠씩 켜져 있으므로 30분마다 새로 불러와 뉴스·글·알림·날짜를 맞춘다 ── */
 // 실제 흐른 시간으로 잰다: Lively가 일시정지하면 타이머도 멈추므로, 돌아왔을 때 30분이 지났으면 바로 새로고침
 if (WALL) {

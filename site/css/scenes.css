@@ -374,3 +374,10 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .net__ip { border: 0; background: none; padding: 0; color: var(--ink); cursor: pointer; font: 600 var(--step-lead)/1.2 var(--mono); letter-spacing: -0.02em; } /* taste-skill-ignore: IP 주소는 고정폭 글씨로 */
 .net__ip[data-copied]::after { content: ' 복사됨'; font: 500 0.75rem var(--font); color: var(--muted); }
 .wall .net { gap: 12px; }
+
+/* 오늘의 보안 키워드 (바탕화면 Commits 칸의 Keyword 탭) */
+.kw[hidden], .activity[hidden] { display: none; }
+.kw { display: grid; align-content: center; gap: 4px; min-height: 0; margin: 0; }
+.kw__term { margin: 0; font-size: clamp(1.6rem, 2.2vw, 2.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); }
+.kw__name { margin: 0; font-size: var(--step-small); color: var(--muted); }
+.kw__desc { margin: 6px 0 0; font-size: var(--step-small); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
