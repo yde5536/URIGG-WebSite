@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-02T03:39:36.037Z",
+  "fetchedAt": "2026-11-02T12:36:09.004Z",
   "events": [
     {
       "title": "HKCERT CTF 2026 (Qualifying Round)",
@@ -9,7 +9,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 10.31
+      "weight": 10.31,
+      "beginner": false
     },
     {
       "title": "PINK+ CTF 2026",
@@ -19,7 +20,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": false
     },
     {
       "title": "CSCTF 2026",
@@ -29,7 +31,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "SpookyCTF 2026",
@@ -39,7 +42,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "BlackAlps CTF 2026",
@@ -49,7 +53,8 @@
       "format": "Jeopardy",
       "onsite": true,
       "location": "Switzerland, Yverdon-les-Bains",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "Mimic",
@@ -59,7 +64,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "CSAW CTF Final Round 2026",
@@ -69,7 +75,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 1
+      "weight": 1,
+      "beginner": false
     },
     {
       "title": "TVX CTF 2026",
@@ -79,7 +86,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": false
     },
     {
       "title": "Platypwn 2026",
@@ -89,7 +97,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 37
+      "weight": 37,
+      "beginner": true
     },
     {
       "title": "WolvCTF 2026",
@@ -99,7 +108,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "InIt CTF",
@@ -109,7 +119,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "EyesOpenCTF 7th edition",
@@ -119,7 +130,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": false
     },
     {
       "title": "GlacierCTF 2026",
@@ -129,7 +141,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 73.17
+      "weight": 73.17,
+      "beginner": false
     },
     {
       "title": "Outback Overflow",
@@ -139,7 +152,8 @@
       "format": "Jeopardy",
       "onsite": false,
       "location": "",
-      "weight": 0
+      "weight": 0,
+      "beginner": true
     },
     {
       "title": "Seize da Flaq",
@@ -149,7 +163,8 @@
       "format": "Jeopardy",
       "onsite": true,
       "location": "Mathura, Uttar Pradesh, India",
-      "weight": 0
+      "weight": 0,
+      "beginner": false
     }
   ]
 }

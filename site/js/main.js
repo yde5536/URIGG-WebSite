@@ -13,7 +13,7 @@ const stamp = (iso) => {
 
 // 서버 함수 → 실패하면 저장해 둔 스냅샷
 // 응답 모양이 바뀌면 숫자를 올린다 (엣지 캐시를 새로 쓰게 하려고)
-const API_VERSION = 5;
+const API_VERSION = 6;
 async function load(name) {
   for (const url of [`/api/${name}?v=${API_VERSION}`, `data/${name}.json`]) {
     try {
@@ -371,8 +371,15 @@ function renderCtf(data) {
     const hours = Math.round((f - s) / 3_600_000);
     const len = hours % 24 === 0 ? `${hours / 24}일` : `${hours}시간`;
     const when = live ? `진행 중 · ${Math.ceil((f - now) / 3_600_000)}시간 남음` : `${ctfWhen(s)} · ${len}`;
-    return `<li${live ? ' class="is-warn"' : ''}><a href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.format || '')} · ${e.onsite ? esc(e.location || '현장') : '온라인'} · ${len}"><b>${live ? '●' : '▸'}</b><span>${esc(e.title)}</span><time>${when}</time></a></li>`;
+    return `<li${live ? ' class="is-warn"' : ''}><a href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.format || '')} · ${e.onsite ? esc(e.location || '현장') : '온라인'} · ${len}"><b>${live ? '●' : '▸'}</b><span>${e.beginner ? '<em class="ctf__beg">초보</em>' : ''}${esc(e.title)}</span><time>${when}</time></a></li>`;
   });
+  // 알림: 온라인 초보자 CTF가 7일 안에 시작하거나 진행 중이면 빨간 알림 (읽으면 숫자는 사라진다)
+  window.alerts.set('ctf', (data?.events || [])
+    .filter((e) => e.beginner && !e.onsite && Date.parse(e.finish) > now && Date.parse(e.start) - now <= 7 * DAY)
+    .map((e) => {
+      const s = Date.parse(e.start);
+      return { icon: '▸', warn: true, at: s / 1e13, text: `초보 CTF · ${e.title}`, time: s <= now ? '진행 중' : ctfWhen(s), href: e.url };
+    }));
   $('#pane-ctf').innerHTML = rows.join('') || `<li class="is-empty">${data ? '45일 안에 예정된 CTF가 없어요.' : 'CTF 일정을 불러오지 못했어요.'}</li>`;
 }
 
