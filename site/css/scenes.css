@@ -28,13 +28,13 @@
 .dash__status dd { margin: 0; color: var(--ink); }
 .dash__more { justify-self: center; font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
 
-.dash__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) repeat(2, minmax(0, 0.9fr)); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
+.dash__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; min-height: 0; }
 .tile { padding: 18px 22px; display: grid; gap: 10px; align-content: start; min-height: 0; overflow: hidden; }
 .tile__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
 .tile__head h2 { font-size: var(--step-lead); }
 .tile__more { margin-left: auto; font-size: var(--step-small); color: var(--muted); text-decoration: none; white-space: nowrap; }
 .tile__more:hover { color: var(--ink); }
-/* Today | News (같은 너비, 두 줄 높이) | D-day · Shortcuts / Log · Programs (2 × 2, 조금 좁게).
+/* Today | News (두 줄 높이) | D-day · Shortcuts / Log · Programs (2 × 2). 네 열 모두 같은 너비.
    바탕화면 모드에서는 Programs 자리에 잔디(Commits) */
 .tile--today { grid-column: 1; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .tile--news { grid-column: 2; grid-row: 1 / span 2; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
@@ -327,3 +327,10 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
   .dday__big { grid-row: span 2; font-size: 2.75rem; }
   .dday__list { contain: size; min-height: 4.5em; max-height: none; margin-top: 0; }
 }
+
+/* 바탕화면 모드: 로고·제목을 크게, 그만큼 칸은 낮게 (노트북 압축 규칙보다 우선) */
+.wall .dash { padding-top: 36px; gap: 18px; }
+.wall .emblem { width: 104px; }
+.wall .dash__brand { gap: 22px; }
+.wall .dash__name { font-size: 4rem; }
+.wall .dash__tag { font-size: var(--step-lead); }
