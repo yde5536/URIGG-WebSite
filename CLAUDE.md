@@ -46,7 +46,9 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Round URIGG logo with a soft halo, no ring, no float.
 - Dashboard grid: Today | News (2 rows) | D-day · Shortcuts / 알림·Log · Programs.
 - 알림/Log tabs: 알림 first; sliding glass pill; red unread count clears after the list is seen for 2 s.
-- Title scrambles between "URIGG" and "Security.log Website" every 15 s; tagline is `urigg.pages.dev`.
+- Title scrambles between "URIGG" and "Security.log Website" every 15 s ("Security.log HUB" in `?wall`); tagline is `urigg.pages.dev`.
+- Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (claude.ai), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
+- Short laptop windows (≤960px tall): compact header, Today without its title row, side-by-side D-day, so the dashboard fits one screen without cutting tiles.
 - The footer (`.end`) is liked; keep it.
 - Rejected before: green hacker theme, ASCII banners, rim glow, red-heavy looks, decorative photos, Progress gauges.
 

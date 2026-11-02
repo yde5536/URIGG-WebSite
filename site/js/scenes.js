@@ -37,7 +37,7 @@
   /* ── 제목: 15초마다 URIGG ↔ Security.log Website ── */
   const name = $('.dash__name');
   if (name) {
-    const TITLES = ['URIGG', 'Security.log Website'];
+    const TITLES = ['URIGG', document.documentElement.classList.contains('wall') ? 'Security.log HUB' : 'Security.log Website'];
     let cur = 0;
     // 긴 제목은 옆의 상태줄과 겹치지 않게, 들어갈 만큼만 글씨를 줄인다
     const fit = () => {
