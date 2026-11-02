@@ -300,12 +300,14 @@ function renderActivity(days) {
 // 꼭 볼 보안 뉴스: 최근 이틀 안에, 제목에 긴급·제로데이·치명적·CVSS 9~10 같은 말이 있는 기사
 const URGENT = /긴급|제로데이|0-?day|zero-day|critical|치명|CVSS\s*(9|10)|actively exploited|악용 중/i;
 function renderNews(data) {
+  // 3일 전(달력 날짜 기준)까지만 보여 준다
+  data = { ...data, items: data.items.filter((n) => daysAgo(n.date) <= 3) };
   window.alerts.set('news', data.items
     .filter((n) => daysAgo(n.date) <= 2 && URGENT.test(n.title))
     .slice(0, 4)
     .map((n) => ({ icon: '!', warn: true, text: `${n.source} · ${n.title}`, time: ago(n.date), href: n.link })));
   $('#panel-news').innerHTML = data.items.map((n) => `
-    <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('');
+    <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('') || '<li class="news__empty">최근 3일 안에 올라온 뉴스가 없어요.</li>';
 }
 
 /* ── 바탕화면 모드: 며칠씩 켜져 있으므로 30분마다 새로 불러와 뉴스·글·알림·날짜를 맞춘다 ── */

@@ -355,3 +355,4 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 /* 웹: 출처는 늘 제목 아래 왼쪽. 바탕화면은 제목 오른쪽 그대로 */
 .tile--news .tile__more { flex-basis: 100%; margin-left: 0; }
 .wall .tile--news .tile__more { flex-basis: auto; margin-left: auto; }
+.news__empty { padding: 6px 0; font-size: var(--step-small); color: var(--muted); }
