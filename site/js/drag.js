@@ -3,7 +3,7 @@
 (() => {
   if (!document.documentElement.classList.contains('wall')) return;
 
-  const LISTS = '.news, .alerts, .dday__list, .programs, .net, .vuln__desc, .term';
+  const LISTS = '.news, .alerts, .dday__list, .programs, .net, .vuln__body, .term';
   const MOVE = 5; // 이만큼(px) 움직여야 끌기로 본다. 그보다 작으면 그냥 클릭
   let drag = null;
 

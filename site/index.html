@@ -124,7 +124,11 @@
               <div><dt>공개</dt><dd id="vuln-year"></dd></div>
               <div><dt>CVSS</dt><dd id="vuln-cvss"></dd></div>
             </dl>
-            <p class="vuln__desc" id="vuln-desc"></p>
+            <!-- 설명 아래: 어떻게 터지나 · 예시 · 막는 법 · 분류 · 더 보기 (칸 안에서 스크롤) -->
+            <div class="vuln__body">
+              <p class="vuln__desc" id="vuln-desc"></p>
+              <div class="vuln__more" id="vuln-more"></div>
+            </div>
             <div class="vuln__foot">
               <span class="vuln__count" id="vuln-count"></span>
               <button type="button" class="vuln__next" id="vuln-next">다음 취약점 ›</button>

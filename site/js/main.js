@@ -340,6 +340,15 @@ fetch('data/vulns.json').then((r) => r.json()).then((list) => {
     $('#vuln-year').textContent = `${v.year}년`;
     $('#vuln-cvss').textContent = v.cvss != null ? v.cvss.toFixed(1) : '—';
     $('#vuln-desc').textContent = v.desc;
+    const sec = (title, inner) => `<section><h3>${title}</h3>${inner}</section>`;
+    $('#vuln-more').innerHTML = [
+      v.flow?.length && sec('어떻게 터지나', `<ol class="vuln__flow">${v.flow.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>`),
+      v.ex && sec('예시', `<code class="vuln__ex">${esc(v.ex)}</code>`),
+      v.fix?.length && sec('막는 법', `<ul class="vuln__fix">${v.fix.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`),
+      v.cwe && sec('분류', `<p>${esc(v.cwe)}</p>`),
+      sec('더 보기', `<p class="vuln__links"><a class="link" href="https://nvd.nist.gov/vuln/detail/${esc(v.cve)}" target="_blank" rel="noopener">NVD ↗</a><a class="link" href="https://www.cve.org/CVERecord?id=${esc(v.cve)}" target="_blank" rel="noopener">CVE.org ↗</a></p>`),
+    ].filter(Boolean).join('');
+    $('.vuln__body').scrollTop = 0;
     $('#vuln-count').textContent = `${n + 1} / ${list.length}`;
   };
   show();

@@ -125,7 +125,7 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
    뉴스·알림처럼 긴 목록은 칸 크기를 키우지 않고(contain: size) 칸 안에서 스크롤 */
 @media (min-width: 1025px) {
   .dash__grid { grid-template-rows: minmax(min-content, 1fr) minmax(min-content, 1fr); }
-  .news { contain: size; }
+  .news, .vuln__body { contain: size; }
   .alerts, .tile--log .term { contain: size; min-height: 7.5em; }
   .dday__list { max-height: 11em; }
 }
@@ -393,7 +393,20 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .vuln__facts div { display: grid; grid-template-columns: 3.6em minmax(0, 1fr); gap: 10px; align-items: baseline; }
 .vuln__facts dt { color: var(--muted); }
 .vuln__facts dd { margin: 0; overflow-wrap: anywhere; }
-.vuln__desc { margin: 0; min-height: 0; overflow: auto; font-size: var(--step-small); line-height: 1.65; text-wrap: pretty; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.vuln__body { min-height: 0; overflow: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.vuln__desc { margin: 0; font-size: var(--step-small); line-height: 1.65; text-wrap: pretty; }
+/* 설명 아래 해설: 작은 제목 + 내용, 섹션 사이는 여백으로만 나눈다 */
+.vuln__more { display: grid; gap: 16px; margin-top: 18px; font-size: var(--step-small); line-height: 1.6; }
+.vuln__more section { display: grid; gap: 6px; }
+.vuln__more h3 { margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: var(--muted); }
+.vuln__more p { margin: 0; }
+.vuln__flow { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 6px; }
+.vuln__flow li { counter-increment: step; display: grid; grid-template-columns: 1.6em minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.vuln__flow li::before { content: counter(step); display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: rgba(255, 255, 255, 0.08); font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.vuln__ex { display: block; padding: 8px 12px; border-radius: 10px; background: rgba(0, 0, 0, 0.35); font-family: var(--mono); font-size: 0.8125rem; overflow-wrap: anywhere; color: var(--ink); } /* taste-skill-ignore: 공격 문자열은 고정폭 */
+.vuln__fix { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; list-style: disc; }
+.vuln__fix li::marker { color: var(--muted); }
+.vuln__links { display: flex; gap: 16px; }
 .vuln__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .vuln__count { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .vuln__next { border: 0; padding: 6px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); color: var(--ink); font: inherit; font-size: var(--step-small); cursor: pointer; transition: background-color 200ms, transform 100ms; } /* taste-skill-ignore: 유리 버튼의 얇은 테 */
@@ -427,10 +440,10 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 /* 칸 안에서 스크롤되는 목록: 스크롤바와 글자 사이에 틈을 둔다
    (뉴스·KEV는 줄 배경이 좌우로 8px 넓게 그려져서 그만큼 더) */
 .news { padding-right: 16px; }
-.alerts, .dday__list, .programs, .net, .vuln__desc { padding-right: 10px; }
+.alerts, .dday__list, .programs, .net, .vuln__body { padding-right: 10px; }
 
 /* 바탕화면: 목록을 끌어서 스크롤 (js/drag.js). 끄는 동안 글자가 선택되지 않게 */
-.wall :is(.news, .alerts, .dday__list, .programs, .net, .vuln__desc, .term) { cursor: grab; user-select: none; -webkit-user-drag: none; }
+.wall :is(.news, .alerts, .dday__list, .programs, .net, .vuln__body, .term) { cursor: grab; user-select: none; -webkit-user-drag: none; }
 .wall .is-dragging { cursor: grabbing; }
 .wall :is(.news, .alerts) a { -webkit-user-drag: none; }
 
