@@ -433,3 +433,12 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .wall :is(.news, .alerts, .dday__list, .programs, .net, .vuln__desc, .term) { cursor: grab; user-select: none; -webkit-user-drag: none; }
 .wall .is-dragging { cursor: grabbing; }
 .wall :is(.news, .alerts) a { -webkit-user-drag: none; }
+
+/* 화면 키보드: 맨 위 입력 미리보기, 입력칸을 가릴 땐 화면 위쪽으로, 투명도는 js/osk.js가 opacity로 */
+.osk__preview { margin: 0 0 2px; padding: 8px 12px; min-height: 2.4em; border-radius: 12px; background: rgba(255, 255, 255, 0.07); font-size: var(--step-body); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.osk__preview::after { content: ''; display: inline-block; width: 2px; height: 1.1em; margin-left: 2px; vertical-align: -0.15em; background: var(--ink); animation: blink 1s steps(1) infinite; }
+.osk__preview.is-empty { color: var(--muted); }
+.wall .osk.is-top { top: 24px; bottom: auto; }
+.osk { transition: opacity 200ms; }
+.osk__key b { font-weight: 700; color: var(--ink); }
+.osk__key { color: var(--ink); }
