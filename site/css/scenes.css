@@ -450,14 +450,14 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .dday__form { align-content: start; align-items: center; }
 
 /* ── 넓은 화면 (1800px 이상, 집 울트라와이드) — 노트북(1536px)에는 영향 없음 ──
-   대시보드는 늘 한 화면에 딱 맞추고, 넘치는 내용(D-day 목록 등)은 칸 안에서 스크롤.
-   Network 탭의 빈자리는 바탕화면처럼 지연 시간 그래프로 채운다. */
+   대시보드는 늘 한 화면에 딱 맞추고, 넘치는 내용(D-day 목록 등)은 칸 안에서 스크롤. */
 @media (min-width: 1800px) {
   html:not(.wall) .dash { height: 100svh; min-height: 0; }
   html:not(.wall) .dash__grid { grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
   html:not(.wall) .dday__list { contain: size; min-height: 3em; max-height: none; }
-  .ping { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px; min-height: 0; margin: 0; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); } /* taste-skill-ignore: 정보와 그래프 사이 구분선 */
-  /* 칸이 넓으니 정보는 두 줄로 나란히 → 그래프 자리가 넉넉해진다 */
-  html:not(.wall) .net { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; overflow: hidden; }
-  html:not(.wall) .net__main { grid-column: 1 / -1; }
+  /* Network: 그래프 없이(웹사이트에는 넣지 않음) 정보를 크게, 칸 높이에 고르게 펼친다 */
+  html:not(.wall) .net-pane { grid-template-rows: minmax(0, 1fr); }
+  html:not(.wall) .net { align-content: space-evenly; gap: 10px; font-size: var(--step-body); }
+  html:not(.wall) .net div { grid-template-columns: 7.5em minmax(0, 1fr); }
+  html:not(.wall) .net__ip { font-size: 1.75rem; }
 }
