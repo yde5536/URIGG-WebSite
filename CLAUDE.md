@@ -69,6 +69,8 @@ Gotchas: `core.autocrlf=true` (normalize `\r\n` in Node edit scripts); write reg
 
 ## Open threads (as of 2026-11-02)
 
+**Next task (to start on the home PC): URIGG-DesktopApp.** A Tauri Windows app that is the `?wall` dashboard as a normal window, for the home PC (3440×1440, not used as wallpaper there). Decisions, reasons and the step list are in `../URIGG-Brand/UNIVERSE.md` (first section). In short: structure C (the app bundles a copy of the wall page and diverges freely; data still from `urigg.pages.dev/api`; native features only in the bundled UI for safety), auto-update via GitHub releases, **manual sync** of a shared-file list, repo `yde5536/URIGG-DesktopApp` (the user creates it), no osk.js / drag.js in the app. **Step 1 is in this repo: split `site/js/main.js` into per-feature files without changing behaviour**, then add CORS for the Tauri origins to the API.
+
 Session of 2026-11-02 ended with everything deployed to `main`. Not yet confirmed by the user:
 - Lively: turning on the **disk cache** setting keeps the widget login across restarts; logging in with the on-screen keyboard works.
 - `scripts/windows/urigg-launchers.reg` double-clicked on the laptop, and 파일 탐색기 / VMware / Claude (`claude://`) shortcuts open from the wallpaper.
