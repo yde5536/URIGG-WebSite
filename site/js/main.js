@@ -309,7 +309,15 @@ function renderNews(data) {
 }
 
 /* ── 바탕화면 모드: 며칠씩 켜져 있으므로 30분마다 새로 불러와 뉴스·글·알림·날짜를 맞춘다 ── */
-if (WALL) setInterval(() => location.reload(), 30 * 60_000);
+// 실제 흐른 시간으로 잰다: Lively가 일시정지하면 타이머도 멈추므로, 돌아왔을 때 30분이 지났으면 바로 새로고침
+if (WALL) {
+  const loadedAt = Date.now();
+  const stale = () => { if (!document.hidden && Date.now() - loadedAt > 30 * 60_000) location.reload(); };
+  setInterval(stale, 30_000);
+  document.addEventListener('visibilitychange', stale);
+  addEventListener('focus', stale);
+  addEventListener('pageshow', stale);
+}
 
 /* ── 앱처럼 설치 (PWA) ───────────────────── */
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
