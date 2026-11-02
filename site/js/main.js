@@ -238,7 +238,6 @@ function renderGithub(data) {
   $('#tree').insertAdjacentHTML('beforeend', rows.join(''));
 
   if (release) {
-    $('#app-ver').textContent = `${release.tag} · ${stamp(release.publishedAt).slice(5, 10)}`;
     $('#st-app').textContent = release.tag;
     if (daysAgo(release.publishedAt) <= 3) window.alerts.set('release', [{ icon: '⬇', text: `코워크 캘린더 ${release.tag} 나왔어요`, time: ago(release.publishedAt), href: release.url }]);
   }
@@ -263,13 +262,17 @@ function renderActivity(days) {
     const lv = n === 0 ? 0 : n === 1 ? 1 : n <= 3 ? 2 : 3;
     cells.push(`<i class="lv${lv}" title="${key} · ${n} commits"></i>`);
   }
-  $('#activity').innerHTML = cells.join('');
-  $('#activity-total').textContent = total;
+  $('#activity').innerHTML = $('#dash-activity').innerHTML = cells.join('');
+  $('#activity-total').textContent = $('#dash-total').textContent = total;
   $('#activity-days').textContent = `${Object.entries(days).filter(([k, n]) => n > 0 && k >= kstKey(start)).length}일`;
   // 오늘(아직 안 했으면 어제)부터 거꾸로 이어진 날 수
   let streak = 0;
   for (let d = days[kstKey(now)] ? 0 : 1; days[kstKey(now - d * DAY)]; d++) streak++;
-  $('#activity-streak').textContent = `${streak}일`;
+  $('#activity-streak').textContent = $('#dash-streak').textContent = `${streak}일`;
+  // 이번 주(일요일부터 오늘까지) 커밋
+  let week = 0;
+  for (let d = 0; d <= todayDow; d++) week += days[kstKey(now - d * DAY)] || 0;
+  $('#dash-week').textContent = week;
 }
 
 /* ── 보안 뉴스 ──────────────────────────── */

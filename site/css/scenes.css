@@ -56,9 +56,10 @@
 .tile--alias { grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
 .keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 10px 8px; min-height: 0; }
 .keys li { display: grid; min-height: 0; }
+/* 칸이 높으면 남는 공간은 아이콘 위로 가고, 이름표는 아이콘 바로 아래에 붙는다 */
 .key { display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; align-content: center; gap: 6px; min-height: 0; text-decoration: none; }
 .key__glass {
-  display: grid; place-items: center; height: 100%; max-height: 104px; min-height: 52px; aspect-ratio: 1; border-radius: 26%;
+  display: grid; place-items: center; height: 100%; max-height: 104px; align-self: end; min-height: 52px; aspect-ratio: 1; border-radius: 26%;
   background: rgba(255, 255, 255, 0.07);
   -webkit-backdrop-filter: blur(8px) saturate(170%); backdrop-filter: blur(8px) saturate(170%); /* taste-skill-ignore: 사용자 요청 리퀴드 글라스 아이콘 */
   box-shadow: var(--glass-edge), 0 10px 22px -12px rgba(0, 0, 0, 0.8); /* taste-skill-ignore: 사용자 요청 리퀴드 글라스 아이콘 */
@@ -77,16 +78,7 @@
 
 /* 진행도 */
 
-/* 캘린더 앱 */
-.tile__app { display: flex; align-items: center; gap: 14px; }
-.tile__app img { width: 40px; height: 40px; }
-.tile__app p { display: grid; }
-.tile__app span { font-family: var(--mono); font-size: var(--step-small); color: var(--muted); } /* taste-skill-ignore: 사용자 요청 보안(터미널) 느낌 */
-.tile__app p { flex: 1 1 0; min-width: max-content; }
-.tile__app b { white-space: nowrap; }
-.tile__app span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .btn--small { min-height: 36px; padding: 0 14px; font-size: var(--step-small); }
-.programs { display: grid; gap: 14px; min-height: 0; overflow: auto; align-content: start; }
 
 /* ── 장면 4: tree 출력 ───────────────────── */
 .repo { display: grid; grid-template-columns: max-content minmax(0, clamp(280px, 18vw, 440px)) minmax(0, 1fr); gap: 32px clamp(40px, 4vw, 72px); align-items: center; padding: 104px var(--gutter) 40px; }
@@ -175,16 +167,11 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .top__mark { display: inline-flex; align-items: center; gap: 10px; }
 .top__mark img { width: 28px; height: 28px; border-radius: 50%; }
 
-/* 프로그램 한 줄 설명 */
-.tile__app { flex-wrap: wrap; row-gap: 8px; }
-.tile__desc { order: 1; flex: 1 0 100%; font-style: normal; font-size: var(--step-small); color: var(--muted); line-height: 1.4; }
 
 @media (max-width: 720px) {
   .emblem { width: 84px; }
 }
 
-/* 타일 안 목록은 세로로만, 스크롤바는 가늘고 옅게 */
-.programs { overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
 
 /* Today: 코워크 캘린더 위젯을 그대로 띄운다 */
 .today__date { color: var(--muted); font-size: var(--step-small); }

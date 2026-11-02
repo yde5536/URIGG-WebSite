@@ -44,7 +44,7 @@ The user has asked for every change to go to production ("운영 사이트 반�
 - Top bar: fully clear when stuck, only edge refraction + RGB prism (SVG backdrop filter, Chromium only, map built at devicePixelRatio) and a thin rim.
 - Crimson only on main buttons. Fonts: Switzer + Pretendard, mono for small labels/times.
 - Round URIGG logo with a soft halo, no ring, no float.
-- Dashboard grid: Today | News (2 rows) | D-day · Shortcuts / 알림·Log · Programs.
+- Dashboard grid: Today | News (2 rows) | D-day · Shortcuts / 알림·Log · Commits (GitHub grass + 연속 / 이번 주 / 26주; replaced Programs on 2026-11-02, the calendar download stays in the footer).
 - 알림/Log tabs: 알림 first; sliding glass pill; red unread count clears after the list is seen for 2 s.
 - Title scrambles between "URIGG" and "Security.log Website" every 15 s ("Security.log HUB" in `?wall`); tagline is `urigg.pages.dev`.
 - Shortcuts: 3 × 2 liquid-glass square icons, white mono, label below: Claude (desktop app, `claude://`), VS Code (`vscode://`), YouTube, GitHub (profile), 티스토리 (blog front page), 드림핵. Icons in `site/images/icons/` (simple-icons CC0; Dreamhack mark cut from its official logo).
@@ -66,6 +66,5 @@ Gotchas: `core.autocrlf=true` (normalize `\r\n` in Node edit scripts); write reg
 ## Open threads (as of 2026-11-02)
 
 - Lively: on-screen keyboard just shipped; confirm the user could log in to the widget on the wallpaper.
-- Wall mode: replace the Programs tile with something glanceable (big clock, time to next event, GitHub grass…). Agreed in principle; **wait for the user to say go** and pick the content.
 - Command palette: **on hold** (2026-11-02). The user agreed it isn't needed now: the dashboard already shows everything on one screen, there is little to search, and the main use is the `?wall` wallpaper where keyboard input may not work. If notes/blog posts pile up, add a plain notes + blog search box in the Notes scene instead. Design notes kept in case: Spotlight-style centered glass bar, sliding glass pill selection, grouped results, Korean initial-consonant (초성) search, Ctrl+K and `/`.
 - Feature ideas offered: Linux Master mock-exam score chart from commit messages, study timer, next-post reminder, news keyword highlight.
