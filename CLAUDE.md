@@ -67,6 +67,11 @@ Gotchas: `core.autocrlf=true` (normalize `\r\n` in Node edit scripts); write reg
 
 ## Open threads (as of 2026-11-02)
 
-- Lively: on-screen keyboard just shipped; confirm the user could log in to the widget on the wallpaper.
+Session of 2026-11-02 ended with everything deployed to `main`. Not yet confirmed by the user:
+- Lively: turning on the **disk cache** setting keeps the widget login across restarts; logging in with the on-screen keyboard works.
+- `scripts/windows/urigg-launchers.reg` double-clicked on the laptop, and 파일 탐색기 / VMware / Claude (`claude://`) shortcuts open from the wallpaper.
+- Lively 성능 tab: "응용 프로그램이 포커싱 되었을 때" set to pause (suggested for CPU).
 - Command palette: **on hold** (2026-11-02). The user agreed it isn't needed now: the dashboard already shows everything on one screen, there is little to search, and the main use is the `?wall` wallpaper where keyboard input may not work. If notes/blog posts pile up, add a plain notes + blog search box in the Notes scene instead. Design notes kept in case: Spotlight-style centered glass bar, sliding glass pill selection, grouped results, Korean initial-consonant (초성) search, Ctrl+K and `/`.
-- Feature ideas offered: Linux Master mock-exam score chart from commit messages, study timer, next-post reminder, news keyword highlight.
+- Feature ideas offered, not built (ask first): alerts for a CTF starting within 24 h and new KEV entries today (data already loaded); quiz mode for Keyword/Vuln (hide the description until clicked); Linux Master (리눅스마스터 2급 2차, on the D-day list) practice question of the day with self-written multiple choice; study timer with today's total; WebRTC IP-leak check, IP change log, speed test for the Network tab; Linux Master score chart from commit messages; news keyword highlight.
+- Housekeeping: taste-skill lint has 1 WARN (too many em dashes); old PNGs now replaced by WebP (`logo-round-240.png`, `calendar-icon.png`) are unused by the page but still in `site/images`.
+- Testing notes: this PC is slow; headless Edge from `shot.mjs` sometimes lingers on port 9337 and later runs attach to it (stale localStorage, hangs). Wrap test runs in `timeout`, and never pass `/dev/null` as an output path (Git Bash writes a file named `nul`).
