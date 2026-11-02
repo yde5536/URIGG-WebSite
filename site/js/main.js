@@ -362,7 +362,7 @@ function renderCtf(data) {
     const hours = Math.round((f - s) / 3_600_000);
     const len = hours % 24 === 0 ? `${hours / 24}일` : `${hours}시간`;
     const when = live ? `진행 중 · ${Math.ceil((f - now) / 3_600_000)}시간 남음` : `${ctfWhen(s)} · ${len}`;
-    return `<li${live ? ' class="is-warn"' : ''}><a href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.format || '')} · ${e.onsite ? esc(e.location || '현장') : '온라인'} · ${len}"><b>${live ? '●' : '⚑'}</b><span>${esc(e.title)}</span><time>${when}</time></a></li>`;
+    return `<li${live ? ' class="is-warn"' : ''}><a href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.format || '')} · ${e.onsite ? esc(e.location || '현장') : '온라인'} · ${len}"><b>${live ? '●' : '▸'}</b><span>${esc(e.title)}</span><time>${when}</time></a></li>`;
   });
   $('#pane-ctf').innerHTML = rows.join('') || `<li class="is-empty">${data ? '45일 안에 예정된 CTF가 없어요.' : 'CTF 일정을 불러오지 못했어요.'}</li>`;
 }
