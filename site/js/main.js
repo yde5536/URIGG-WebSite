@@ -123,34 +123,41 @@ setInterval(tick, 1000);
 $('#today-date').textContent = todayLabel;
 
 /* ── 블로그: 대시보드의 tail 로그 ─────────── */
-/* ── Log 칸 탭: 알림(먼저) ↔ Log ──────────────
-   제목 뒤의 유리 알약이 고른 탭으로 미끄러져 간다. 칸 내용은 그대로 바뀐다. */
-const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
-const pill = $('.tabs__pill');
-const movePill = () => {
-  const on = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
-  if (!on || !pill) return;
-  pill.style.width = `${on.offsetWidth}px`;
-  pill.style.transform = `translateX(${on.offsetLeft}px)`;
-};
-const showTab = (tab) => {
-  for (const t of tabs) {
-    const on = t === tab;
-    t.setAttribute('aria-selected', on);
-    t.tabIndex = on ? 0 : -1;
-    $('#' + t.getAttribute('aria-controls')).hidden = !on;
-  }
-  movePill();
-  watchRead();
-};
-tabs.forEach((t, i) => {
-  t.addEventListener('click', () => showTab(t));
-  t.addEventListener('keydown', (e) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
-    showTab(next); next.focus();
+/* ── 칸 제목 탭: 알림 ↔ Log ↔ CTF, Security News ↔ KEV, Shortcuts ↔ Network ──
+   제목 뒤의 유리 알약이 고른 탭으로 미끄러져 간다. 칸 내용은 그대로 바뀐다.
+   제목 줄의 data-pane="패널id …" 요소(오른쪽 링크 등)는 그 패널이 보일 때만 보인다. */
+const tabGroups = [...document.querySelectorAll('.tabs')].map((group) => {
+  const tabs = [...group.querySelectorAll('[role="tab"]')], pill = group.querySelector('.tabs__pill');
+  const head = group.closest('.tile__head');
+  const move = () => {
+    const on = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
+    if (!on || !pill) return;
+    pill.style.width = `${on.offsetWidth}px`;
+    pill.style.transform = `translateX(${on.offsetLeft}px)`;
+  };
+  const show = (tab) => {
+    for (const t of tabs) {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      $('#' + t.getAttribute('aria-controls')).hidden = !on;
+    }
+    head.querySelectorAll('[data-pane]').forEach((el) => { el.hidden = !el.dataset.pane.split(' ').some((id) => !$('#' + id).hidden); });
+    move();
+    watchRead();
+    group.dispatchEvent(new CustomEvent('tabchange', { detail: tab.id }));
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+      show(next); next.focus();
+    });
   });
+  return move;
 });
+const movePill = () => tabGroups.forEach((move) => move());
 addEventListener('resize', movePill);
 document.fonts?.ready.then(movePill);
 
@@ -205,7 +212,7 @@ window.alerts = {
   },
 };
 window.alerts.set('init', []);
-showTab(tabs[0]);
+movePill();
 const daysAgo = (iso) => kstDay(Date.now()) - kstDay(new Date(iso).getTime());
 
 function renderBlog(data) {
@@ -310,6 +317,72 @@ function renderNews(data) {
     <li><a href="${esc(n.link)}" target="_blank" rel="noopener"><span class="news__src">${esc(n.source)}</span><span class="news__title">${esc(n.title)}</span><time datetime="${n.date}">${ago(n.date)}</time></a></li>`).join('') || '<li class="news__empty">최근 3일 안에 올라온 뉴스가 없어요.</li>';
 }
 
+/* ── 실제 악용 중인 취약점 (CISA KEV, 뉴스 칸의 KEV 탭) ─────── */
+function renderKev(data) {
+  $('#pane-kev').innerHTML = data
+    ? data.items.map((v) => `
+    <li><a href="https://nvd.nist.gov/vuln/detail/${esc(v.cve)}" target="_blank" rel="noopener" title="${esc(v.name)}${v.ransomware ? ' · 랜섬웨어에 쓰인 적 있음' : ''}"><span class="news__src">${esc(v.vendor)}</span><span class="news__title">${v.ransomware ? '<b class="kev__rw">랜섬웨어</b> ' : ''}${esc(v.cve)} · ${esc(v.product)}</span><time datetime="${v.added}">${ago(`${v.added}T12:00:00-05:00`)}</time></a></li>`).join('')
+    : '<li class="news__empty">CISA 목록을 불러오지 못했어요.</li>';
+}
+
+/* ── 다가오는 CTF (CTFtime, 알림 칸의 CTF 탭) ─────────── */
+const ctfWhen = (ms) => {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+  return `${p.month}/${p.day} ${p.hour}:${p.minute}`;
+};
+function renderCtf(data) {
+  const now = Date.now();
+  const rows = (data?.events || []).filter((e) => Date.parse(e.finish) > now).map((e) => {
+    const s = Date.parse(e.start), f = Date.parse(e.finish), live = s <= now;
+    const hours = Math.round((f - s) / 3_600_000);
+    const len = hours % 24 === 0 ? `${hours / 24}일` : `${hours}시간`;
+    const when = live ? `진행 중 · ${Math.ceil((f - now) / 3_600_000)}시간 남음` : `${ctfWhen(s)} · ${len}`;
+    return `<li${live ? ' class="is-warn"' : ''}><a href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.format || '')} · ${e.onsite ? esc(e.location || '현장') : '온라인'} · ${len}"><b>${live ? '●' : '⚑'}</b><span>${esc(e.title)}</span><time>${when}</time></a></li>`;
+  });
+  $('#pane-ctf').innerHTML = rows.join('') || `<li class="is-empty">${data ? '45일 안에 예정된 CTF가 없어요.' : 'CTF 일정을 불러오지 못했어요.'}</li>`;
+}
+
+/* ── 내 네트워크 상태 (Shortcuts 칸의 Network 탭) ─────────
+   보는 사람 자신의 IP라 스냅샷 없이 늘 /api/net에 직접 묻고, 탭을 볼 때만 부른다.
+   VPN·프록시는 추정: 브라우저 시간대와 IP 위치의 시간대가 다르거나, 통신사가 호스팅·VPN 회사면 "사용 중"으로 본다. */
+const VPNISH = /cloud|hosting|server|data ?cent|vpn|proxy|amazon|aws|google|microsoft|azure|digitalocean|linode|akamai|ovh|hetzner|vultr|m247|datacamp|choopa|leaseweb|contabo|oracle|proton|nord|mullvad|express|surfshark|private internet/i;
+const netBox = $('#pane-net');
+let netAt = 0;
+async function renderNet() {
+  netAt = Date.now();
+  const row = (k, v, cls = '') => `<div${cls ? ` class="${cls}"` : ''}><dt>${k}</dt><dd>${v}</dd></div>`;
+  if (!navigator.onLine) { netBox.innerHTML = row('상태', '오프라인이에요'); return; }
+  let d = null;
+  try {
+    const res = await fetch('/api/net', { cache: 'no-store' });
+    if (res.ok && res.headers.get('content-type')?.includes('json')) d = await res.json();
+  } catch {}
+  if (!d?.ip) { netBox.innerHTML = row('상태', '온라인') + row('공인 IP', '불러오지 못했어요'); return; }
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const tzOff = d.timezone && tz !== d.timezone, host = VPNISH.test(d.isp || '');
+  const conn = navigator.connection;
+  netBox.innerHTML = [
+    row('공인 IP', `<button type="button" class="net__ip" title="눌러서 복사">${esc(d.ip)}</button>`, 'net__main'),
+    row('통신사', `${esc(d.isp || '—')}${d.asn ? ` <small>AS${d.asn}</small>` : ''}`),
+    row('위치', esc([d.city, d.country].filter(Boolean).join(', ') || '—')),
+    row('VPN·프록시', tzOff || host ? '사용 중 (추정)' : '안 씀 (추정)', tzOff || host ? 'is-warn' : ''),
+    row('연결', esc([d.http, d.tls, d.colo && `Cloudflare ${d.colo}`].filter(Boolean).join(' · '))),
+    conn?.effectiveType ? row('브라우저', esc(`${conn.effectiveType.toUpperCase()} · 지연 ${conn.rtt}ms · ${conn.downlink}Mbps`)) : '',
+  ].join('');
+  netBox.querySelector('[class="is-warn"] dd')?.setAttribute('title', [tzOff && `브라우저 시간대(${tz})와 IP 위치 시간대(${d.timezone})가 달라요`, host && '통신사가 호스팅·VPN 회사예요'].filter(Boolean).join(' · '));
+}
+netBox.addEventListener('click', async (e) => {
+  const ip = e.target.closest('.net__ip');
+  if (!ip) return;
+  try { await navigator.clipboard.writeText(ip.textContent); ip.dataset.copied = ''; setTimeout(() => delete ip.dataset.copied, 1200); } catch {}
+});
+$('#net-refresh').addEventListener('click', renderNet);
+$('#tab-net').closest('.tabs').addEventListener('tabchange', (e) => { if (e.detail === 'tab-net' && Date.now() - netAt > 60_000) renderNet(); });
+const netVisible = () => !netBox.hidden && !document.hidden;
+addEventListener('online', () => netVisible() && renderNet());
+addEventListener('offline', () => netVisible() && renderNet());
+setInterval(() => netVisible() && Date.now() - netAt > 5 * 60_000 && renderNet(), 60_000);
+
 /* ── 바탕화면 모드: 며칠씩 켜져 있으므로 30분마다 새로 불러와 뉴스·글·알림·날짜를 맞춘다 ── */
 // 실제 흐른 시간으로 잰다: Lively가 일시정지하면 타이머도 멈추므로, 돌아왔을 때 30분이 지났으면 바로 새로고침
 if (WALL) {
@@ -329,3 +402,5 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
 load('blog').then((d) => d?.posts?.length && renderBlog(d));
 load('github').then((d) => d?.groups && renderGithub(d));
 load('news').then((d) => d?.items?.length && renderNews(d));
+load('kev').then((d) => renderKev(d?.items ? d : null));
+load('ctf').then((d) => renderCtf(d?.events ? d : null));

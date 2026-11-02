@@ -1,0 +1,187 @@
+{
+  "fetchedAt": "2026-11-02T03:39:35.425Z",
+  "version": "2026.10.30",
+  "count": 1766,
+  "items": [
+    {
+      "cve": "CVE-2026-118527",
+      "vendor": "Ivanti",
+      "product": "Connect Secure",
+      "name": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
+      "desc": "Ivanti Connect Secure contains a generation of predictable numbers or identifiers vulnerability that allows a remote authenticated attacker to upload files with attacker-controlled content to a known location on disk. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-111357.",
+      "added": "2026-10-30",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-111357",
+      "vendor": "Ivanti",
+      "product": "Connect Secure",
+      "name": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+      "desc": "Ivanti Connect Secure contains a missing authentication for critical function vulnerability that could allow a local authenticated attacker to escalate their privileges. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-118527.",
+      "added": "2026-10-30",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-97229",
+      "vendor": "GitLab",
+      "product": "Community Edition and Enterprise Edition",
+      "name": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+      "desc": "GitLab Community Edition and Enterprise Edition contain a integer overflow or wraparound vulnerability that could allow an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+      "added": "2026-10-29",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-76418",
+      "vendor": "Cisco",
+      "product": "Secure Firewall ASA Software and Cisco Secure FTD Software",
+      "name": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
+      "desc": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software contains an unchecked return value to NULL pointer dereference vulnerability that could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.",
+      "added": "2026-10-29",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-46300",
+      "vendor": "Linux",
+      "product": "Kernel",
+      "name": "Linux Kernel Missing Initialization of a Variable Vulnerability",
+      "desc": "Linux Kernel contains a missing initialization of a variable vulnerability that could allow for unintended modification of page-cache-backed data via failure to preserve the shared-fragment marker during socket buffer coalescing, causing ESP input processing to decrypt shared fragments in place. This vulnerability can be chained with CVE-2026-109618 and CVE-2026-109619 to implant PHP webshells and run commands as root.",
+      "added": "2026-10-28",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-41709",
+      "vendor": "Broadcom",
+      "product": "VMware ESX",
+      "name": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+      "desc": "Broadcom VMWare ESX contains an insufficient logging vulnerability that could allow a malicious actor with admin access to perform certain operations without being logged.",
+      "added": "2026-10-28",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-48356",
+      "vendor": "Adobe",
+      "product": "Commerce and Magento",
+      "name": "Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability",
+      "desc": "Adobe Commerce and Magento contain an unrestricted upload of file with dangerous type vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session.",
+      "added": "2026-10-27",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-111497",
+      "vendor": "Google",
+      "product": "Brotli",
+      "name": "Google Brotli Unchecked Return Value Vulnerability",
+      "desc": "Google Brotli contains an unchecked return value vulnerability that allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.",
+      "added": "2026-10-27",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "vendor": "PHP Group",
+      "product": "PHP",
+      "name": "PHP Stale Internal Request-State Vulnerability",
+      "desc": "PHP contains a stale internal request-state vulnerability that allows for unauthenticated remote code execution.",
+      "added": "2026-10-26",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "vendor": "PHP Group",
+      "product": "PHP",
+      "name": "PHP Memory Corruption Vulnerability",
+      "desc": "PHP contains an out-of-memory corruption vulnerability that allows for unauthenticated remote code execution.",
+      "added": "2026-10-26",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-114625",
+      "vendor": "Arista",
+      "product": "VeloCloud Orchestrator",
+      "name": "Arista VeloCloud Orchestrator SQL Injection Vulnerability",
+      "desc": "Arista VeloCloud Orchestrator on-prem contains a SQL injection vulnerability that may allow a remote attacker to access privileged internal functionality and impact the VCO host. Successful exploitation may compromise the confidentiality, integrity, and availability of the orchestrator and data managed by the orchestrator.",
+      "added": "2026-10-23",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-110447",
+      "vendor": "Collabora",
+      "product": "Collabora Online – Built-in CODE Server",
+      "name": "Collabora Online – Built-in CODE Server OS Command Injection Vulnerability",
+      "desc": "Collabora Collabora Online – Built-in CODE Server when used within the NextCloud platform contains an OS command injection vulnerability that allows for remote code execution when the CODE server isn't running.",
+      "added": "2026-10-23",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-96656",
+      "vendor": "Plex",
+      "product": "Media Server",
+      "name": "Plex Media Server External Control of File Name or Path Vulnerability",
+      "desc": "Plex Media Server contains an external control of file name or path vulnerability which can allow an admin user to write arbitrary files that may be executed on load. This vulnerability can be chained with CVE-2026-96652, CVE-2026-96654, and CVE-2026-96655.",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-96655",
+      "vendor": "Plex",
+      "product": "Media Server",
+      "name": "Plex Media Server Server-Side Request Forgery (SSRF) Vulnerability",
+      "desc": "Plex Media Server contains a server-side request forgery (SSRF) vulnerability that could allow an authenticated user to request arbitrary internal or external addresses via the '/video/:/transcode/universal' path parameter. This vulnerability can be chained with CVE-2026-96652, CVE-2026-96654, and CVE-2026-96656.",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-96654",
+      "vendor": "Plex",
+      "product": "Media Server",
+      "name": "Plex Media Server Improper Neutralization of Encoded URI Schemes in a Web Page Vulnerability",
+      "desc": "Plex Media Server contains an improper neutralization of encoded URI schemes in a web page vulnerability that could allow an attacker to call other plugins' functions and supply their own parameters. This vulnerability can be chained with CVE-2026-96652, CVE-2026-96655, and CVE-2026-96656.",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-96652",
+      "vendor": "Plex",
+      "product": "Media Server",
+      "name": "Plex Media Server Server-Side Request Forgery (SSRF) Vulnerability",
+      "desc": "Plex Media Server contains a server-side request forgery (SSRF) vulnerability which could allow an attacker using any X-Plex-Token value to include a full URL in the 'protocol' parameter and force the Plex server to POST to the attacker's chosen destination. This vulnerability can be chained with CVE-2026-96654, CVE-2026-96655, and CVE-2026-96656. ",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-110936",
+      "vendor": "Siemens",
+      "product": "Software Center",
+      "name": "Siemens Software Center Uncontrolled Search Path Element Vulnerability",
+      "desc": "Siemens Software Center contains an uncontrolled search path element vulnerability that could allow an authenticated local attacker to place a specially crafted DLL in a directory that the application searches, leading to arbitrary code execution with the privileges of the affected application.",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-106931",
+      "vendor": "EG Secure Solutions",
+      "product": "SiteGuard Server Edition",
+      "name": "EG Secure Solutions SiteGuard Server Edition OS Command Injection Vulnerability",
+      "desc": "EG Secure Solutions SiteGuard Server Edition contains an OS command injection vulnerability which may allow an attacker to execute arbitrary OS commands with root or SYSTEM privileges on the system running the affected product.",
+      "added": "2026-10-20",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-102764",
+      "vendor": "BeyondTrust",
+      "product": "Remote Support",
+      "name": "BeyondTrust Remote Support Authentication Bypass by Spoofing Vulnerability",
+      "desc": "BeyondTrust Remote Support contains an authentication bypass by spoofing vulnerability that could allow a remote attacker to perform file operations on the appliance.",
+      "added": "2026-10-16",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2025-61624",
+      "vendor": "Fortinet",
+      "product": "Multiple Products",
+      "name": "Fortinet Multiple Products Path Traversal Vulnerability",
+      "desc": "FortiOS, FortiPAM, FortiProxy, and FortiSwitchManager contain a path traversal vulnerability that may allow an authenticated attacker with admin profile and at least read-write permissions to write or delete arbitrary files via specific CLI commands.",
+      "added": "2026-10-16",
+      "ransomware": false
+    }
+  ]
+}

@@ -98,34 +98,56 @@
           </form>
         </article>
 
-        <!-- 보안 뉴스 -->
-        <article class="tile tile--news glass glass--dark" aria-labelledby="news-title">
-          <div class="tile__head"><h2 id="news-title">Security News</h2><span class="tile__more">KISA · 데일리시큐 · THN</span></div>
-          <ol class="news" id="panel-news"></ol>
+        <!-- 보안 뉴스 ↔ 실제 악용 중인 취약점(CISA KEV) -->
+        <article class="tile tile--news glass glass--dark" aria-label="Security News · KEV">
+          <div class="tile__head">
+            <div class="tabs" role="tablist" aria-label="뉴스 칸 보기">
+              <span class="tabs__pill" aria-hidden="true"></span>
+              <button type="button" role="tab" id="tab-news" aria-selected="true" aria-controls="panel-news">Security News</button>
+              <button type="button" role="tab" id="tab-kev" aria-selected="false" aria-controls="pane-kev" tabindex="-1">KEV</button>
+            </div>
+            <span class="tile__more" data-pane="panel-news">KISA · 데일리시큐 · THN</span>
+            <a class="link tile__more" data-pane="pane-kev" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener" hidden>CISA 실제 악용 취약점 ↗</a>
+          </div>
+          <ol class="news" id="panel-news" role="tabpanel" aria-labelledby="tab-news"></ol>
+          <ol class="news" id="pane-kev" role="tabpanel" aria-labelledby="tab-kev" hidden></ol>
         </article>
 
         <!-- 최근 글 -->
-        <article class="tile tile--log glass glass--dark" aria-label="Log · 알림">
+        <article class="tile tile--log glass glass--dark" aria-label="알림 · Log · CTF">
           <div class="tile__head">
             <div class="tabs" role="tablist" aria-label="Log 칸 보기">
               <span class="tabs__pill" aria-hidden="true"></span>
               <button type="button" role="tab" id="tab-alerts" aria-selected="true" aria-controls="pane-alerts">알림<span class="tabs__count" id="alert-count" hidden></span></button>
               <button type="button" role="tab" id="tab-log" aria-selected="false" aria-controls="pane-log" tabindex="-1">Log</button>
+              <button type="button" role="tab" id="tab-ctf" aria-selected="false" aria-controls="pane-ctf" tabindex="-1">CTF</button>
             </div>
-            <a class="link tile__more" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a>
+            <a class="link tile__more" data-pane="pane-alerts pane-log" href="https://urigg-security.tistory.com/" target="_blank" rel="noopener">블로그 ↗</a>
+            <a class="link tile__more" data-pane="pane-ctf" href="https://ctftime.org/event/list/upcoming" target="_blank" rel="noopener" hidden>CTFtime ↗</a>
           </div>
           <ul class="alerts" id="pane-alerts" role="tabpanel" aria-labelledby="tab-alerts"></ul>
           <div class="term" id="pane-log" role="tabpanel" aria-labelledby="tab-log" hidden>
             <p class="term__prompt"><span class="term__user">urigg@security</span>:~$ tail -n 5 security.log<span class="caret" aria-hidden="true"></span></p>
             <ol class="tail" id="tail"></ol>
           </div>
+          <!-- 다가오는 CTF (CTFtime) -->
+          <ul class="alerts ctf" id="pane-ctf" role="tabpanel" aria-labelledby="tab-ctf" hidden></ul>
         </article>
 
-        <!-- 바로가기 -->
-        <nav class="tile tile--alias glass glass--dark" aria-labelledby="alias-title">
-          <div class="tile__head"><h2 id="alias-title">Shortcuts</h2></div>
+        <!-- 바로가기 ↔ 내 네트워크 상태 -->
+        <nav class="tile tile--alias glass glass--dark" aria-label="Shortcuts · Network">
+          <div class="tile__head">
+            <div class="tabs" role="tablist" aria-label="바로가기 칸 보기">
+              <span class="tabs__pill" aria-hidden="true"></span>
+              <button type="button" role="tab" id="tab-keys" aria-selected="true" aria-controls="pane-keys">Shortcuts</button>
+              <button type="button" role="tab" id="tab-net" aria-selected="false" aria-controls="pane-net" tabindex="-1">Network</button>
+            </div>
+            <button type="button" class="tile__more link net__refresh" data-pane="pane-net" id="net-refresh" hidden>새로고침</button>
+          </div>
+          <!-- 지금 연결의 공인 IP·통신사·위치 (/api/net). 보는 사람 자신의 정보, 저장 안 함 -->
+          <dl class="net" id="pane-net" role="tabpanel" aria-labelledby="tab-net" hidden></dl>
           <!-- 3 × 2 유리 아이콘. 아이콘은 images/icons/ (simple-icons CC0, 드림핵은 공식 로고의 심볼) -->
-          <ul class="keys">
+          <ul class="keys" id="pane-keys" role="tabpanel" aria-labelledby="tab-keys">
             <li><a class="key" href="claude://"><span class="key__glass"><img src="images/icons/claude.svg" alt=""></span><b>Claude</b></a></li>
             <li><a class="key" href="vscode://"><span class="key__glass"><img src="images/icons/visualstudiocode.svg" alt=""></span><b>VS Code</b></a></li>
             <li><a class="key" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="key__glass"><img src="images/icons/youtube.svg" alt=""></span><b>YouTube</b></a></li>

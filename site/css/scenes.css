@@ -356,3 +356,21 @@ a.term__row:hover .nm { text-decoration: underline 1px; text-underline-offset: 4
 .tile--news .tile__more { flex-basis: 100%; margin-left: 0; }
 .wall .tile--news .tile__more { flex-basis: auto; margin-left: auto; }
 .news__empty { padding: 6px 0; font-size: var(--step-small); color: var(--muted); }
+
+/* ── 칸 제목 탭 패널 (Security News ↔ KEV, 알림 ↔ Log ↔ CTF, Shortcuts ↔ Network) ── */
+.news[hidden], .keys[hidden], .net[hidden] { display: none; }
+.tabs { flex: none; }
+button.tile__more { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step-small); cursor: pointer; }
+.kev__rw { font-size: 0.75rem; font-weight: 600; color: var(--accent-text); }
+
+/* 내 네트워크 상태 */
+.net { display: grid; align-content: start; gap: 7px; min-height: 0; margin: 2px 0 0; overflow: auto; overflow-x: hidden; font-size: var(--step-small); scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent; }
+.net div { display: grid; grid-template-columns: 6.4em minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.net dt { color: var(--muted); }
+.net dd { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.net small { color: var(--muted); }
+.net .is-warn dd { color: var(--accent-text); }
+.net__main { margin-bottom: 4px; }
+.net__ip { border: 0; background: none; padding: 0; color: var(--ink); cursor: pointer; font: 600 var(--step-lead)/1.2 var(--mono); letter-spacing: -0.02em; } /* taste-skill-ignore: IP 주소는 고정폭 글씨로 */
+.net__ip[data-copied]::after { content: ' 복사됨'; font: 500 0.75rem var(--font); color: var(--muted); }
+.wall .net { gap: 12px; }

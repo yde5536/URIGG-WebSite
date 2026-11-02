@@ -1,7 +1,7 @@
 // 앱처럼 설치했을 때 쓰는 서비스 워커.
 // 페이지와 데이터는 늘 네트워크를 먼저 쓰고(최신 우선), 끊겼을 때만 저장해 둔 것을 보여 준다.
 // 이름에 해시가 붙은 파일(캘린더 위젯 assets)과 이미지는 저장본을 먼저 쓴다.
-const CACHE = 'urigg-v2';
+const CACHE = 'urigg-v3';
 const SHELL = ['/', '/css/base.css', '/css/scenes.css', '/css/theme-glass.css', '/js/main.js', '/js/scenes.js', '/js/dday.js', '/js/osk.js', '/images/favicon-192.png'];
 
 self.addEventListener('install', (e) => {
@@ -20,6 +20,8 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   const url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== location.origin) return;
+  // 내 네트워크 상태(/api/net)는 그때그때의 IP라 저장하지 않는다
+  if (url.pathname === '/api/net') return;
 
   const cacheFirst = url.pathname.startsWith('/calendar/assets/') || url.pathname.startsWith('/images/');
   if (cacheFirst) {

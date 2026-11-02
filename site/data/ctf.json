@@ -1,0 +1,155 @@
+{
+  "fetchedAt": "2026-11-02T03:39:36.037Z",
+  "events": [
+    {
+      "title": "HKCERT CTF 2026 (Qualifying Round)",
+      "url": "https://ctftime.org/event/3418/",
+      "start": "2026-11-06T10:00:00+00:00",
+      "finish": "2026-11-07T10:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 10.31
+    },
+    {
+      "title": "PINK+ CTF 2026",
+      "url": "https://ctftime.org/event/3331/",
+      "start": "2026-11-06T12:00:00+00:00",
+      "finish": "2026-11-09T12:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "CSCTF 2026",
+      "url": "https://ctftime.org/event/3333/",
+      "start": "2026-11-06T13:00:00+00:00",
+      "finish": "2026-11-08T13:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "SpookyCTF 2026",
+      "url": "https://ctftime.org/event/3339/",
+      "start": "2026-11-06T17:00:00+00:00",
+      "finish": "2026-11-07T17:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "BlackAlps CTF 2026",
+      "url": "https://ctftime.org/event/3242/",
+      "start": "2026-11-06T18:15:00+00:00",
+      "finish": "2026-11-06T22:30:00+00:00",
+      "format": "Jeopardy",
+      "onsite": true,
+      "location": "Switzerland, Yverdon-les-Bains",
+      "weight": 0
+    },
+    {
+      "title": "Mimic",
+      "url": "https://ctftime.org/event/3455/",
+      "start": "2026-11-07T12:00:00+00:00",
+      "finish": "2026-11-08T12:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "CSAW CTF Final Round 2026",
+      "url": "https://ctftime.org/event/3410/",
+      "start": "2026-11-12T17:00:00+00:00",
+      "finish": "2026-11-14T05:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 1
+    },
+    {
+      "title": "TVX CTF 2026",
+      "url": "https://ctftime.org/event/3486/",
+      "start": "2026-11-13T10:00:00+00:00",
+      "finish": "2026-11-13T20:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "Platypwn 2026",
+      "url": "https://ctftime.org/event/3082/",
+      "start": "2026-11-13T17:00:00+00:00",
+      "finish": "2026-11-14T11:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 37
+    },
+    {
+      "title": "WolvCTF 2026",
+      "url": "https://ctftime.org/event/3049/",
+      "start": "2026-11-13T23:00:00+00:00",
+      "finish": "2026-11-15T23:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "InIt CTF",
+      "url": "https://ctftime.org/event/3467/",
+      "start": "2026-11-14T15:30:00+00:00",
+      "finish": "2026-11-14T23:30:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "EyesOpenCTF 7th edition",
+      "url": "https://ctftime.org/event/3419/",
+      "start": "2026-11-20T10:00:00+00:00",
+      "finish": "2026-11-22T10:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "GlacierCTF 2026",
+      "url": "https://ctftime.org/event/3337/",
+      "start": "2026-11-20T18:00:00+00:00",
+      "finish": "2026-11-21T18:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 73.17
+    },
+    {
+      "title": "Outback Overflow",
+      "url": "https://ctftime.org/event/3425/",
+      "start": "2026-11-20T23:00:00+00:00",
+      "finish": "2026-11-21T23:00:00+00:00",
+      "format": "Jeopardy",
+      "onsite": false,
+      "location": "",
+      "weight": 0
+    },
+    {
+      "title": "Seize da Flaq",
+      "url": "https://ctftime.org/event/3408/",
+      "start": "2026-11-21T06:30:00+00:00",
+      "finish": "2026-11-22T02:30:00+00:00",
+      "format": "Jeopardy",
+      "onsite": true,
+      "location": "Mathura, Uttar Pradesh, India",
+      "weight": 0
+    }
+  ]
+}
