@@ -110,7 +110,18 @@
             <a class="link tile__more" data-pane="pane-kev" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener" hidden>CISA 실제 악용 취약점 ↗</a>
           </div>
           <ol class="news" id="panel-news" role="tabpanel" aria-labelledby="tab-news"></ol>
-          <ol class="news" id="pane-kev" role="tabpanel" aria-labelledby="tab-kev" hidden></ol>
+          <div class="kev" id="pane-kev" role="tabpanel" aria-labelledby="tab-kev" hidden>
+            <!-- 유명 취약점 해설 한 개씩 (data/vulns.json). '다음'으로 넘기고, 본 위치는 이 브라우저에 기억 -->
+            <section class="vuln" aria-label="유명 취약점 해설" aria-live="polite">
+              <div class="vuln__top">
+                <p class="vuln__alias" id="vuln-alias"></p>
+                <button type="button" class="vuln__next" id="vuln-next">다음 ›</button>
+              </div>
+              <p class="vuln__meta" id="vuln-meta"></p>
+              <p class="vuln__desc" id="vuln-desc"></p>
+            </section>
+            <ol class="news" id="kev-list" aria-label="최근 추가된 실제 악용 취약점"></ol>
+          </div>
         </article>
 
         <!-- 최근 글 -->

@@ -385,3 +385,16 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 .wall .keys { row-gap: 4px; }
 .wall .key { gap: 4px; }
 .wall .tile--grass .tile__head { margin-bottom: 6px; }
+
+/* KEV 탭: 위에 유명 취약점 해설 카드 하나, 아래 최근 KEV 목록(칸 안에서 스크롤) */
+.kev[hidden] { display: none; }
+.kev { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 10px; min-height: 0; }
+.tile--news .kev .news { contain: size; }
+.vuln { display: grid; gap: 4px; padding: 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.05); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); } /* taste-skill-ignore: 사용자 요청 유리 카드 */
+.vuln__top { display: flex; align-items: baseline; gap: 10px; }
+.vuln__alias { margin: 0; flex: 1; min-width: 0; font-size: var(--step-lead); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vuln__next { flex: none; border: 0; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); color: var(--ink); font: inherit; font-size: var(--step-small); cursor: pointer; transition: background-color 200ms, transform 100ms; }
+.vuln__next:hover { background: rgba(255, 255, 255, 0.15); }
+.vuln__next:active { transform: scale(0.95); }
+.vuln__meta { margin: 0; font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+.vuln__desc { margin: 4px 0 0; font-size: var(--step-small); line-height: 1.55; text-wrap: pretty; }
