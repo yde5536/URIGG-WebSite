@@ -50,84 +50,51 @@ if (auroraSpans.length && !matchMedia('(prefers-reduced-motion: reduce)').matche
   setInterval(drift, 125);
 }
 
-/* ── 유리 렌즈 (크롬·엣지만: 배경 필터에 SVG를 쓸 수 있는 브라우저) ──
-   가장자리 띠에서 뒤 화면을 안쪽으로 당겨 굴절처럼 보이게 하고, 빨강·초록·파랑을 조금씩 다르게 당겨 프리즘처럼 갈라지게 한다.
-   상단 바(늘 켜짐)와 알림/Log 탭 알약(움직이는 동안만)이 쓴다. */
-let pillLens = null;
+/* ── 상단 바 유리 렌즈 (크롬·엣지만: 배경 필터에 SVG를 쓸 수 있는 브라우저) ──
+   가장자리 띠에서 뒤 화면을 안쪽으로 당겨 굴절처럼 보이게 하고, 빨강·초록·파랑을 조금씩 다르게 당겨 프리즘처럼 갈라지게 한다. */
 if (window.chrome && !matchMedia('(prefers-reduced-transparency: reduce)').matches) {
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('style', 'position:absolute;width:0;height:0');
-  const filterSrc = (id) => `<filter id="${id}" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+  svg.innerHTML = `<filter id="top-lens" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
     <feImage result="map" preserveAspectRatio="none"/>
     ${[['r', 1, '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['g', 0.9, '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0'], ['b', 0.8, '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0']]
       .map(([c, k, m]) => `<feDisplacementMap in="SourceGraphic" in2="map" data-k="${k}" xChannelSelector="R" yChannelSelector="G"/><feColorMatrix type="matrix" values="${m}" result="${c}"/>`).join('')}
     <feBlend in="r" in2="g" mode="screen" result="rg"/><feBlend in="rg" in2="b" mode="screen"/>
   </filter>`;
-  svg.innerHTML = filterSrc('top-lens') + filterSrc('pill-lens');
   document.body.append(svg);
-
+  const filter = svg.querySelector('filter'), img = svg.querySelector('feImage');
+  const BAND = 20, SCALE = 46;
   // 알약 모양의 가장자리에서 안쪽으로 얼마나 들어왔는지(거리)와 바깥 방향(법선)으로 변위 지도를 그린다.
   // 크롬은 이 필터를 화면의 실제 픽셀 단위로 계산하므로, 배율(devicePixelRatio)만큼 키워서 만들어야 글자가 뭉개지지 않는다.
-  const lens = (id, band) => {
-    const filter = svg.querySelector('#' + id), img = filter.querySelector('feImage'), maps = filter.querySelectorAll('feDisplacementMap');
-    let size = '';
-    return {
-      build(w, h) {
-        const dpr = devicePixelRatio || 1;
-        if (!w || !h || size === `${w}x${h}@${dpr}`) return;
-        size = `${w}x${h}@${dpr}`;
-        const W = Math.round(w * dpr), H = Math.round(h * dpr), r = h / 2, BAND = Math.min(band, r);
-        const cv = document.createElement('canvas');
-        cv.width = W; cv.height = H;
-        const ctx = cv.getContext('2d'), data = ctx.createImageData(W, H);
-        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-          const px = (x + 0.5) / dpr - w / 2, py = (y + 0.5) / dpr - h / 2;
-          const qx = Math.abs(px) - (w / 2 - r), qy = Math.abs(py) - (h / 2 - r);
-          let nx, ny, depth;
-          if (qx > 0) { const l = Math.hypot(qx, Math.max(qy, 0)) || 1; depth = r - l; nx = Math.sign(px) * qx / l; ny = qy > 0 ? Math.sign(py) * qy / l : 0; }
-          else { depth = r - Math.abs(py); nx = 0; ny = Math.sign(py); }
-          const t = Math.max(0, 1 - depth / BAND), mag = t * t;
-          const i = (y * W + x) * 4;
-          data.data[i] = 128 - nx * mag * 127;
-          data.data[i + 1] = 128 - ny * mag * 127;
-          data.data[i + 2] = 128; data.data[i + 3] = 255;
-        }
-        ctx.putImageData(data, 0, 0);
-        for (const el of [filter, img]) { el.setAttribute('x', 0); el.setAttribute('y', 0); el.setAttribute('width', W); el.setAttribute('height', H); }
-        img.setAttribute('href', cv.toDataURL());
-      },
-      scale(s) { const dpr = devicePixelRatio || 1; maps.forEach((d) => d.setAttribute('scale', s * dpr * d.dataset.k)); },
-    };
+  const build = () => {
+    const dpr = devicePixelRatio || 1;
+    const w = topBar.offsetWidth, h = topBar.offsetHeight;
+    if (!w || !h) return;
+    const W = Math.round(w * dpr), H = Math.round(h * dpr), r = h / 2;
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d'), data = ctx.createImageData(W, H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const px = (x + 0.5) / dpr - w / 2, py = (y + 0.5) / dpr - h / 2;
+      const qx = Math.abs(px) - (w / 2 - r), qy = Math.abs(py) - (h / 2 - r);
+      let nx, ny, depth;
+      if (qx > 0) { const l = Math.hypot(qx, Math.max(qy, 0)) || 1; depth = r - l; nx = Math.sign(px) * qx / l; ny = qy > 0 ? Math.sign(py) * qy / l : 0; }
+      else { depth = r - Math.abs(py); nx = 0; ny = Math.sign(py); }
+      const t = Math.max(0, 1 - depth / BAND), mag = t * t;
+      const i = (y * W + x) * 4;
+      data.data[i] = 128 - nx * mag * 127;
+      data.data[i + 1] = 128 - ny * mag * 127;
+      data.data[i + 2] = 128; data.data[i + 3] = 255;
+    }
+    ctx.putImageData(data, 0, 0);
+    for (const el of [filter, img]) { el.setAttribute('x', 0); el.setAttribute('y', 0); el.setAttribute('width', W); el.setAttribute('height', H); }
+    img.setAttribute('href', cv.toDataURL());
+    svg.querySelectorAll('feDisplacementMap').forEach((d) => d.setAttribute('scale', SCALE * dpr * d.dataset.k));
   };
-
-  const top = lens('top-lens', 20);
-  const buildTop = () => { top.build(topBar.offsetWidth, topBar.offsetHeight); top.scale(46); };
-  buildTop();
-  addEventListener('resize', buildTop);
-
-  // 탭 알약: 멈춰 있을 땐 필터를 끄고(글자가 선명하게), 움직이는 0.45초 동안만 강도가 0 → 최대 → 0으로 올라갔다 내려간다
-  // 최대 강도: 알약이 낮아(약 32px) 16을 넘기면 알약 밖 빈 곳까지 끌어와 깨진다
-  const PILL_PEAK = 14, PILL_MS = 450;
-  const pl = lens('pill-lens', 16);
-  let raf = 0;
-  pillLens = {
-    size(w, h) { pl.build(w, h); },
-    pulse(el) {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      cancelAnimationFrame(raf);
-      const t0 = performance.now();
-      el.classList.add('is-moving');
-      const step = (now) => {
-        const k = Math.min(1, (now - t0) / PILL_MS);
-        pl.scale(PILL_PEAK * Math.sin(Math.PI * k));
-        if (k < 1) raf = requestAnimationFrame(step);
-        else { pl.scale(0); el.classList.remove('is-moving'); }
-      };
-      raf = requestAnimationFrame(step);
-    },
-  };
+  build();
+  addEventListener('resize', build);
   document.documentElement.classList.add('lens-on');
 }
 
@@ -165,10 +132,8 @@ const movePill = () => {
   if (!on || !pill) return;
   pill.style.width = `${on.offsetWidth}px`;
   pill.style.transform = `translateX(${on.offsetLeft}px)`;
-  pillLens?.size(on.offsetWidth, on.offsetHeight);
 };
 const showTab = (tab) => {
-  if (tab.getAttribute('aria-selected') !== 'true') pillLens?.pulse(pill);
   for (const t of tabs) {
     const on = t === tab;
     t.setAttribute('aria-selected', on);
