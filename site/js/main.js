@@ -413,10 +413,12 @@ setInterval(() => netVisible() && Date.now() - netAt > 5 * 60_000 && renderNet()
    탭을 안 보고 있어도 재 두어야 열었을 때 그래프가 있다. 30분마다 새로고침되므로 기록은 이 브라우저에 저장.
    실패한 측정은 null → 선이 끊긴다. */
 if (WALL) {
-  const PING_KEY = 'urigg-ping', WINDOW = 30 * 60_000, W = 300, H = 100;
+  // LIMIT: 이보다 오래 걸리면 끊김으로 본다. 그보다 훨씬 오래(8초+) 걸렸다면 재는 도중 Lively가 멈췄다 풀린 것이라 버린다
+  // (멈춘 시간이 통째로 지연 시간으로 잡혀 134초 같은 값이 들어간 적이 있다)
+  const PING_KEY = 'urigg-ping', WINDOW = 30 * 60_000, W = 300, H = 100, LIMIT = 5000, PAUSED = 8000;
   const svg = $('#ping-svg'), tip = $('#ping-tip'), dot = $('#ping-dot'), plot = svg.parentElement;
   let pts = [];
-  try { pts = JSON.parse(localStorage.getItem(PING_KEY) || '[]').filter((p) => Date.now() - p.t < WINDOW); } catch {}
+  try { pts = JSON.parse(localStorage.getItem(PING_KEY) || '[]').filter((p) => Date.now() - p.t < WINDOW && (p.ms == null || p.ms < LIMIT)); } catch {}
   const hhmm = (t) => new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(t));
   let scaleMax = 50;
   const xOf = (t) => ((t - (Date.now() - WINDOW)) / WINDOW) * W;
@@ -447,11 +449,14 @@ if (WALL) {
     let ms = null;
     const at = Date.now(); // 잰 시각은 보낸 순간 (응답이 늦어도 0초·30초에 찍히게)
     if (navigator.onLine) {
-      const t0 = performance.now();
+      const t0 = performance.now(), ctrl = new AbortController(), kill = setTimeout(() => ctrl.abort(), LIMIT);
       try {
-        const res = await fetch(`/images/favicon-32.png?ping=${Date.now()}`, { method: 'HEAD', cache: 'no-store' });
+        const res = await fetch(`/images/favicon-32.png?ping=${Date.now()}`, { method: 'HEAD', cache: 'no-store', signal: ctrl.signal });
         if (res.ok) ms = performance.now() - t0;
       } catch {}
+      clearTimeout(kill);
+      if (Date.now() - at > PAUSED) return;
+      if (ms != null && ms >= LIMIT) ms = null;
     }
     pts.push({ t: at, ms });
     pts = pts.filter((p) => Date.now() - p.t < WINDOW);
