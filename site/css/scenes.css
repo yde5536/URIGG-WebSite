@@ -477,3 +477,5 @@ button.tile__more { border: 0; background: none; padding: 0; font: inherit; font
 
 /* CTF 목록: 초보자용 대회 표시 */
 .ctf__beg { margin-right: 6px; padding: 1px 6px; border-radius: 999px; background: rgba(239, 66, 87, 0.16); color: var(--accent-text); font-style: normal; font-size: 0.6875rem; font-weight: 600; vertical-align: 1px; }
+/* Programs가 늘어나도 칸을 키우지 않고 칸 안에서 스크롤 (넓은 화면) */
+@media (min-width: 1025px) { .programs { contain: size; min-height: 6em; } }
