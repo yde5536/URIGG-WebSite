@@ -8,6 +8,9 @@ export const onRequestGet = ({ request }) => {
     isp: cf.asOrganization,
     country: cf.country,
     city: cf.city,
+    // 도시 단위 대략 좌표 (허브 Weather 칸이 날씨를 받을 때 씀)
+    lat: cf.latitude,
+    lon: cf.longitude,
     timezone: cf.timezone,
     colo: cf.colo,
     http: cf.httpProtocol,
