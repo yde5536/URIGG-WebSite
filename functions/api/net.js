@@ -14,6 +14,6 @@ export const onRequestGet = ({ request }) => {
     tls: cf.tlsVersion,
   };
   return new Response(JSON.stringify(body), {
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store, private' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store, private', 'Access-Control-Allow-Origin': '*' },
   });
 };
